@@ -1,0 +1,1240 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>미래엔 통합사회Ⅱ 완전정복 | 3. 시장경제와 지속 가능 발전 마스터 - Pink Edition</title>
+<style>
+:root{
+  --primary:#0F172A; --primary-soft:#1E293B;
+  --accent:#E11D48; --blue:#2563EB; --blue-dark:#1D4ED8;
+  --green:#059669; --amber:#D97706; --purple:#7C3AED;
+  --bg:#F1F5F9; --card:#FFFFFF; --line:#E2E8F0; --line-2:#CBD5E1;
+  --text:#334155; --text-dim:#64748B;
+  --r:18px;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;
+  font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Segoe UI",Roboto,sans-serif;}
+html,body{height:100%;}
+body{background:var(--bg);color:var(--text);display:flex;justify-content:center;align-items:center;overflow:hidden;}
+
+.app{width:100%;max-width:1440px;height:100vh;max-height:1000px;background:var(--card);
+  border-radius:var(--r);box-shadow:0 24px 50px rgba(15,23,42,.12);display:grid;
+  grid-template-columns:290px 1fr;overflow:hidden;border:1px solid var(--line);}
+
+/* ========== 사이드바 ========== */
+.sidebar{background:linear-gradient(170deg,#0F172A,#1E293B);display:flex;flex-direction:column;padding:26px 16px 16px;}
+.brand{font-size:1.3rem;font-weight:800;color:#fff;letter-spacing:-.5px;}
+.brand-sub{font-size:.78rem;color:#94A3B8;margin:6px 0 22px;line-height:1.5;}
+.nav{list-style:none;display:flex;flex-direction:column;gap:7px;flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;}
+.nav li{padding:15px 16px;border-radius:12px;font-size:.95rem;font-weight:700;color:#CBD5E1;
+  cursor:pointer;transition:.18s;display:flex;align-items:center;gap:10px;min-height:50px;}
+.nav li:active{transform:scale(.97);}
+.nav li.on{background:#fff;color:var(--primary);box-shadow:0 4px 14px rgba(0,0,0,.25);}
+.credit{margin-top:14px;padding:14px 12px;border-top:1px solid rgba(255,255,255,.12);
+  font-size:.72rem;color:#94A3B8;line-height:1.7;text-align:center;}
+.credit b{color:#E2E8F0;display:block;font-size:.8rem;margin-bottom:3px;}
+
+/* ========== 본문 ========== */
+.main{padding:28px 34px 34px;overflow-y:auto;-webkit-overflow-scrolling:touch;background:#FBFCFE;}
+.page{display:none;}
+.page.on{display:block;animation:fade .28s ease;}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+.head{border-bottom:3px solid var(--line);padding-bottom:16px;margin-bottom:22px;}
+.head h2{font-size:1.75rem;font-weight:800;color:var(--primary);letter-spacing:-.6px;}
+.head p{font-size:.92rem;color:var(--text-dim);margin-top:6px;line-height:1.6;}
+
+/* 칩 / 버튼 */
+.chips{display:flex;flex-wrap:wrap;gap:9px;margin-bottom:18px;}
+.chip{padding:11px 18px;border-radius:999px;border:2px solid var(--line-2);background:#fff;
+  font-size:.88rem;font-weight:700;color:var(--primary-soft);cursor:pointer;transition:.18s;min-height:44px;}
+.chip.on{background:var(--primary);color:#fff;border-color:var(--primary);}
+.btn{padding:13px 24px;border:none;border-radius:12px;background:var(--blue);color:#fff;
+  font-size:.95rem;font-weight:800;cursor:pointer;min-height:48px;transition:.18s;}
+.btn:active{transform:scale(.97);}
+.btn.ghost{background:#fff;color:var(--primary);border:2px solid var(--line-2);}
+.btn.red{background:var(--accent);} .btn.green{background:var(--green);}
+
+/* 카드 공통 */
+.card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:22px;margin-bottom:16px;
+  box-shadow:0 2px 8px rgba(15,23,42,.04);}
+.card h3{font-size:1.15rem;font-weight:800;color:var(--primary);margin-bottom:12px;
+  display:flex;align-items:center;gap:8px;}
+.card h4{font-size:1rem;font-weight:800;color:var(--blue-dark);margin:16px 0 8px;}
+.card p,.card li{font-size:.93rem;line-height:1.75;color:var(--text);}
+.card ul{padding-left:20px;} .card li{margin-bottom:5px;}
+.tag{display:inline-block;padding:3px 10px;border-radius:7px;font-size:.74rem;font-weight:800;margin-left:6px;vertical-align:middle;}
+.t-hot{background:#FEE2E2;color:#B91C1C;} .t-mid{background:#FEF3C7;color:#B45309;}
+.t-new{background:#DCFCE7;color:#15803D;} .t-key{background:#DBEAFE;color:#1D4ED8;}
+
+.box{border-left:5px solid;border-radius:10px;padding:15px 17px;margin-top:12px;}
+.box h6{font-size:.9rem;font-weight:800;margin-bottom:6px;}
+.box p{font-size:.9rem;line-height:1.7;}
+.b-why{background:#EFF6FF;border-color:var(--blue);} .b-why h6{color:#1D4ED8;} .b-why p{color:#1E3A8A;}
+.b-ex{background:#FEF3C7;border-color:var(--amber);} .b-ex h6{color:#B45309;} .b-ex p{color:#78350F;}
+.b-test{background:#FFE4E6;border-color:var(--accent);} .b-test h6{color:#BE123C;} .b-test p{color:#881337;}
+.b-tip{background:#F3E8FF;border-color:var(--purple);} .b-tip h6{color:#6D28D9;} .b-tip p{color:#4C1D95;}
+
+/* 사상가/개념 그리드 */
+.kgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;margin-bottom:18px;}
+.kbtn{background:#fff;border:2px solid var(--line);padding:14px 8px;border-radius:12px;text-align:center;
+  font-weight:700;font-size:.9rem;color:var(--primary);cursor:pointer;transition:.18s;min-height:52px;
+  display:flex;align-items:center;justify-content:center;}
+.kbtn:active{transform:scale(.96);}
+.kbtn.on{background:var(--blue);color:#fff;border-color:var(--blue);}
+.kbtn.hot{border-color:#FDA4AF;}
+
+/* 테이블 */
+table{width:100%;border-collapse:collapse;margin-top:10px;font-size:.89rem;}
+th,td{border:1px solid var(--line);padding:11px 12px;text-align:left;line-height:1.6;}
+th{background:#F1F5F9;font-weight:800;color:var(--primary);}
+td b{color:var(--blue-dark);}
+tr:nth-child(even) td{background:#FAFBFC;}
+
+/* 타임라인 */
+.tl{position:relative;padding-left:30px;}
+.tl::before{content:'';position:absolute;left:9px;top:6px;bottom:6px;width:3px;background:var(--line-2);border-radius:2px;}
+.tl-item{position:relative;margin-bottom:16px;}
+.tl-item::before{content:'';position:absolute;left:-26px;top:6px;width:13px;height:13px;border-radius:50%;
+  background:#fff;border:3px solid var(--blue);}
+.tl-item.hot::before{border-color:var(--accent);}
+.tl-y{font-size:.82rem;font-weight:800;color:var(--accent);}
+.tl-t{font-size:.95rem;font-weight:700;color:var(--primary);margin:2px 0 3px;}
+.tl-d{font-size:.86rem;color:var(--text-dim);line-height:1.6;}
+
+/* 용어사전 */
+.search{width:100%;padding:15px 18px;border:2px solid var(--line-2);border-radius:12px;font-size:1rem;
+  margin-bottom:16px;outline:none;min-height:50px;}
+.search:focus{border-color:var(--blue);}
+.terms{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.term{background:#fff;border:1px solid var(--line);border-left:4px solid var(--blue);border-radius:10px;padding:14px 16px;}
+.term dt{font-size:.98rem;font-weight:800;color:var(--primary);margin-bottom:5px;}
+.term dd{font-size:.87rem;line-height:1.65;color:var(--text);}
+.term .who{font-size:.75rem;color:var(--accent);font-weight:800;}
+
+/* 퀴즈 */
+.qbar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:18px;
+  background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px 18px;}
+.score{font-size:1.05rem;font-weight:800;color:var(--primary);}
+.score span{color:var(--accent);}
+.q{background:#fff;border:1px solid var(--line);border-radius:14px;padding:20px 22px;margin-bottom:14px;}
+.q.ok{border-color:#86EFAC;background:#F0FDF4;}
+.q.no{border-color:#FCA5A5;background:#FEF2F2;}
+.q-top{display:flex;gap:10px;align-items:flex-start;margin-bottom:14px;}
+.q-no{flex-shrink:0;width:32px;height:32px;border-radius:9px;background:var(--primary);color:#fff;
+  display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.86rem;}
+.q-txt{font-size:1rem;font-weight:700;color:var(--primary);line-height:1.65;}
+.q-type{display:inline-block;padding:2px 9px;border-radius:6px;font-size:.7rem;font-weight:800;
+  background:#E0E7FF;color:#4338CA;margin-left:6px;vertical-align:middle;}
+.opts{display:flex;flex-direction:column;gap:8px;}
+.opt{padding:13px 16px;border:2px solid var(--line);border-radius:11px;background:#fff;cursor:pointer;
+  font-size:.93rem;line-height:1.5;transition:.15s;min-height:48px;display:flex;align-items:center;gap:10px;}
+.opt:active{transform:scale(.99);}
+.opt.sel{border-color:var(--blue);background:#EFF6FF;font-weight:700;}
+.opt.right{border-color:var(--green);background:#ECFDF5;font-weight:700;}
+.opt.wrong{border-color:var(--accent);background:#FEF2F2;}
+.opt i{flex-shrink:0;width:24px;height:24px;border-radius:50%;border:2px solid var(--line-2);
+  display:flex;align-items:center;justify-content:center;font-style:normal;font-size:.75rem;font-weight:800;color:var(--text-dim);}
+.opt.sel i{border-color:var(--blue);background:var(--blue);color:#fff;}
+.opt.right i{border-color:var(--green);background:var(--green);color:#fff;}
+.opt.wrong i{border-color:var(--accent);background:var(--accent);color:#fff;}
+.blank{width:170px;padding:9px 12px;border:2px solid var(--line-2);border-radius:9px;font-size:.95rem;outline:none;}
+.blank:focus{border-color:var(--blue);}
+.sol{display:none;margin-top:13px;padding:14px 16px;background:#F8FAFC;border-left:4px solid var(--primary);border-radius:9px;}
+.sol.on{display:block;}
+.sol b{color:var(--green);} .sol p{font-size:.89rem;line-height:1.7;margin-top:5px;}
+
+.result{display:none;background:linear-gradient(135deg,#1E293B,#334155);color:#fff;border-radius:16px;
+  padding:26px;margin-bottom:16px;text-align:center;}
+.result.on{display:block;}
+.result .big{font-size:2.6rem;font-weight:800;margin:6px 0;}
+.result .msg{font-size:.95rem;color:#CBD5E1;line-height:1.6;}
+
+.foot{text-align:center;padding:22px 0 8px;font-size:.78rem;color:#94A3B8;line-height:1.8;border-top:1px solid var(--line);margin-top:24px;}
+.foot b{color:var(--text-dim);}
+
+@media (max-width:1100px){
+  .app{grid-template-columns:230px 1fr;} .terms{grid-template-columns:1fr;}
+}
+@media (max-width:760px){
+  html,body{height:auto;min-height:100%;overflow:auto;align-items:stretch}
+  .app{display:flex;flex-direction:column;height:auto;min-height:100vh;max-height:none;border-radius:0;border:0}
+  .sidebar{padding:14px 12px 10px;flex-shrink:0}
+  .brand{font-size:1.1rem}.brand-sub{margin:4px 0 10px}
+  .nav{flex-direction:row;gap:6px;overflow-x:auto;flex:none;padding:2px 0 4px}
+  .nav li{min-width:max-content;padding:10px 12px;min-height:44px;font-size:.83rem}
+  .credit{display:none}.main{padding:18px 14px 30px;overflow:visible;flex:1}
+  .head h2{font-size:1.4rem}.card{padding:16px}.kgrid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .terms{grid-template-columns:1fr}.chips{gap:6px}.chip{padding:8px 12px}
+  .blank{max-width:100%;width:140px}table{display:block;overflow-x:auto;white-space:normal}
+  th,td{min-width:95px} .qbar{padding:12px}.q{padding:16px 14px}
+}
+@media print{html,body{height:auto;overflow:visible}.app{display:block;height:auto;max-height:none;box-shadow:none;border:0}.sidebar{display:none}.main{overflow:visible;padding:0}.page{display:block!important;break-before:page}.qbar,.chips,.btn{display:none!important}.sol{display:block!important}.card,.q{break-inside:avoid}}
+
+/* ================================================================
+   PINK EDITION — coherent rose palette, large legible text, responsive.
+   ================================================================ */
+:root{
+ --primary:#682744; --primary-soft:#80435f;
+ --accent:#c43a75; --blue:#bd427b; --blue-dark:#962f60;
+ --green:#25765e; --amber:#aa5b79; --purple:#9e548f;
+ --bg:#fff4f8; --card:#fff; --line:#f2dbe6; --line-2:#e6bbcf;
+ --text:#59374a; --text-dim:#815e72;
+ --r:22px;
+}
+body{
+ background:radial-gradient(circle at 8% 5%,#ffe8f0 0,transparent 40%),
+            linear-gradient(135deg,#fff1f7 0%,#fff9fc 48%,#fcecf5 100%);
+ color:var(--text);
+}
+.app{
+ max-width:1440px;
+ background:#fff8fb;
+ border:1px solid #edcadb;
+ border-radius:25px;
+ box-shadow:0 28px 90px rgba(145,49,94,.15),0 4px 14px rgba(145,49,94,.05);
+}
+.sidebar{
+ position:relative;
+ background:linear-gradient(170deg,#8c3463 0%,#b64d81 51%,#d779a0 100%);
+ padding:30px 18px 18px;
+}
+.sidebar::before{
+ content:'';position:absolute;right:13px;top:10px;width:110px;height:110px;
+ border:1px solid rgba(255,255,255,.17);border-radius:50%;pointer-events:none;
+}
+.sidebar::after{
+ content:'';position:absolute;right:45px;top:44px;width:42px;height:42px;
+ background:rgba(255,255,255,.09);border-radius:50%;pointer-events:none;
+}
+.brand{
+ position:relative;z-index:1;font-size:1.35rem;line-height:1.32;
+ font-weight:900;color:#fff;letter-spacing:-.7px;
+ text-shadow:0 1px 2px rgba(85,18,52,.16);
+}
+.brand::before{
+ content:'';display:block;width:35px;height:5px;margin-bottom:14px;
+ background:#ffd4e5;border-radius:20px;
+}
+.brand-sub{position:relative;z-index:1;color:#ffe5ef;font-size:.84rem;line-height:1.7;margin:12px 0 27px;}
+.nav{gap:8px;}
+.nav li{
+ color:#fff0f6;font-weight:700;font-size:.96rem;
+ border:1px solid transparent;padding:14px 15px;
+ border-radius:13px;transition:background .15s ease,transform .15s ease;
+}
+.nav li:hover{background:rgba(255,255,255,.13);}
+.nav li.on{
+ color:#8c2e5c;background:#fff8fc;
+ border-color:rgba(255,255,255,.8);
+ box-shadow:0 7px 18px rgba(102,25,62,.17);
+}
+.credit{color:#ffe0eb;border-top-color:rgba(255,255,255,.26);font-size:.77rem;}
+.credit b{color:#fff;font-size:.89rem;}
+.main{background:linear-gradient(180deg,#fff8fb 0,#fff 55%,#fffafc 100%);padding:32px 38px 38px;}
+.head{position:relative;padding:0 0 21px 18px;border-bottom:2px solid #f4dae6;margin-bottom:24px;}
+.head::before{
+ content:'';position:absolute;top:5px;bottom:23px;left:0;width:5px;
+ background:linear-gradient(180deg,#d94a87,#ffc1d9);border-radius:10px;
+}
+.head h2{font-size:1.83rem;font-weight:900;color:#752c50;letter-spacing:-.75px;line-height:1.35;}
+.head p{font-size:.97rem;color:#806073;line-height:1.74;margin-top:9px;}
+.card{
+ border:1px solid #f0d7e3;border-radius:18px;padding:23px 24px;
+ background:#fff;box-shadow:0 6px 24px rgba(153,49,93,.055);
+}
+.card h3{font-size:1.18rem;color:#762b52;line-height:1.45;gap:8px;}
+.card h4{color:#9e3768;}
+.card p,.card li{font-size:.98rem;line-height:1.87;color:#50384a;}
+.card li::marker{color:#c65788;}
+.tag{margin-left:5px;border-radius:6px;letter-spacing:-.1px;}
+.t-hot{background:#ffe5ef;color:#ac295c;}
+.t-mid{background:#fff0e7;color:#99543f;}
+.t-new{background:#e8f5ef;color:#246649;}
+.t-key{background:#f4e9ff;color:#75468d;}
+.chips{gap:9px;margin-bottom:21px;}
+.chip,.kbtn,.btn,.opt{font-family:inherit;}
+.chip{
+ background:#fff;color:#84405f;border-color:#e9c3d5;
+ box-shadow:0 2px 3px rgba(138,38,82,.025);font-size:.94rem;
+}
+.chip:hover,.kbtn:hover{border-color:#c95c90;background:#fff5f9;}
+.chip.on{background:#b73e78;color:#fff;border-color:#b73e78;box-shadow:0 4px 12px rgba(178,55,113,.16);}
+.btn{
+ background:linear-gradient(135deg,#c2437c,#a83368);
+ border:1px solid #b53e73;color:#fff;
+ box-shadow:0 3px 10px rgba(166,47,98,.12);
+ border-radius:11px;font-size:.94rem;
+}
+.btn:hover{filter:brightness(1.04);}
+.btn.ghost{background:#fff;color:#8e365f;border:2px solid #e8bed0;box-shadow:none;}
+.btn.ghost:hover{background:#fff4f9;}
+.btn.red{background:#ab2e59;border-color:#ab2e59;}
+.btn.green{background:linear-gradient(135deg,#b83c77,#902d60);border-color:#9e315f;}
+.box{border-radius:11px;border-left-width:5px;padding:17px 18px;}
+.box h6{font-size:.96rem;}
+.box p{font-size:.95rem;line-height:1.78;}
+.b-why{background:#fff1f7;border-color:#c84d85;}.b-why h6{color:#90345d;}.b-why p{color:#6c3d57;}
+.b-ex{background:#fff5f0;border-color:#d9948d;}.b-ex h6{color:#a35658;}.b-ex p{color:#76464a;}
+.b-test{background:#fff0f4;border-color:#d04a78;}.b-test h6{color:#a22d5b;}.b-test p{color:#6e3551;}
+.b-tip{background:#f9eff9;border-color:#ba79a8;}.b-tip h6{color:#8b4a7b;}.b-tip p{color:#60465f;}
+.kgrid{grid-template-columns:repeat(auto-fill,minmax(148px,1fr));gap:11px;}
+.kbtn{border-color:#edd1df;color:#7c3155;background:#fff;border-radius:13px;font-size:.93rem;line-height:1.35;padding:12px 6px;}
+.kbtn.hot{border-color:#dc8bb1;}
+.kbtn.on{border-color:#bd437d;background:#bd437d;color:#fff;box-shadow:0 5px 16px rgba(167,53,104,.14);}
+.kbtn.on:hover{background:#a8326c;}
+table{font-size:.93rem;border-collapse:separate;border-spacing:0;}
+th,td{border-right:1px solid #f0dbe5;border-bottom:1px solid #f0dbe5;border-top:0;border-left:0;padding:12px 13px;}
+tr th:first-child,tr td:first-child{border-left:1px solid #f0dbe5;}
+table tr:first-child th{border-top:1px solid #f0dbe5;}
+tr:first-child th:first-child{border-top-left-radius:9px;}
+tr:first-child th:last-child{border-top-right-radius:9px;}
+th{background:#faeaf1;color:#74334e;}
+td{background:#fff;color:#53384a;}
+tr:nth-child(even) td{background:#fffafd;}
+td b{color:#993761;}
+.tl::before{background:#eed3df;}
+.tl-item::before{border-color:#be5488;background:#fff7fb;}
+.tl-item.hot::before{border-color:#b62b67;background:#ffdcea;}
+.tl-y{color:#bb3c75;font-size:.88rem;}
+.tl-t{color:#773354;font-size:1rem;}
+.tl-d{color:#765568;font-size:.91rem;}
+.search{background:#fff;color:#643b50;border-color:#e6bfce;border-radius:13px;}
+.search:focus,.blank:focus{border-color:#bd4a81;box-shadow:0 0 0 3px rgba(198,73,130,.12);}
+.search::placeholder{color:#aa8799;}
+.term{border-color:#efd8e3;border-left:4px solid #be5186;border-radius:12px;box-shadow:0 3px 13px rgba(139,44,86,.045);}
+.term dt{color:#8d335d;font-size:1.02rem;}.term dd{color:#5c4050;font-size:.92rem;}.term .who{color:#aa3972;}
+.qbar{border-color:#edd0de;background:#fff7fa;border-radius:14px;}
+.score{color:#713050;}.score span{color:#b43873;}
+.q{border-color:#ecd2df;border-radius:15px;background:#fff;box-shadow:0 3px 14px rgba(140,41,89,.035);}
+.q.ok{background:#f4fbf7;border-color:#85b9a0;}
+.q.no{background:#fff5f8;border-color:#e1a3b9;}
+.q-no{background:#b84479;border-radius:9px;}
+.q-txt{color:#65324d;font-size:1.02rem;}
+.q-type{color:#8c3467;background:#fae4ef;}
+.opt{border-color:#f0dbe4;color:#603e52;border-radius:11px;font-size:.97rem;}
+.opt:hover{background:#fff7fb;border-color:#deb0c8;}
+.opt.sel{border-color:#be5188;background:#fff0f7;color:#793455;}
+.opt.right{border-color:#2f8666;background:#f0fcf5;color:#205c47;}
+.opt.wrong{border-color:#c34871;background:#fff0f4;color:#8d3155;}
+.opt.sel i{border-color:#bd4b83;background:#bd4b83;}.opt.right i{border-color:#2f8666;background:#2f8666;}
+.opt.wrong i{border-color:#bc3a67;background:#bc3a67;}
+.blank{border-color:#e4bfce;background:#fff;color:#60344c;}
+.sol{background:#fff5f9;border-left-color:#b34a7c;color:#5d384c;}
+.sol b{color:#8e2e5b;}
+.result{
+ background:linear-gradient(130deg,#9a3668,#c9578c 65%,#e58bb1);
+ box-shadow:0 6px 20px rgba(155,48,99,.12);
+}
+.result .msg{color:#fff3f8;}
+.foot{border-top-color:#f1dce7;color:#97738a;}.foot b{color:#8b4a69;}
+a{color:#a72e67;}a:hover{color:#7f2252;}
+:focus-visible{outline:3px solid #e079a3;outline-offset:3px;}
+@media (max-width:1100px){.app{grid-template-columns:250px 1fr;}}
+@media (max-width:760px){
+ body{background:#fff7fb;}
+ .app{border-radius:0;box-shadow:none;border:0;}
+ .sidebar{padding:17px 14px 12px;}
+ .sidebar::before{width:75px;height:75px;}
+ .sidebar::after{width:30px;height:30px;right:31px;top:27px;}
+ .brand{font-size:1.15rem;}
+ .brand::before{width:27px;height:4px;margin-bottom:10px;}
+ .brand-sub{font-size:.78rem;margin:5px 0 13px;}
+ .nav{gap:7px;}
+ .nav li{padding:10px 13px;font-size:.9rem;}
+ .main{padding:21px 15px 32px;}
+ .head{padding-left:14px;margin-bottom:18px;}
+ .head h2{font-size:1.48rem;}.head p{font-size:.9rem;}
+ .card{padding:17px 16px;}.card p,.card li{font-size:.94rem;}
+ .kgrid{grid-template-columns:repeat(2,minmax(0,1fr));}
+ .chip{padding:10px 12px;font-size:.87rem;}
+ .q{padding:17px 14px;}.q-txt{font-size:1rem;}
+ .opt{padding:13px 11px;}
+}
+@media print{
+ body,.main{background:#fff!important;color:#000;}
+ .app{border:0;border-radius:0;box-shadow:none;}
+ .card,.q,.term{box-shadow:none;}
+ .head h2,.card h3{color:#502437;}
+ .sidebar{display:none!important;}
+ .page{break-before:page;}
+}
+</style>
+</head>
+<body>
+
+<div class="app">
+  <!-- 사이드바 -->
+  <aside class="sidebar">
+    <div class="brand">통합사회Ⅱ 완전정복</div>
+    <div class="brand-sub">미래엔(정창우 외) · 3. 시장경제와 지속 가능 발전<br>자본주의 · 합리적선택 · 자산관리 · 퀴즈 마스터</div>
+    <ul class="nav">
+      <li class="on" onclick="go(event,'p-home')">한눈에 보기</li>
+      <li onclick="go(event,'p-concept')">핵심 사상가·개념</li>
+      <li onclick="go(event,'p-theme')">핵심 테마 요약</li>
+      <li onclick="go(event,'p-term')">시험 용어 사전</li>
+      <li onclick="go(event,'p-quiz')">소단원별 연습문제</li>
+      <li onclick="go(event,'p-exam')">실전 모의고사</li>
+    </ul>
+    <div class="credit"><b>미래엔 통합사회Ⅱ 연구회</b>대표저자 : 정창우 (서울대 교수 외)</div>
+  </aside>
+
+  <!-- 본문 -->
+  <main class="main">
+
+    <!-- ===== 한눈에 보기 ===== -->
+    <section id="p-home" class="page on">
+      <div class="head">
+        <h2>3. 시장경제와 지속 가능 발전 한눈에 보기</h2>
+        <p>자본주의 발전사부터 합리적 선택, 시장 실패와 윤리적 소비, 생애 주기 자산 관리까지 완벽 정리합니다. <span class="tag t-hot">최빈출</span>은 내신·수능 1순위 개념입니다.</p>
+      </div>
+
+      <div class="card">
+        <h3>1등급 완성을 위한 핵심 학습 주제 10선</h3>
+        <table>
+          <tr><th style="width:52px">번호</th><th style="width:220px">핵심 주제</th><th>반드시 기억할 출제 포인트 한 줄</th></tr>
+          <tr><td>1</td><td><b>자본주의 역사 5단계</b></td><td><b>상업자본주의</b>(중상주의) → <b>산업자본주의</b>(애덤 스미스) → <b>독점자본주의</b>(제국주의) → <b>수정자본주의</b>(케인스) → <b>신자유주의</b>(하이에크)</td></tr>
+          <tr><td>2</td><td><b>시장 vs 정부의 대결</b></td><td><b>시장 실패</b>(대공황 → 케인스의 큰 정부·유효수요 창출) ↔ <b>정부 실패</b>(스태그플레이션 → 하이에크의 작은 정부·규제 완화)</td></tr>
+          <tr><td>3</td><td><b>합리적 선택의 원리</b></td><td><b>순편익 = 편익 - 기회비용 &gt; 0</b> / 기회비용 = <b>명시적 비용 + 암묵적 비용</b> / <b>매몰 비용은 과감히 배제</b></td></tr>
+          <tr><td>4</td><td><b>시장 실패 4대 요인</b></td><td>① <b>공공재 부족</b>(무임승차) ② <b>외부 효과</b>(비용·편익의 왜곡) ③ <b>독과점 시장</b> ④ <b>정보의 비대칭성</b>(도덕적 해이·역선택)</td></tr>
+          <tr><td>5</td><td><b>외부 효과의 양상</b></td><td><b>외부 경제</b>(사회적 최적 수준보다 <b>과소 생산</b> → 보조금 지급) ↔ <b>외부 불경제</b>(사회적 최적 수준보다 <b>과다 생산</b> → 세금/벌금 부과)</td></tr>
+          <tr><td>6</td><td><b>슘페터의 기업가 정신</b></td><td>새로운 시장과 기술을 개척하는 <b>'창조적 파괴(Creative Destruction)'</b> 및 혁신(Innovation), <b>ESG 경영</b></td></tr>
+          <tr><td>7</td><td><b>윤리적 소비와 경제 주체</b></td><td>소비자의 <b>착한 소비·공정 무역·환경친화적 소비</b>, 노동자의 <b>근로 3권</b>, 정부의 <b>공정한 시장 환경 조성</b></td></tr>
+          <tr><td>8</td><td><b>자산 관리의 3대 원칙</b></td><td><b>안전성</b>(원금 보존), <b>수익성</b>(이자·시세차익), <b>유동성/환금성</b>(현금 전환 용이성)의 상충 관계 및 <b>분산 투자</b></td></tr>
+          <tr><td>9</td><td><b>주요 금융 자산 비교</b></td><td><b>예금</b>(안전성·유동성 최고, 예금자보호 5천만 원) ↔ <b>주식</b>(수익성 최고, 원금 손실 위험) ↔ <b>채권</b>(이자+차익, 정부/기업 발행)</td></tr>
+          <tr><td>10</td><td><b>생애 주기와 재무 설계</b></td><td>유년기(지출) → 청년기(소득 창출) → 중장년기(소득 최고점, 저축) → 노년기(소득 절벽)의 <b>3층 연금(국민·퇴직·개인)</b> 설계</td></tr>
+        </table>
+      </div>
+
+      <div class="card">
+        <h3>반드시 외우는 자본주의 경제사 &amp; 금융 제도 핵심 연표</h3>
+        <div class="tl" id="timeline"></div>
+      </div>
+
+      <div class="card" id="verification-card">
+        <h3>개념 및 경제학 쟁점 검증 안내 (미래엔 정창우 교과서 기준)</h3>
+        <p>이 학습 자료는 2022 개정 교육과정 고등학교 통합사회2 교과서(미래엔, 대표저자 정창우 외) 및 한국은행·금융감독원의 표준 교육 지침을 바탕으로 시험에 자주 출제되는 핵심 오답 지문들을 엄밀히 검증하였습니다.</p>
+        <ul style="margin-top:10px">
+          <li><b>기회비용과 매몰 비용:</b> 기회비용을 계산할 때 <b>이미 지출되어 어떤 선택을 하더라도 다시 회수할 수 없는 '매몰 비용(Sunk Cost)'은 절대 포함하지 않으며</b>, 합리적 선택 시 완전히 무시해야 합니다.</li>
+          <li><b>외부 불경제(부정적 외부 효과)의 생산량 왜곡:</b> 환경오염처럼 제3자에게 피해를 주면서도 대가를 치르지 않는 외부 불경제는 <b>사적 비용이 사회적 비용보다 적게 들어 시장에 맡기면 사회적 최적 수준보다 '과다 생산'</b>됩니다.</li>
+          <li><b>공공재의 비배제성과 비경합성:</b> 공공재는 대가를 치르지 않아도 소비에서 배제할 수 없는 <b>'비배제성'</b>과, 한 사람의 소비가 다른 사람의 소비를 줄이지 않는 <b>'비경합성'</b> 때문에 대가를 치르지 않으려는 <b>'무임승차자 문제'</b>가 발생하여 시장에서 '과소 생산'됩니다.</li>
+          <li><b>주식과 채권의 본질적 차이:</b> <b>주식</b>은 기업에 대한 지분을 나타내는 지분 증권(배당금과 매매 차익 목적, 만기 없음, 원금 손실 가능)인 반면, <b>채권</b>은 돈을 빌려주고 받는 채무 증권(원금 상환과 확정 이자 목적, 만기 있음, 주식보다 안전)입니다.</li>
+          <li><b>예금자보호제도의 한도:</b> 예금자보호법에 따른 보호 금액은 금융회사별로 <b>1인당 원금과 소정의 이자를 합하여 최고 5,000만 원까지</b>입니다. (주식, 채권, 펀드 등 실적 배당형 투자 상품은 보호 대상이 아님)</li>
+        </ul>
+        <p style="margin-top:12px;font-size:.82rem"><b>확인 자료:</b>
+        <a href="https://www.bok.or.kr" target="_blank" rel="noopener">한국은행 경제교육</a> ·
+        <a href="https://www.fss.or.kr" target="_blank" rel="noopener">금융감독원 금융교육센터</a> ·
+        <a href="https://www.kdic.or.kr" target="_blank" rel="noopener">예금보험공사 예금자보호제도 안내</a> ·
+        <a href="https://www.ftc.go.kr" target="_blank" rel="noopener">공정거래위원회 독점규제 및 공정거래법</a></p>
+      </div>
+
+      <div class="card">
+        <h3>시험 직전 1분 암기법</h3>
+        <div class="box b-tip">
+          <h6>자본주의 5단계 흐름 암기 공식</h6>
+          <p><b>상·산·독·수·신</b><br>
+          ① <b>상</b>업(중상주의) → ② <b>산</b>업(애덤 스미스, 자유방임) → ③ <b>독</b>점(제국주의, 대공황) → ④ <b>수</b>정(케인스, 큰 정부) → ⑤ <b>신</b>자유주의(하이에크, 작은 정부)</p>
+        </div>
+        <div class="box b-tip">
+          <h6>합리적 선택 계산 공식</h6>
+          <p>• <b>기회비용 = 명시적 비용(실제 쓴 돈) + 암묵적 비용(포기한 다른 가치 중 최대치)</b><br>
+          • <b>순편익 = 편익(얻는 만족) - 기회비용 &gt; 0</b> (순편익이 가장 큰 대안 선택, 매몰 비용은 제외!)</p>
+        </div>
+        <div class="box b-tip">
+          <h6>외부 효과 1초 판별법</h6>
+          <p>• <b>외부 경제 (착한 일, 독감 예방접종 등)</b>: 시장 방치 시 <b>과소 생산</b> → 국가가 <b>보조금·혜택</b> 지급<br>
+          • <b>외부 불경제 (나쁜 일, 매연·폐수 배출 등)</b>: 시장 방치 시 <b>과다 생산</b> → 국가가 <b>세금(피구세)·과징금</b> 부과</p>
+        </div>
+        <div class="box b-tip">
+          <h6>금융 자산 3대 원칙 비교</h6>
+          <p>• <b>수익성</b>: 주식 &gt; 펀드 &gt; 채권 &gt; 예금·적금<br>
+          • <b>안전성</b>: 예금·적금 &gt; 국채 &gt; 회사채 &gt; 주식 (하이 리스크 하이 리턴)<br>
+          • "계란을 한 바구니에 담지 마라" → <b>포트폴리오 분산 투자</b></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 핵심 사상가 & 개념 정리 ===== -->
+    <section id="p-concept" class="page">
+      <div class="head">
+        <h2>핵심 경제 사상가 &amp; 시장 제도 20선 상세 정리</h2>
+        <p>사상가나 경제 제도를 클릭하면 핵심 성격 · 주요 이론 내용 · 등장 배경 · 쉬운 예시 · <b>시험 출제 포인트</b>가 나타납니다.</p>
+      </div>
+      <div class="chips" id="concept-era"></div>
+      <div class="kgrid" id="concept-grid"></div>
+      <div id="concept-detail"></div>
+    </section>
+
+    <!-- ===== 핵심 테마 요약 ===== -->
+    <section id="p-theme" class="page">
+      <div class="head">
+        <h2>주제별 핵심 요약</h2>
+        <p>자본주의의 변천사부터 합리적 선택, 시장 실패와 외부 효과, ESG 경영, 자산 관리까지 6대 테마로 완벽 정리했습니다.</p>
+      </div>
+      <div class="chips" id="theme-tabs"></div>
+      <div id="theme-body"></div>
+    </section>
+
+    <!-- ===== 시험 용어 사전 ===== -->
+    <section id="p-term" class="page">
+      <div class="head">
+        <h2>시험에 나오는 경제·금융 용어 사전</h2>
+        <p>내신과 수능에 출제되는 필수 경제·금융 용어를 검색해 보세요. 단어 일부만 입력해도 실시간 검색됩니다.</p>
+      </div>
+      <input class="search" id="term-search" placeholder=" 예: 기회비용, 매몰비용, 외부불경제, 공공재, 신자유주의, 펀드, 예금자보호 …" oninput="renderTerms()">
+      <div class="chips" id="term-tabs"></div>
+      <div class="terms" id="term-list"></div>
+    </section>
+
+    <!-- ===== 소단원별 연습문제 ===== -->
+    <section id="p-quiz" class="page">
+      <div class="head">
+        <h2>소단원별 연습문제</h2>
+        <p>단원을 고르고 객관식, O/X, 빈칸 문제를 푼 뒤 <b>채점하기</b>를 누르면 정답과 깊이 있는 해설이 나타납니다.</p>
+      </div>
+      <div class="chips" id="quiz-tabs"></div>
+      <div class="qbar">
+        <div class="score" id="quiz-score">선택한 단원: <span id="quiz-unit-name">자본주의의 전개와 시장과 정부</span></div>
+        <button class="btn green" onclick="gradeQuiz()">채점하기</button>
+        <button class="btn ghost" onclick="renderQuiz()">다시 풀기</button>
+        <button class="btn ghost" onclick="showAllSol()">해설 전체 보기</button>
+      </div>
+      <div class="result" id="quiz-result"></div>
+      <div id="quiz-body"></div>
+    </section>
+
+    <!-- ===== 실전 모의고사 ===== -->
+    <section id="p-exam" class="page">
+      <div class="head">
+        <h2>실전 모의고사 (랜덤 20문항)</h2>
+        <p>3단원 전 범위 문제 은행에서 무작위로 20문항을 추출합니다. 실제 시험처럼 한 번에 풀고 채점해 보세요.</p>
+      </div>
+      <div class="qbar">
+        <button class="btn" onclick="newExam()">새 문제 뽑기</button>
+        <button class="btn green" onclick="gradeExam()">제출 &amp; 채점</button>
+        <div class="score" id="exam-score">20문항 · 100점 만점</div>
+      </div>
+      <div class="result" id="exam-result"></div>
+      <div id="exam-body"></div>
+    </section>
+
+    <div class="foot">
+      <b>미래엔 통합사회Ⅱ 연구회</b> &nbsp;|&nbsp; 대표저자 : 서울대 정창우 교수 외 10인<br>
+      고등학교 통합사회2 · 3단원 [시장경제와 지속 가능 발전] 내신 및 수능 1등급 대비 통합 학습 앱
+    </div>
+  </main>
+</div>
+
+<script>
+/* ====================== 공통 내비게이션 ====================== */
+function go(e,id){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('on'));
+  document.querySelectorAll('.nav li').forEach(n=>n.classList.remove('on'));
+  document.getElementById(id).classList.add('on');
+  e.currentTarget.classList.add('on');
+  document.querySelector('.main').scrollTop=0;
+}
+
+/* ====================== 연표 데이터 ====================== */
+const timeline=[
+ {y:"1776",t:"애덤 스미스 『국부론』 출간",d:"'보이지 않는 손(시장 가격 기구)'을 통한 자원의 효율적 배분과 자유방임주의 주창, 산업 자본주의의 사상적 토대",hot:1},
+ {y:"1890",t:"미국 셔먼 반독점법(Sherman Act) 제정",d:"독점 자본주의의 횡포를 막고 시장의 자유로운 경쟁을 보호하기 위한 세계 최초의 반독점 법률",hot:0},
+ {y:"1929",t:"미국 대공황(Great Depression) 발발",d:"10월 24일 뉴욕 증시 폭락을 시작으로 대량 실업과 공장 폐쇄 속출, 자유방임주의 시장 실패의 결정적 사건",hot:1},
+ {y:"1933",t:"미국 루스벨트 뉴딜(New Deal) 정책",d:"테네시강 유역 개발 공사(TVA), 와그너법, 사회보장법 등 국가가 시장에 적극 개입하는 '수정 자본주의' 본격화",hot:1},
+ {y:"1936",t:"케인스 『일반이론』 출간",d:"유효수요 창출 이론을 통해 정부의 재정 지출 확대로 완전고용을 달성해야 한다는 '수정 자본주의' 이론 확립",hot:1},
+ {y:"1944",t:"브레턴우즈 협정 체결",d:"달러화를 기축통화로 삼고 IMF와 세계은행을 설립하여 전후 자유무역과 경제 부흥의 국제 금융 질서 확립",hot:0},
+ {y:"1973",t:"제1차 석유 파동 &amp; 스태그플레이션",d:"경기 침체 속에서 물가가 치솟는 스태그플레이션 발생, 정부의 과도한 개입이 부른 '정부 실패' 대두",hot:1},
+ {y:"1979",t:"영국 대처 총리 집권(대처리즘)",d:"공기업 민영화, 노동조합 규제, 복지 축소 등 신자유주의적 구조조정 개시",hot:0},
+ {y:"1980",t:"미국 레이건 대통령 집권(레이거노믹스)",d:"하이에크와 프리드먼의 사상을 바탕으로 감세, 규제 완화, 작은 정부를 지향하는 '신자유주의' 확산",hot:1},
+ {y:"1995",t:"세계무역기구(WTO) 출범",d:"관세 장벽 철폐와 서비스·지식재산권까지 포함하는 무한 경쟁의 다자간 자유무역 시대 개막",hot:0},
+ {y:"1995",t:"대한민국 예금자보호법 제정",d:"금융기관 파산 시 예금자의 자산을 보호하기 위해 예금보험공사 설립 및 5,000만 원 한도 보장제 도입",hot:1},
+ {y:"1997",t:"대한민국 외환위기(IMF 구제금융)",d:"외환보유액 고갈로 국가 부도 위기에 직면하여 고강도 금융 구조조정과 노동 유연화(신자유주의 개혁) 수용",hot:1},
+ {y:"2008",t:"미국발 글로벌 금융위기",d:"서브프라임 모기지 사태와 리먼 브러더스 파산으로 촉발된 전 세계적 금융 위기, 금융 자본주의 규제 필요성 재부각",hot:1},
+ {y:"2015",t:"UN 지속가능발전목표(SDGs) 채택",d:"경제 성장과 함께 환경 보전, 사회적 불평등 해소를 전 지구적으로 실천하기 위한 17개 공동 목표 결의",hot:1},
+ {y:"현대",t:"ESG 경영 및 디지털 핀테크 자산 혁신",d:"환경(E)·사회(S)·지배구조(G)를 평가하는 책임 투자와 모바일 금융, 가상자산 등 금융 생활 환경의 급변",hot:1}
+];
+document.getElementById('timeline').innerHTML=timeline.map(t=>
+ `<div class="tl-item ${t.hot?'hot':''}"><div class="tl-y">${t.y}</div>
+  <div class="tl-t">${t.t}${t.hot?' <span class="tag t-hot">최빈출</span>':''}</div>
+  <div class="tl-d">${t.d}</div></div>`).join('');
+
+/* ====================== 20대 핵심 사상가 & 개념 데이터 ====================== */
+const concepts={
+ adam_smith:{n:"애덤 스미스 (Adam Smith)",era:1,hot:1,s:"'보이지 않는 손'과 자유방임주의를 주창한 경제학의 아버지",
+  a:["『국부론』(1776) 저술: 개인의 이기심(사익 추구)이 사회 전체의 부(공익)를 증진시킴",
+     "<b>보이지 않는 손(Invisible Hand)</b>: 가격 기구를 통해 수요와 공급이 스스로 일치하여 자원이 효율적으로 배분됨",
+     "<b>자유방임주의</b>: 정부는 시장에 개입하지 말고 국방, 치안, 공공사업에만 머무는 '야경국가'가 되어야 함",
+     "분업(특화)의 효율성 강조: 핀 공장의 분업 사례를 통해 생산성 혁신 설명"],
+  w:"중상주의 시대 정부의 과도한 무역 독점과 특혜, 가격 통제가 오히려 국부를 갉아먹는다고 보아 자유로운 경쟁을 역설했습니다.",
+  e:" 우리가 매일 맛있는 빵을 먹을 수 있는 것은 빵집 주인의 자비심 때문이 아니라, 자신의 이익을 챙기려는 사리심 때문입니다.",
+  t:"애덤 스미스는 <b>'산업 자본주의'</b>와 <b>'자유방임주의'</b>의 대표 사상가로 시험에 매년 출제됩니다."},
+ keynes:{n:"존 메이너드 케인스 (J. M. Keynes)",era:1,hot:1,s:"대공황을 극복하기 위해 유효수요와 정부 개입을 강조한 수정 자본주의의 기수",
+  a:["『고용, 이자 및 화폐의 일반이론』(1936) 저술",
+     "<b>유효수요(Effective Demand) 이론</b>: 시장에 물건이 남아도는 것은 살 돈(구매력)을 갖춘 수요가 부족하기 때문",
+     "<b>수정 자본주의</b>: 시장 실패(대공황)를 치유하기 위해 정부가 재정 지출과 공공사업을 통해 일자리와 수요를 창출해야 함",
+     "<b>큰 정부(Big Government)</b> 및 복지 국가의 이론적 토대 마련"],
+  w:"1929년 대공황으로 공장이 문을 닫고 실업자가 넘쳐나는데도 시장의 '보이지 않는 손'이 작동하지 않자, 정부가 직접 나서야 한다고 보았습니다.",
+  e:" 불황일 때 정부가 도로를 깔고 댐을 지어 노동자들에게 일당을 주면, 그 돈으로 물건을 사서 공장이 다시 돌아간다는 원리입니다.",
+  t:"<b>대공황 → 시장 실패 → 케인스 → 수정 자본주의(큰 정부)</b> 인과관계 연결이 100% 빈출!"},
+ hayek:{n:"프리드리히 하이에크 (F. Hayek)",era:1,hot:1,s:"정부 실패를 비판하고 시장의 자율성을 다시 강조한 신자유주의의 거두",
+  a:["『노예의 길』(1944) 저술, 1974년 노벨 경제학상 수상",
+     "<b>정부 실패(Government Failure)</b> 비판: 정부 관료는 시장의 모든 정보를 알 수 없으며, 과도한 복지와 규제는 비효율과 나태를 부름",
+     "<b>신자유주의(Neo-liberalism)</b>: 공기업 민영화, 노동 시장 유연화, 세금 감면, 규제 완화를 통한 시장 기능 복원",
+     "<b>작은 정부(Small Government)</b> 옹호: 1980년대 대처리즘과 레이거노믹스의 사상적 나침반"],
+  w:"1970년대 오일쇼크로 불황과 물가 상승이 동시에 오는 '스태그플레이션'이 발생하자, 케인스식 정부 개입 정책이 한계에 부딪혔기 때문입니다.",
+  e:" 정부가 방만하게 운영하는 공기업을 민간에 매각(민영화)하고 기업에 대한 규제를 풀어 경쟁력을 높여야 한다는 주장입니다.",
+  t:"<b>석유 파동/스태그플레이션 → 정부 실패 → 하이에크 → 신자유주의(작은 정부, 민영화)</b> 연결 필수!"},
+ schumpeter:{n:"조지프 슘페터 (J. A. Schumpeter)",era:1,hot:1,s:"'창조적 파괴'와 기술 혁신을 주도하는 기업가 정신을 강조한 학자",
+  a:["<b>창조적 파괴(Creative Destruction)</b>: 낡은 방식을 과감히 버리고 새로운 기술과 제도로 시장 질서를 재편하는 과정",
+     "<b>혁신(Innovation)의 5가지 형태</b>: 신제품 개발, 신기술 도입, 신시장 개척, 새로운 원자재 공급원 확보, 신조직 편성",
+     "<b>기업가 정신(Entrepreneurship)</b>: 미래의 불확실성과 실패 위험을 무릅쓰고 과감히 도전하는 열정과 모험심",
+     "자본주의 발전의 진정한 원동력은 단순한 자본 축적이 아니라 '혁신'에 있다고 봄"],
+  w:"기존의 가격 경쟁에 머무는 정체된 경제학에서 벗어나, 자본주의가 어떻게 스스로를 파괴하며 끊임없이 성장하는지 밝혀냈습니다.",
+  e:" 스마트폰의 등장이 기존의 피처폰, MP3 플레이어, 디지털카메라 시장을 파괴하고 새로운 거대 생태계를 창조한 현상입니다.",
+  t:"<b>기업가 정신 = 위험 감수 + 혁신 + 창조적 파괴</b> 키워드를 묻는 문제가 단골 출제됩니다."},
+ invisible_hand:{n:"보이지 않는 손 (Invisible Hand)",era:2,s:"자율적인 시장 가격 기구를 통해 사회적 조화를 이루는 메커니즘",
+  a:["시장 참여자들이 오직 자신의 사익(이윤과 만족)만을 위해 행동하더라도 자원이 가장 효율적으로 배분됨",
+     "<b>가격(Price)의 신호등 역할</b>: 상품이 부족하면 가격이 올라 생산을 늘리게 하고, 남아돌면 가격이 내려 생산을 줄이게 함",
+     "자유 경쟁 시장에서 정부의 인위적 통제 없이도 수요와 공급의 균형이 달성됨"],
+  w:"모든 경제 활동을 국가가 일일이 통제하고 계획하려던 중상주의적 통제 경제에 반대하여 제창되었습니다.",
+  e:" 마스크 품귀 현상이 일어났을 때 가격이 오르자 많은 공장들이 마스크 생산에 뛰어들어 빠르게 공급 부족이 해소된 사례입니다.",
+  t:"시장 실패가 발생하면 보이지 않는 손이 제대로 작동하지 못한다는 점과 연결됩니다."},
+ public_goods:{n:"공공재 (Public Goods)",era:2,hot:1,s:"비배제성과 비경합성을 지녀 시장에서 과소 생산되는 재화",
+  a:["<b>비배제성(Non-excludability)</b>: 대가를 치르지 않은 사람도 소비에서 배제할 수 없음 → <b>무임승차자(Free-rider) 문제</b> 발생",
+     "<b>비경합성(Non-rivalry)</b>: 한 사람이 소비한다고 해서 다른 사람의 소비 가능 양이 줄어들지 않음",
+     "시장 실패 원인: 민간 기업이 이윤을 남길 수 없으므로 시장에 맡기면 사회적 필요량보다 <b>과소 생산</b>됨",
+     "해결책: <b>정부가 세금을 걷어 직접 생산·공급</b>함 (국방, 치안, 등대, 공공 도로 등)"],
+  w:"모두에게 꼭 필요한 재화임에도 불구하고 돈을 낼 사람을 골라낼 수 없어 시장에서 공급되지 못하는 한계를 극복하기 위해 정부가 맡습니다.",
+  e:" 어두운 바다의 등대는 불빛을 본 선박에게만 돈을 걷을 수 없으므로 민간 기업이 만들지 않고 정부가 세금으로 짓습니다.",
+  t:"<b>'비배제성 = 무임승차', '비경합성 = 공동 소비', '시장에서 과소 생산 → 정부가 공급'</b> 3단 공식 암기!"},
+ pos_externality:{n:"외부 경제 (긍정적 외부 효과)",era:2,hot:1,s:"타인에게 혜택을 주면서도 그 대가를 받지 못하는 현상",
+  a:["원리: 제3자에게 의도치 않은 이익(편익)을 주었지만 시장을 통해 정당한 보상을 받지 못함",
+     "관계: <b>사적 편익 &lt; 사회적 편익</b> (개인이 얻는 만족보다 사회 전체가 얻는 혜택이 더 큼)",
+     "문제점: 생산자 입장에서 충분한 보상이 없으므로 시장에 맡기면 사회적 최적 수준보다 <b>과소 생산·과소 소비</b>됨",
+     "정부의 개입: 보조금 지급, 세금 감면, 특허권 보호, 기술 개발 지원을 통해 생산과 소비를 촉진함"],
+  w:"사회적으로 매우 유익한 활동이 시장 메커니즘만으로는 충분히 장려되지 못하는 시장 실패를 교정하기 위해 정부가 지원합니다.",
+  e:" 과수원 옆에 양봉업자가 벌을 치면 과일나무 수분이 잘 되어 과수원 주인이 큰 혜택을 보지만, 양봉업자는 돈을 받지 못합니다.",
+  t:"<b>사적 편익 &lt; 사회적 편익 → 시장에서 과소 생산 → 정부가 보조금 지급</b> 공식 암기!"},
+ neg_externality:{n:"외부 불경제 (부정적 외부 효과)",era:2,hot:1,s:"타인에게 피해를 주면서도 그에 대한 대가를 치르지 않는 현상",
+  a:["원리: 제3자에게 의도치 않은 손해(비용)를 입혔음에도 불구하고 아무런 배상이나 비용을 치르지 않음",
+     "관계: <b>사적 비용 &lt; 사회적 비용</b> (사회적 비용 = 사적 비용 + 외부 비용)",
+     "문제점: 공장 입장에서 오염 정화 비용을 치르지 않으므로 물건값을 싸게 책정하여 시장에서 사회적 최적 수준보다 <b>과다 생산·과다 소비</b>됨",
+     "정부의 개입: <b>세금 부과(피구세), 환경개선부담금, 공해 배출 규제, 오염배출권 거래제</b>"],
+  w:"기업이 환경오염 비용을 사회 전체에 떠넘기고 자신만 이윤을 챙기는 불합리한 자원 배분을 막기 위해 오염 유발자에게 비용을 물립니다.",
+  e:" 화학 공장이 정화 장치 없이 폐수를 강물에 무단 방류하여 하류 양식장의 물고기가 떼죽음을 당하는 사례입니다.",
+  t:"<b>사적 비용 &lt; 사회적 비용 → 시장에서 과다 생산 → 정부가 세금/과징금 부과</b> 공식은 100% 출제!"},
+ monopoly:{n:"독과점 시장 (불완전 경쟁)",era:2,s:"소수의 거대 기업이 시장을 지배하여 가격과 공급량을 좌우하는 현상",
+  a:["<b>독점(Monopoly)</b>: 한 기업이 시장을 장악 / <b>과점(Oligopoly)</b>: 소수의 거대 기업이 시장을 지배",
+     "폐해: 기업 간 <b>담합(카르텔)</b>으로 공급량을 줄이고 가격을 인위적으로 올려 소비자 잉여를 침탈함",
+     "기술 개발 태만, 자원 배분의 비효율성 초래",
+     "정부의 대책: <b>공정거래위원회</b> 설치, <b>독점규제 및 공정거래에 관한 법률</b> 적용, 부당 공동행위 과징금 부과"],
+  w:"자유 경쟁을 방치하면 대기업이 독점적 지위를 남용하여 중소기업을 죽이고 소비자에게 바가지를 씌우기 때문에 시장의 공정성을 감시합니다.",
+  e:" 통신 3사가 짜고 요금을 내리지 않거나, 주유소들이 기름값을 동시에 담합하여 올리는 불공정 행위입니다.",
+  t:"정부의 대책으로 <b>'공정거래위원회의 담합 규제'</b>가 출제 포인트입니다."},
+ asym_info:{n:"정보의 비대칭성",era:2,s:"거래 당사자 간에 상품에 대한 정보 수준이 달라 발생하는 시장 실패",
+  a:["<b>역선택(Adverse Selection)</b>: 거래 전에 정보가 부족한 쪽이 불리한 결정을 내려 질 나쁜 상품만 시장에 남는 현상 (예: 중고차 시장의 '레몬 마켓')",
+     "<b>도덕적 해이(Moral Hazard)</b>: 거래(계약) 후에 자신의 책임을 다하지 않고 부주의하거나 불성실하게 행동하는 현상 (예: 화재보험 가입 후 소화기 방치)",
+     "해결책: 품질 보증서 발급, 원산지 표시제, 의약품 성분 표시제, 소비자 정보 공시"],
+  w:"판매자는 제품의 결함을 잘 알지만 소비자는 겉모습만 보고 사야 하는 불공정한 정보 격차를 법으로 해소하기 위해 정보 공개를 의무화했습니다.",
+  e:" 중고차 판매상이 침수차라는 사실을 숨기고 소비자에게 무사고 차량 가격으로 속여 파는 경우가 대표적인 정보 비대칭성입니다.",
+  t:"<b>거래 전 = 역선택</b>, <b>거래 후 = 도덕적 해이</b> 시점 구분이 빈출 문제입니다."},
+ csr_esg:{n:"ESG 경영 &amp; 기업의 사회적 책임",era:3,hot:1,s:"단순한 이윤 추구를 넘어 환경, 사회, 투명 경영을 중시하는 패러다임",
+  a:["<b>기업의 사회적 책임(CSR)</b>: 고용 창출, 윤리 준수, 자선 활동, 법적 의무 이행",
+     "<b>ESG 경영</b>: 친환경(<b>E</b>nvironment), 사회적 책임(<b>S</b>ocial), 투명한 지배구조(<b>G</b>overnance)를 기업 평가의 핵심 잣대로 삼음",
+     "배경: 기후 위기, 노동 인권 침해, 일감 몰아주기 등 기업의 비윤리적 행태에 대한 소비자 및 투자자의 심판",
+     "착한 기업이 장기적으로 더 높은 투자와 지속 가능한 생존을 달성함"],
+  w:"과거 주주만을 위한 단기적 이윤 극대화가 환경 파괴와 사회적 갈등을 낳자, 모든 이해관계자(소비자, 노동자, 지구)와 상생해야 한다는 요구가 커졌습니다.",
+  e:" 재생에너지를 100% 사용하는 RE100을 선언하고 협력업체와의 공정 거래를 준수하는 기업에 글로벌 투자 자금이 몰리는 현상입니다.",
+  t:"'기업의 목적은 오직 주주의 이윤 극대화에만 국한된다'는 전통적 관점과의 대비가 시험에 나옵니다."},
+ ethical_cons:{n:"윤리적 소비 (Ethical Consumption)",era:3,hot:1,s:"가격과 품질뿐만 아니라 사회적·환경적 가치까지 고려하는 소비",
+  a:["개념: 소비자가 물건을 구매할 때 자신의 가치관(환경, 노동권, 동물 복지, 인권)을 투영하여 선택하는 행위",
+     "유형: <b>녹색 소비</b>(친환경·탄소중립 제품), <b>공정 무역</b>(제3세계 생산자에게 정당한 가격 지불), <b>동물 복지 제품</b> 구매, <b>사회적 기업 제품</b> 애용",
+     "<b>불매 운동(Boycott)</b>: 비윤리적 갑질 기업이나 환경오염 유발 기업의 상품을 거부하는 적극적 시민 행동",
+     "소비자의 선택이 기업의 생산 방식을 변화시키는 시장의 강력한 통제력으로 작용"],
+  w:"소비자가 쓰는 돈 한 푼이 곧 더 나은 세상을 만드는 '투표용지(Dollar Voting)'라는 인식이 확산되었습니다.",
+  e:" 커피를 살 때 아동 노동을 착취하지 않고 적정 대가를 지불한 '공정 무역(Fair Trade) 인증 마크'가 붙은 원두를 고르는 것입니다.",
+  t:"합리적 소비(가격 대비 효용의 극대화)를 넘어 <b>사회적 연대와 생태적 가치를 추구하는 지속 가능성</b>이 핵심 포인트입니다."},
+ labor_rights:{n:"근로 3권 (노동 3권)",era:3,s:"노동자가 사용자와 대등하게 협상할 수 있도록 헌법이 보장한 권리",
+  a:["헌법 제33조 제1항: '근로자는 근로조건의 향상을 위하여 자주적인 단결권·단체교섭권 및 단체행동권을 가진다.'",
+     "① <b>단결권</b>: 근로자가 노동조합을 자주적으로 조직하고 가입하여 활동할 권리",
+     "② <b>단체교섭권</b>: 노동조합이 사용자와 임금 및 근로조건에 관해 대등하게 협상하고 단체협약을 체결할 권리",
+     "③ <b>단체행동권</b>: 협상이 결렬되었을 때 파업, 태업 등 쟁의 행위를 할 수 있는 권리"],
+  w:"개별 노동자는 자본을 가진 기업가에 비해 힘이 절대적으로 약하므로, 단결하여 대등한 협상력을 갖추도록 헌법상 기본권으로 보장했습니다.",
+  e:" 임금 삭감에 맞서 노동조합이 회사와 교섭을 벌이고, 합의가 이루어지지 않을 때 합법적인 파업을 벌이는 권리입니다.",
+  t:"<b>단결권, 단체교섭권, 단체행동권</b> 3종 세트의 개념을 정확히 연결해야 합니다."},
+ asset_prin:{n:"자산 관리의 3대 원칙",era:4,hot:1,s:"금융 자산을 운용할 때 반드시 저울질해야 하는 세 가지 핵심 기준",
+  a:["① <b>안전성(Stability)</b>: 투자한 원금이 손실되지 않고 안전하게 보존될 가능성 (예금 &gt; 채권 &gt; 주식)",
+     "② <b>수익성(Profitability)</b>: 투자를 통해 이자, 배당, 시세차익 등 높은 수익을 올릴 가능성 (주식 &gt; 채권 &gt; 예금)",
+     "③ <b>유동성/환금성(Liquidity)</b>: 필요할 때 즉시 손실 없이 현금으로 쉽게 전환할 수 있는 정도 (요구불예금 &gt; 정기예금 &gt; 부동산)",
+     "<b>상충 관계(Trade-off)</b>: 안전성이 높으면 수익성이 낮고, 수익성이 높으면 안전성이 떨어짐 (High Risk, High Return)"],
+  w:"자신의 재무 목표와 위험 감수 능력에 맞추어 균형 잡힌 자산 포트폴리오를 구성하기 위해 정립되었습니다.",
+  e:" 1년 뒤 대학 등록금으로 쓸 돈은 '안전성'을 중시해 예금에 넣고, 10년 뒤를 내다본 여유 자금은 '수익성'을 위해 주식이나 펀드에 분산 투자합니다.",
+  t:"'안전성과 수익성은 비례한다'는 보기는 <b>절대적인 오답</b>입니다! (반비례 상충 관계)"},
+ deposits:{n:"예금 &amp; 적금",era:4,hot:1,s:"최고의 안전성과 유동성을 지닌 가장 기본적인 금융 자산",
+  a:["<b>요구불예금</b>: 입출금이 자유로운 대신 이자율이 매우 낮음 (유동성 극대)",
+     "<b>저축성 예금/적금</b>: 일정 기간 돈을 묶어두고 약정된 이자를 받는 상품 (정기예금: 목돈 예치, 정기적금: 매월 푼돈 적립)",
+     "장점: <b>원금 손실 위험이 거의 없어 안전성이 가장 높음</b>, 현금화가 쉬움",
+     "단점: <b>수익성이 낮음</b>, 물가상승률보다 금리가 낮으면 실질 자산 가치가 하락할 수 있음",
+     "보호: <b>예금자보호법</b>에 따라 금융회사 파산 시 1인당 최고 5,000만 원까지 원리금 보호"],
+  w:"소액의 자금을 안전하게 모으고 유사시 즉시 인출할 수 있는 가계 재무 설계의 기본 주춧돌입니다.",
+  e:" 매달 알바비에서 20만 원씩 1년간 적금 통장에 넣어 만기 때 이자와 함께 목돈 240여만 원을 타는 상품입니다.",
+  t:"예금자보호법 적용 한도가 <b>'금융기관별 1인당 5,000만 원'</b>이라는 수치 암기 필수!"},
+ stocks:{n:"주식 (Stocks)",era:4,hot:1,s:"주식회사의 지분을 나타내며 고수익·고위험을 띠는 직접 투자 자산",
+  a:["법적 성격: 주식회사의 자본을 구성하는 분할 단위이자 소유권을 나타내는 <b>지분 증권</b>",
+     "수익 창출 방식: ① <b>배당금(Dividend)</b>: 기업이 벌어들인 이익을 지분율에 따라 배분받음 ② <b>매매 차익(Capital Gain)</b>: 주가 상승 시 팔아서 차익 획득",
+     "장점: 기업 성장 시 <b>매우 높은 수익성</b> 기대 가능, 거래소에서 매매하여 유동성 양호",
+     "단점: <b>안전성이 매우 낮음</b> (원금 보장 불가, 주가 폭락 시 투자금 전액 손실 위험)",
+     "주주의 유한책임: 회사가 부도나도 투자한 주식 대금 한도 내에서만 손해를 보고 개인 재산으로 빚을 갚지는 않음"],
+  w:"기업은 대규모 자금을 장기적으로 조달하고, 투자자는 기업 성장의 결실을 함께 누리기 위해 발달했습니다.",
+  e:" 혁신적인 전기차 회사의 주식을 1주에 10만 원에 샀다가, 회사가 성장하여 주가가 20만 원이 되었을 때 팔아 100% 수익을 내는 투자입니다.",
+  t:"주식은 <b>'원금 손실 가능'</b>, <b>'만기 없음'</b>, <b>'예금자보호 제외'</b> 특징이 빈출 포인트입니다."},
+ bonds:{n:"채권 (Bonds)",era:4,hot:1,s:"정부나 기업이 대규모 자금을 빌리며 발행하는 차용증서",
+  a:["법적 성격: 정부(국채), 지방자치단체(지방채), 금융기관(금융채), 주식회사(회사채)가 발행하는 <b>채무 증권</b>",
+     "수익 창출 방식: ① <b>확정 이자</b>: 정기적으로 정해진 이자를 수령 ② <b>시세 차익</b>: 채권 금리 변동에 따른 매매 차익",
+     "특징: <b>만기(Maturity)</b>가 정해져 있어 만기 시 원금 상환 받음",
+     "비교: <b>예금보다 수익성이 높고, 주식보다 안전성이 높음</b> (국채는 국가가 망하지 않는 한 원금 보장)",
+     "기업 청산 시 권리: 회사가 망했을 때 남은 재산을 돌려받는 순위에서 <b>채권자가 주주보다 우선함</b>"],
+  w:"국가나 대기업이 은행 대출만으로 감당하기 힘든 천문학적인 자금을 일반 대중으로부터 직접 빌리기 위해 발행합니다.",
+  e:" 정부가 도로를 놓기 위해 발행한 '국고채 5년물'을 사서 5년 동안 매년 3%의 이자를 꼬박꼬박 받고 만기 때 원금을 돌려받는 투자입니다.",
+  t:"<b>주식(지분/배당/만기없음) ↔ 채권(채무/이자/만기있음)</b> 상호 비교 표 문제는 100% 출제!"},
+ funds:{n:"펀드 (간접 투자 상품)",era:4,s:"전문가가 다수 투자자의 돈을 모아 대신 굴려주는 집합 투자 기구",
+  a:["원리: 자산운용사의 펀드매니저가 다수의 투자자로부터 모은 자금을 주식, 채권, 원자재 등에 분산 투자함",
+     "장점: 소액으로도 다양한 종목에 <b>포트폴리오 분산 투자</b> 가능, 금융 지식이 부족해도 전문가의 운용 능력 활용",
+     "특징: <b>실적 배당 원칙</b> (수익이 나든 손실이 나든 결과가 고스란히 투자자에게 귀속됨)",
+     "단점: <b>원금 손실 위험</b> 존재(예금자보호 제외), 운용 보수 및 수수료 발생"],
+  w:"개인이 혼자서 수십 개 기업을 분석하고 분산 투자하기 어렵기 때문에 전문가에게 돈을 맡겨 굴리도록 만들었습니다.",
+  e:" 1만 원으로 전 세계 100대 IT 테크 기업을 골고루 담은 글로벌 테크 펀드에 가입하여 분산 투자 효과를 누리는 것입니다.",
+  t:"펀드는 전문가가 굴리더라도 <b>'원금 보장이 되지 않는다(실적 배당)'</b>는 점이 중요합니다."},
+ life_cycle:{n:"생애 주기와 재무 설계",era:4,hot:1,s:"연령별 소득과 소비의 격차를 평생에 걸쳐 조율하는 인생 설계도",
+  a:["<b>생애 주기 곡선</b>: 유년기(소득 &lt; 소비) → 청년·중장년기(소득 &gt; 소비, 저축기) → 노년기(소득 &lt; 소비, 은퇴기)",
+     "<b>소득의 불일치</b>: 돈을 가장 많이 버는 시기(40~50대)와 돈을 쓰는 시기(평생)가 일치하지 않음",
+     "재무 설계의 목적: 청장년기의 흑자 자금을 잘 모으고 굴려 노년기의 적자를 메우고 평생의 삶의 질 유지",
+     "핵심 과제: 자녀 교육, 주택 마련, 긴급 비상금, <b>노후 생활비(100세 시대 은퇴 준비)</b>"],
+  w:"인간의 수명은 100세로 늘어났는데 정년은 60세 전후로 짧아져, 은퇴 후 30~40년의 소득 절벽을 청년기부터 미리 대비해야 합니다.",
+  e:" 30대부터 월급의 20%를 개인연금과 저축에 넣어 60세 은퇴 후에도 매달 따박따박 생활비가 나오도록 설계하는 것입니다.",
+  t:"생애 주기 그래프에서 <b>소득이 소비를 초과하는 구간(저축 구간)</b>과 <b>소비가 소득을 초과하는 구간(유년기·노년기 적자 구간)</b> 분석이 빈출!"},
+ three_pension:{n:"3층 연금 보장 체계",era:4,hot:1,s:"안정된 노후를 위해 국가, 기업, 개인이 3중으로 쌓는 연금 안전망",
+  a:["1층 <b>국민연금 (공적 연금)</b>: 국가가 법으로 강제하여 최소한의 기본 생활을 보장 (기초 생활 보장)",
+     "2층 <b>퇴직연금 (기업 연금)</b>: 근로자가 일하는 기업에서 적립하여 표준적인 생활을 보장 (안정 생활 보장)",
+     "3층 <b>개인연금 (사적 연금)</b>: 개인이 금융기관에 자발적으로 가입하여 여유로운 노후를 준비 (풍요 생활 보장)",
+     "세계은행(World Bank)이 권고한 현대 복지 국가의 가장 모범적인 노후 보장 포트폴리오"],
+  w:"국민연금 하나만으로는 고령화 시대의 노후를 감당하기 부족하므로 국가·직장·개인이 3겹의 방어막을 쳐야 합니다.",
+  e:" 65세 은퇴 후 국민연금에서 100만 원, 퇴직연금에서 80만 원, 개인연금에서 70만 원을 받아 매달 250만 원의 안정적 노후 소득을 만드는 구조입니다.",
+  t:"<b>1층(국민연금) = 기초 / 2층(퇴직연금) = 표준 / 3층(개인연금) = 여유</b> 층별 역할 매칭이 시험에 나옵니다."}
+};
+
+const conceptEras=[
+ {k:0,n:"전체 20선"},
+ {k:1,n:"1. 자본주의 경제 사상가"},
+ {k:2,n:"2. 시장 메커니즘과 시장 실패"},
+ {k:3,n:"3. 경제 주체의 역할과 윤리"},
+ {k:4,n:"4. 금융 자산과 자산 관리 제도"}
+];
+let curConceptEra=0;
+
+document.getElementById('concept-era').innerHTML=conceptEras.map(e=>
+ `<div class="chip ${e.k===0?'on':''}" onclick="setConceptEra(${e.k},this)">${e.n}</div>`).join('');
+
+function setConceptEra(k,el){
+ curConceptEra=k;
+ document.querySelectorAll('#concept-era .chip').forEach(c=>c.classList.remove('on'));
+ el.classList.add('on');
+ renderConcepts();
+ document.getElementById('concept-detail').innerHTML='';
+}
+
+function renderConcepts(){
+ const list=Object.entries(concepts).filter(([k,v])=>curConceptEra===0||v.era===curConceptEra);
+ document.getElementById('concept-grid').innerHTML=list.map(([k,v])=>
+  `<div class="kbtn ${v.hot?'hot':''}" onclick="showConcept('${k}',this)">${v.n.split(' ')[0]}${v.hot?' ':''}</div>`).join('');
+}
+
+function showConcept(k,el){
+ const d=concepts[k];
+ document.querySelectorAll('.kbtn').forEach(b=>b.classList.remove('on'));
+ el.classList.add('on');
+ document.getElementById('concept-detail').innerHTML=`
+ <div class="card" style="border:2px solid var(--line-2)">
+   <h3 style="color:var(--blue);font-size:1.3rem">${d.n}</h3>
+   <p style="font-size:1rem;font-weight:700;color:var(--primary);margin-bottom:6px">📌 ${d.s}</p>
+   <h4>핵심 원리 및 주요 규정</h4>
+   <ul>${d.a.map(x=>`<li>${x}</li>`).join('')}</ul>
+   ${d.w?`<div class="box b-why"><h6>등장 배경 및 경제학적 문제의식</h6><p>${d.w}</p></div>`:''}
+   ${d.e?`<div class="box b-ex"><h6>이해를 돕는 쉬운 예시 / 현실 적용 사례</h6><p>${d.e}</p></div>`:''}
+   ${d.t?`<div class="box b-test"><h6>시험 출제 포인트 &amp; 오답 함정 정복</h6><p>${d.t}</p></div>`:''}
+ </div>`;
+ document.getElementById('concept-detail').scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+renderConcepts();
+
+/* ====================== 핵심 테마 요약 (6대 테마) ====================== */
+const themes=[
+{n:"① 자본주의 역사적 전개",h:`
+<div class="card"><h3>자본주의의 기본 특징</h3>
+<ul>
+<li><b>사유재산제도</b>: 개인이 생산 수단과 재산을 자유롭게 소유하고 처분할 권리 보장</li>
+<li><b>경제 활동의 자유</b>: 직업 선택, 계약, 이윤 추구의 자유</li>
+<li><b>시장 가격 기구</b>: 상품의 생산량과 가격이 시장의 수요와 공급에 의해 자율적으로 결정됨</li>
+</ul>
+</div>
+<div class="card"><h3>자본주의의 역사적 전개 5단계 비교 (★수능·내신 1순위)</h3>
+<table>
+<tr><th>단계</th><th>시기 및 배경</th><th>주요 특징</th><th>대표 사상가 / 국가관</th></tr>
+<tr><td><b>1. 상업 자본주의</b></td><td>15~18세기<br>신항로 개척, 절대왕정</td><td>상품 유통 중심, <b>중상주의</b>(금은 축적, 수출 장려, 수입 억제, 식민지 쟁탈)</td><td>국가가 상업을 강력 통제·독점</td></tr>
+<tr><td><b>2. 산업 자본주의</b></td><td>18세기 후반~19세기<br>산업 혁명, 공장제 기계 공업</td><td>상품 생산 중심, 자유로운 시장 경쟁, <b>자유방임주의</b></td><td><b>애덤 스미스</b><br><b>'보이지 않는 손'</b>, <b>야경국가</b>(작은 정부)</td></tr>
+<tr><td><b>3. 독점 자본주의</b></td><td>19세기 말~20세기 초<br>자본 집적과 거대 기업 탄생</td><td>소수 대기업의 시장 지배(독과점), 제국주의 침략, 빈부 격차 심화</td><td><b>1929년 대공황</b> 발발<br>(<b>시장 실패</b>의 극치)</td></tr>
+<tr><td><b>4. 수정 자본주의</b></td><td>1930년대~1970년대<br>대공황 극복 (뉴딜 정책)</td><td>정부의 적극적 시장 개입, 유효수요 창출, 사회보장제도 확충</td><td><b>케인스</b><br><b>복지 국가</b>, <b>큰 정부</b></td></tr>
+<tr><td><b>5. 신자유주의</b></td><td>1970년대 말~현재<br>석유 파동, 스태그플레이션</td><td>공기업 민영화, 규제 완화, 복지 축소, 노동 유연화, 자유무역</td><td><b>하이에크, 프리드먼</b><br><b>'정부 실패' 비판</b>, <b>작은 정부</b></td></tr>
+</table>
+<div class="box b-test"><h6>시장 실패 vs 정부 실패 원인 암기</h6><p>
+• <b>시장 실패(Market Failure)</b>: 시장 가격 기구만으로 자원의 효율적 배분이 이루어지지 못하는 현상 (대공황 초래)<br>
+• <b>정부 실패(Government Failure)</b>: 정부의 과도한 시장 개입과 관료제적 비효율성, 규제로 인해 오히려 경제 효율이 떨어지는 현상 (스태그플레이션 초래)
+</p></div>
+</div>`},
+
+{n:"② 합리적 선택과 기회비용",h:`
+<div class="card"><h3>자원의 희소성과 경제 문제</h3>
+<p>인간의 물질적 욕망은 무한하지만 이를 충족시켜 줄 자원은 유한한 <b>자원의 희소성</b> 때문에 끊임없는 <b>'선택(Choice)'의 문제</b>가 발생합니다.</p>
+</div>
+<div class="card"><h3>합리적 선택의 원리와 계산법</h3>
+<h4>1. 기회비용(Opportunity Cost)의 구성</h4>
+<p style="font-weight:700;color:var(--primary);margin-bottom:8px">기회비용 = 명시적 비용(회계적 비용) + 암묵적 비용</p>
+<ul>
+<li><b>명시적 비용</b>: 어떤 대안을 선택함으로써 실제로 주머니에서 지출된 현금 비용</li>
+<li><b>암묵적 비용</b>: 그 대안을 선택하느라 포기해야 했던 다른 기회의 가치 중 <b>가장 큰 것</b></li>
+<li><b>매몰 비용 (Sunk Cost)</b>: 이미 지출되어 어떤 선택을 하더라도 다시 회수할 수 없는 비용 → <b>합리적 선택 시 절대 고려하지 않아야 함!</b></li>
+</ul>
+<h4>2. 순편익(Net Benefit)의 극대화</h4>
+<p style="font-weight:700;color:var(--primary);margin-bottom:8px">순편익 = 편익(만족·이익) - 기회비용 &gt; 0</p>
+<p>합리적 선택이란 여러 대안 중에서 <b>순편익이 0보다 크고, 순편익이 가장 큰 대안을 선택</b>하는 것입니다. (편익 &gt; 기회비용)</p>
+<div class="box b-ex"><h6>기회비용 계산 실전 예시</h6><p>
+고등학생 A군이 2시간 동안 영화(티켓 15,000원)를 볼까, 시급 10,000원의 편의점 알바를 할까 고민 중입니다.<br>
+• 영화 관람의 <b>명시적 비용</b> = 티켓값 15,000원<br>
+• 영화 관람의 <b>암묵적 비용</b> = 포기한 알바비 20,000원 (2시간 × 1만 원)<br>
+• 따라서 영화 관람의 <b>기회비용</b> = 15,000원 + 20,000원 = <b>35,000원</b><br>
+→ 영화 관람이 합리적이려면 영화를 통해 얻는 편익(만족)이 최소 35,000원보다 커야 합니다!
+</p></div>
+</div>`},
+
+{n:"③ 시장 실패와 외부 효과",h:`
+<div class="card"><h3>시장 실패의 4대 원인과 정부의 해결책</h3>
+<table>
+<tr><th style="width:130px">원인</th><th>구체적 내용</th><th>정부의 개입 대책</th></tr>
+<tr><td><b>독과점의 발생</b></td><td>불완전 경쟁으로 공급량을 줄이고 가격을 인상하여 소비자 피해 유발</td><td><b>공정거래위원회</b>의 독점 규제, 불공정 거래 행위 감시, 과징금 부과</td></tr>
+<tr><td><b>공공재 부족</b></td><td><b>비배제성</b>(무임승차)과 <b>비경합성</b>으로 인해 시장에 맡기면 <b>과소 생산</b>됨</td><td>정부가 세금을 재원으로 <b>직접 생산 및 공급</b> (국방, 치안, 도로 등)</td></tr>
+<tr><td><b>외부 효과 발생</b></td><td>제3자에게 이익이나 손해를 주면서도 시장 대가를 주고받지 않음</td><td>외부 경제에는 <b>보조금</b> 지급, 외부 불경제에는 <b>세금·과징금</b> 부과</td></tr>
+<tr><td><b>정보의 비대칭성</b></td><td>거래 당사자 간 정보 격차로 <b>역선택</b>(레몬 마켓)과 <b>도덕적 해이</b> 발생</td><td>원산지 표시제, 제품 정보 공시제, 공인 인증제 시행</td></tr>
+</table>
+</div>
+<div class="card"><h3>외부 효과 비교 총정리 (★최다 출제)</h3>
+<table>
+<tr><th>구분</th><th>외부 경제 (긍정적 외부 효과)</th><th>외부 불경제 (부정적 외부 효과)</th></tr>
+<tr><td><b>개념</b></td><td>제3자에게 의도치 않은 <b>이익</b>을 주고도 대가를 받지 못함</td><td>제3자에게 의도치 않은 <b>손해</b>를 끼치고도 배상하지 않음</td></tr>
+<tr><td><b>편익/비용 관계</b></td><td><b>사적 편익 &lt; 사회적 편익</b></td><td><b>사적 비용 &lt; 사회적 비용</b> (사적 비용 + 외부 비용)</td></tr>
+<tr><td><b>시장 방치 시 결과</b></td><td>사회적 최적 수준보다 <b>과소 생산·과소 소비</b></td><td>사회적 최적 수준보다 <b>과다 생산·과다 소비</b></td></tr>
+<tr><td><b>사례</b></td><td>독감 예방접종, 양봉업과 과수원, 신기술 개발, 화원 조성</td><td>공장의 매연·폐수 배출, 층간 소음, 길거리 흡연</td></tr>
+<tr><td><b>정부의 대책</b></td><td><b>보조금 지급</b>, 세금 감면, 특허권 인정, 생산 장려</td><td><b>피구세 부과</b>, 환경부담금 징수, <b>오염배출권 거래제</b></td></tr>
+</table>
+</div>`},
+
+{n:"④ 지속 가능 발전을 위한 경제 주체 역할",h:`
+<div class="card"><h3>경제 주체들의 바람직한 역할</h3>
+<p>시장 경제가 건전하게 발전하고 미래 세대의 번영까지 포용하는 '지속 가능한 발전'을 이루기 위해서는 기업, 노동자, 소비자, 정부가 각자의 책임을 다해야 합니다.</p>
+</div>
+<div class="card"><h3>1. 기업가의 역할과 사회적 책임</h3>
+<ul>
+<li><b>기업가 정신과 혁신</b>: 슘페터의 '창조적 파괴' 정신으로 신기술과 신시장을 개척하여 사회적 생산성 증대</li>
+<li><b>ESG 경영의 실천</b>:
+  <ul>
+    <li><b>E (Environment, 환경)</b>: 탄소 배출 저감, 재생에너지 사용(RE100), 친환경 원자재 활용</li>
+    <li><b>S (Social, 사회)</b>: 근로자 인권 보장, 안전한 일터 조성, 협력업체와의 공정 거래</li>
+    <li><b>G (Governance, 지배구조)</b>: 투명한 회계 감사, 주주 권리 보호, 일감 몰아주기 근절</li>
+  </ul>
+</li>
+</ul>
+</div>
+<div class="card"><h3>2. 소비자의 역할: 윤리적 소비</h3>
+<ul>
+<li><b>개념</b>: 상품의 가격과 품질뿐만 아니라, 생산과 유통 과정이 인간과 환경, 동물에 미치는 영향까지 고려하는 소비</li>
+<li><b>실천 방식</b>:
+  <ul>
+    <li><b>공정 무역(Fair Trade)</b>: 개발도상국 가난한 생산자에게 정당한 가격을 지불하고 아동 노동을 배제한 제품 구매</li>
+    <li><b>녹색 소비</b>: 에너지 효율 등급이 높은 제품, 친환경 유기농 농산물, 재활용 가능한 포장재 선택</li>
+    <li><b>동물 복지 인증 제품</b> 구매 및 기업의 비윤리적 행태에 대한 <b>불매 운동(Boycott)</b> 참여</li>
+  </ul>
+</li>
+</ul>
+</div>
+<div class="card"><h3>3. 노동자와 정부의 역할</h3>
+<ul>
+<li><b>노동자</b>: 헌법상 보장된 <b>근로 3권</b>을 바탕으로 정당한 권리를 행사하며, 생산성 향상과 기업 발전에 협력하는 상생의 노사 관계 구축</li>
+<li><b>정부</b>: 공정한 경쟁을 보장하는 법과 제도 구축(공정거래법), 시장 실패 교정, 친환경 인프라 투자, 사회적 약자를 위한 사회 안전망 확충</li>
+</ul>
+</div>`},
+
+{n:"⑤ 금융 자산의 특징과 자산 관리 원칙",h:`
+<div class="card"><h3>자산 관리의 3대 원칙</h3>
+<table>
+<tr><th style="width:130px">원칙</th><th>개념</th><th>비교 우위 자산</th></tr>
+<tr><td><b>안전성</b></td><td>투자한 원금이 손실되지 않고 온전히 보존될 수 있는 정도</td><td><b>예금·적금 &gt; 국채 &gt; 회사채 &gt; 주식</b></td></tr>
+<tr><td><b>수익성</b></td><td>투자를 통해 이자, 배당금, 시세차익 등 높은 수익을 올릴 수 있는 정도</td><td><b>주식 &gt; 펀드 &gt; 회사채 &gt; 예금·적금</b></td></tr>
+<tr><td><b>유동성 (환금성)</b></td><td>필요할 때 가치 손실 없이 즉시 현금으로 바꿀 수 있는 정도</td><td><b>요구불예금 &gt; 정기예금 &gt; 주식 &gt; 부동산</b></td></tr>
+</table>
+<div class="box b-why"><h6>High Risk, High Return의 법칙</h6><p>
+수익성이 높은 금융 자산은 필연적으로 원금 손실 위험(안전성 결여)이 따르며, 안전한 자산은 수익률이 낮습니다. 따라서 위험을 줄이기 위해 주식, 채권, 예금에 나누어 담는 <b>'포트폴리오 분산 투자'</b>가 필수적입니다.
+</p></div>
+</div>
+<div class="card"><h3>주요 금융 자산 핵심 비교 (★시험 100% 출제)</h3>
+<table>
+<tr><th>비교 항목</th><th>예금·적금</th><th>주식 (Stocks)</th><th>채권 (Bonds)</th></tr>
+<tr><td><b>증권의 성격</b></td><td>은행과의 예금 계약</td><td>기업 소유권을 나타내는 <b>지분 증권</b></td><td>돈을 빌려주고 받는 <b>채무 증권</b></td></tr>
+<tr><td><b>수익 원천</b></td><td>확정 <b>이자</b></td><td><b>배당금</b> + <b>매매 차익</b></td><td>확정 <b>이자</b> + <b>매매 차익</b></td></tr>
+<tr><td><b>만기 유무</b></td><td>만기 있음 (정기예금)</td><td><b>만기 없음</b></td><td><b>만기 있음</b> (원금 상환일 명시)</td></tr>
+<tr><td><b>원금 손실 위험</b></td><td>원금 보장 (안전성 최상)</td><td><b>원금 손실 가능 (고위험)</b></td><td>기업 부도 시 손실 (예금보다 높고 주식보다 낮음)</td></tr>
+<tr><td><b>기업 파산 시 권리</b></td><td>-</td><td>잔여재산 청구권 <b>후순위</b></td><td>잔여재산 청구권 <b>우선순위 (주주보다 앞섬)</b></td></tr>
+<tr><td><b>예금자보호 여부</b></td><td><b>보호 대상 (1인당 5천만 원)</b></td><td><b>보호 대상 아님</b></td><td><b>보호 대상 아님</b></td></tr>
+</table>
+</div>`},
+
+{n:"⑥ 생애 주기와 재무 설계",h:`
+<div class="card"><h3>생애 주기(Life Cycle) 곡선의 이해</h3>
+<h4>연령대별 소득과 소비의 변화</h4>
+<ul>
+<li><b>유소년기 (성장기)</b>: 소득은 없고 양육 및 교육비 지출만 발생 → <b>적자 인생 단계 (소득 &lt; 소비)</b></li>
+<li><b>청년기 (사회초년기)</b>: 취업을 통해 소득이 발생하지만 학자금 상환, 결혼 비용 등으로 지출도 큼</li>
+<li><b>중장년기 (성숙기)</b>: 직장에서의 소득이 정점에 도달하는 시기 → <b>인생의 최대 흑자 단계 (소득 &gt; 소비)</b>, 자녀 교육 및 주택 마련 지출 집중</li>
+<li><b>노년기 (은퇴기)</b>: 정년퇴직으로 근로 소득이 급감하거나 단절됨, 의료비 지출 급증 → <b>적자 인생 단계 (소득 &lt; 소비)</b></li>
+</ul>
+<div class="box b-test"><h6>재무 설계의 핵심 목적</h6><p>
+소득이 소비보다 많은 중장년기의 흑자 자금을 저축하고 투자하여, 소득이 끊기는 <b>노년기의 적자를 메울 수 있도록 평생에 걸쳐 소득을 재배분</b>하는 것입니다.
+</p></div>
+</div>
+<div class="card"><h3>100세 시대를 위한 '3층 연금 체계'</h3>
+<table>
+<tr><th style="width:130px">구분</th><th style="width:140px">제도 명칭</th><th>성격 및 역할</th></tr>
+<tr><td><b>1층 (기본 생활)</b></td><td><b>국민연금 (공적 연금)</b></td><td>국가가 운영하는 강제 가입 사회보험으로, 국민의 최소한의 기초 생계 보장</td></tr>
+<tr><td><b>2층 (표준 생활)</b></td><td><b>퇴직연금 (기업 연금)</b></td><td>기업이 근로자의 퇴직금을 사외 금융기관에 적립하여 은퇴 후 안정된 표준 생활 보장</td></tr>
+<tr><td><b>3층 (여유 생활)</b></td><td><b>개인연금 (사적 연금)</b></td><td>개인이 금융회사 연금저축 등에 자발적으로 가입하여 여유로운 노후 생활 준비</td></tr>
+</table>
+</div>`},
+];
+
+let curTheme=0;
+document.getElementById('theme-tabs').innerHTML=themes.map((t,i)=>
+ `<div class="chip ${i===0?'on':''}" onclick="setTheme(${i},this)">${t.n}</div>`).join('');
+
+function setTheme(i,el){
+ curTheme=i;
+ document.querySelectorAll('#theme-tabs .chip').forEach(c=>c.classList.remove('on'));
+ el.classList.add('on');
+ document.getElementById('theme-body').innerHTML=themes[i].h;
+ document.querySelector('.main').scrollTop=0;
+}
+document.getElementById('theme-body').innerHTML=themes[0].h;
+
+/* ====================== 시험 용어 사전 (45개 용어) ====================== */
+const terms=[
+{c:"경제사상",t:"보이지 않는 손",w:"애덤 스미스",d:"개인이 자신의 이익만을 위해 자유롭게 경쟁하더라도, 가격 기구를 통해 사회 전체의 자원이 가장 효율적으로 배분되는 원리."},
+{c:"경제사상",t:"자유방임주의",w:"산업 자본주의",d:"국가가 시장 경제에 간섭하지 않고 개인의 자유로운 경제 활동을 완전히 방임해야 한다는 경제 사상."},
+{c:"경제사상",t:"수정 자본주의",w:"케인스",d:"대공황과 같은 시장 실패를 극복하기 위해 정부가 재정 지출과 공공사업을 통해 유효수요를 창출하는 자본주의 형태."},
+{c:"경제사상",t:"신자유주의",w:"하이에크",d:"정부 실패와 스태그플레이션을 비판하며 공기업 민영화, 규제 완화, 복지 축소 등 시장 기능의 복원을 주장한 사상."},
+{c:"경제사상",t:"스태그플레이션",w:"1970년대",d:"경기 침체(Stagnation)와 물가 상승(Inflation)이 동시에 발생하는 현상으로, 케인스식 정부 개입의 한계를 드러냄."},
+{c:"경제사상",t:"야경국가",w:"작은 정부",d:"국가의 역할을 오직 국방, 치안, 법질서 유지 등 최소한의 경비 기능에만 한정하는 국가관."},
+
+{c:"선택과비용",t:"기회비용",w:"경제학 기초",d:"어떤 선택을 함으로써 포기해야 하는 여러 대안들 중 가장 가치가 큰 대안의 가치 (명시적 비용 + 암묵적 비용)."},
+{c:"선택과비용",t:"명시적 비용",w:"기회비용 구성",d:"선택을 위해 실제로 지갑에서 현금으로 지출한 회계적 비용."},
+{c:"선택과비용",t:"암묵적 비용",w:"기회비용 구성",d:"실제 지출은 없었으나 그 선택 때문에 포기해야 했던 다른 기회의 잠재적 가치(예: 포기한 월급, 이자)."},
+{c:"선택과비용",t:"매몰 비용",w:"Sunk Cost",d:"이미 지출되어 어떤 선택을 하더라도 다시 회수할 수 없는 비용으로, 합리적 선택 시 반드시 배제해야 함."},
+{c:"선택과비용",t:"순편익",w:"합리적 선택",d:"선택을 통해 얻는 편익(만족)에서 기회비용을 뺀 값으로, 합리적 선택을 위해서는 순편익이 0보다 커야 함."},
+{c:"선택과비용",t:"자원의 희소성",w:"경제의 출발점",d:"인간의 욕망에 비해 이를 충족시켜 줄 사회적 자원의 양이 상대적으로 부족한 상태."},
+
+{c:"시장실패",t:"시장 실패",w:"Market Failure",d:"시장의 가격 기구가 제대로 작동하지 못하여 자원의 배분이 효율적으로 이루어지지 못하는 현상."},
+{c:"시장실패",t:"정부 실패",w:"Government Failure",d:"시장 실패를 바로잡기 위한 정부의 과도한 개입이 불완전한 정보와 관료제적 비효율성으로 인해 오히려 더 큰 부작용을 낳는 현상."},
+{c:"시장실패",t:"공공재",w:"Public Goods",d:"비배제성과 비경합성을 지녀 대가를 지불하지 않아도 이용할 수 있기 때문에 시장에서 과소 생산되는 재화 (국방, 치안 등)."},
+{c:"시장실패",t:"비배제성",w:"공공재 특성",d:"대가를 지불하지 않은 사람이라도 그 재화의 소비나 혜택에서 배제할 수 없는 특성."},
+{c:"시장실패",t:"비경합성",w:"공공재 특성",d:"한 사람의 소비가 다른 사람의 소비 가능량을 감소시키지 않고 여러 사람이 동시에 소비할 수 있는 특성."},
+{c:"시장실패",t:"무임승차자 문제",w:"Free-rider",d:"대가를 지불하지 않고도 공공재의 혜택을 공짜로 누리려는 현상."},
+{c:"시장실패",t:"외부 효과",w:"Externality",d:"어떤 경제 활동이 제3자에게 의도치 않은 혜택이나 손해를 주면서도 시장을 통해 아무런 대가를 주고받지 않는 현상."},
+{c:"시장실패",t:"외부 경제",w:"긍정적 외부효과",d:"제3자에게 이익을 주지만 대가를 받지 못해 시장에서 사회적 최적 수준보다 '과소 생산'되는 현상."},
+{c:"시장실패",t:"외부 불경제",w:"부정적 외부효과",d:"제3자에게 손해를 끼치고도 배상하지 않아 시장에서 사회적 최적 수준보다 '과다 생산'되는 현상 (환경오염 등)."},
+{c:"시장실패",t:"피구세",w:"외부불경제 교정",d:"환경오염과 같은 외부 불경제를 유발하는 행위자에게 외부 비용만큼 세금을 부과하여 생산량을 줄이도록 유도하는 조세."},
+{c:"시장실패",t:"오염배출권 거래제",w:"환경 정책",d:"정부가 기업별로 온실가스 배출 허용량을 정해 준 뒤, 남거나 부족한 배출권을 시장에서 사고팔 수 있게 한 제도."},
+{c:"시장실패",t:"정보의 비대칭성",w:"시장 실패",d:"거래 당사자 한쪽은 상품에 대해 많은 정보를 가지고 있으나 상대방은 정보를 잘 모르는 불균형 상태."},
+{c:"시장실패",t:"역선택",w:"Adverse Selection",d:"거래 전에 정보가 부족한 쪽이 불리한 선택을 하여 질 나쁜 상품만 시장에 거래되는 현상 (중고차 레몬 마켓)."},
+{c:"시장실패",t:"도덕적 해이",w:"Moral Hazard",d:"거래나 계약 체결 후에 자신의 책임을 다하지 않고 부주의하게 행동하여 상대방에게 피해를 주는 현상."},
+
+{c:"주체와윤리",t:"기업가 정신",w:"슘페터",d:"미래의 불확실성과 위험을 감수하고 기술 혁신과 신시장 개척을 통해 새로운 가치를 창조하려는 도전적 태도."},
+{c:"주체와윤리",t:"창조적 파괴",w:"슘페터",d:"낡은 경제 구조를 무너뜨리고 혁신적인 신기술과 상품으로 경제를 비약적으로 도약시키는 자본주의 발전 과정."},
+{c:"주체와윤리",t:"ESG 경영",w:"현대 기업 윤리",d:"환경 보호(E), 사회적 기여(S), 투명한 지배구조(G)를 핵심 지표로 삼아 지속 가능한 발전을 추구하는 경영 방식."},
+{c:"주체와윤리",t:"윤리적 소비",w:"착한 소비",d:"단순히 가격과 품질만 따지지 않고 생산 과정에서의 환경오염, 노동 착취, 동물 복지 등을 고려하여 구매하는 소비."},
+{c:"주체와윤리",t:"공정 무역",w:"Fair Trade",d:"개발도상국 생산자에게 정당한 가격을 지불하고 아동 노동을 배제하여 생산자의 자립을 돕는 무역 형태."},
+{c:"주체와윤리",t:"불매 운동",w:"Boycott",d:"사회적 책임을 저버리거나 부도덕한 갑질을 일삼는 기업의 제품을 사지 않는 소비자 권리 행사 운동."},
+{c:"주체와윤리",t:"근로 3권",w:"노동권",d:"노동자가 사용자와 대등하게 교섭할 수 있도록 보장된 단결권, 단체교섭권, 단체행동권."},
+
+{c:"금융자산",t:"안전성",w:"자산관리 원칙",d:"투자한 원금이 떼이거나 손실을 보지 않고 안전하게 보존될 가능성."},
+{c:"금융자산",t:"수익성",w:"자산관리 원칙",d:"투자를 통해 원금 대비 높은 이자나 배당, 시세차익을 거둘 수 있는 가능성."},
+{c:"금융자산",t:"유동성 (환금성)",w:"자산관리 원칙",d:"보유한 자산을 필요할 때 가격 손실 없이 즉시 현금으로 바꿀 수 있는 용이성."},
+{c:"금융자산",t:"예금자보호법",w:"금융 제도",d:"금융회사가 파산하더라도 예금보험공사가 1인당 최고 5,000만 원까지 원금과 소정의 이자를 보장하는 법률."},
+{c:"금융자산",t:"주식",w:"지분 증권",d:"주식회사의 자본을 구성하는 분할 단위로, 보유 시 주주로서 배당금과 시세차익을 누리지만 원금 손실 위험이 큼."},
+{c:"금융자산",t:"채권",w:"채무 증권",d:"정부나 기업이 대규모 자금을 빌리며 발행하는 차용증서로, 정기적인 확정 이자와 만기 시 원금을 돌려받음."},
+{c:"금융자산",t:"펀드",w:"간접투자 상품",d:"전문가(자산운용사)가 여러 투자자의 돈을 모아 주식이나 채권에 분산 투자한 후 결과를 배분하는 실적 배당 상품."},
+{c:"금융자산",t:"포트폴리오",w:"분산 투자",d:"위험을 분산하기 위해 성격이 다른 여러 자산(예금, 주식, 채권 등)에 나누어 투자하는 자산 배분 조합."},
+{c:"금융자산",t:"생애 주기",w:"Life Cycle",d:"시간의 흐름에 따라 유년기-청년기-중장년기-노년기를 거치며 소득과 소비가 변화하는 인생의 과정."},
+{c:"금융자산",t:"3층 연금 체계",w:"노후 대비",d:"국민연금(1층 기초생활) + 퇴직연금(2층 표준생활) + 개인연금(3층 여유생활)으로 구성된 3중 노후 소득 보장망."}
+];
+
+const tcats=["전체","경제사상","선택과비용","시장실패","주체와윤리","금융자산"];
+let tcat="전체";
+
+document.getElementById('term-tabs').innerHTML=tcats.map(c=>
+ `<div class="chip ${c==='전체'?'on':''}" onclick="setTcat('${c}',this)">${c}</div>`).join('');
+
+function setTcat(c,el){
+ tcat=c;
+ document.querySelectorAll('#term-tabs .chip').forEach(x=>x.classList.remove('on'));
+ el.classList.add('on');
+ renderTerms();
+}
+
+function renderTerms(){
+ const q=document.getElementById('term-search').value.trim();
+ const list=terms.filter(t=>(tcat==="전체"||t.c===tcat)&&(!q||t.t.includes(q)||t.d.includes(q)||t.w.includes(q)));
+ document.getElementById('term-list').innerHTML=list.length?list.map(t=>
+  `<dl class="term"><dt>${t.t} ${t.w?`<span class="who">· ${t.w}</span>`:''}</dt><dd>${t.d}</dd></dl>`).join('')
+  :`<p style="color:var(--text-dim);padding:20px">검색 결과가 없습니다. 다른 단어로 검색해 보세요.</p>`;
+}
+renderTerms();
+
+/* ====================== 문제 은행 (6단원 40문항) ====================== */
+const units=[
+ {k:1,n:"자본주의의 전개와 시장과 정부"},
+ {k:2,n:"합리적 선택과 기회비용"},
+ {k:3,n:"시장 실패와 외부 효과"},
+ {k:4,n:"경제 주체의 역할과 기업가 정신"},
+ {k:5,n:"금융 자산의 특징과 자산 관리"},
+ {k:6,n:"생애 주기와 금융 생활 설계"}
+];
+
+const bank=[
+/* ---- 1단원: 자본주의의 전개와 시장과 정부 ---- */
+{u:1,ty:"m",q:"자본주의의 역사적 발전 단계가 일어난 순서대로 바르게 나열된 것은?",o:["상업 자본주의 → 독점 자본주의 → 산업 자본주의 → 수정 자본주의 → 신자유주의","상업 자본주의 → 산업 자본주의 → 독점 자본주의 → 수정 자본주의 → 신자유주의","산업 자본주의 → 상업 자본주의 → 독점 자본주의 → 신자유주의 → 수정 자본주의","상업 자본주의 → 수정 자본주의 → 산업 자본주의 → 독점 자본주의 → 신자유주의"],a:1,
+ s:"<b>상업 자본주의(중상주의) → 산업 자본주의(애덤 스미스) → 독점 자본주의(대공황) → 수정 자본주의(케인스) → 신자유주의(하이에크)</b> 순서로 발전하였습니다."},
+{u:1,ty:"m",q:"케인스(Keynes)의 수정 자본주의에 대한 설명으로 옳은 것은?",o:["정부는 시장에 일체 개입하지 않고 국방과 치안만 담당해야 한다","1929년 대공황을 해결하기 위해 정부가 재정 지출을 늘려 유효수요를 창출해야 한다고 보았다","스태그플레이션을 극복하기 위해 공기업 민영화와 복지 축소를 강조했다","보이지 않는 손에 의해 시장은 항상 완전고용 균형을 달성한다고 주장했다"],a:1,
+ s:"케인스는 대공황의 원인이 수요 부족에 있다고 보고, <b>정부가 재정 지출을 늘려 유효수요를 창출하는 '수정 자본주의(큰 정부)'</b>를 역설했습니다."},
+{u:1,ty:"o",q:"애덤 스미스는 개인이 자신의 이익(사익)만을 위해 행동하더라도 '보이지 않는 손'에 의해 사회 전체의 공익이 증진된다고 보았다.",a:1,
+ s:"맞습니다. 시장 가격 기구(보이지 않는 손)가 자원을 효율적으로 배분한다는 자유방임주의의 핵심입니다."},
+{u:1,ty:"b",q:"1970년대 석유 파동으로 인해 경기 침체와 물가 상승이 동시에 나타난 현상을 ( )이라 하며, 이는 케인스식 정부 개입의 한계인 정부 실패를 드러냈다.",a:["스태그플레이션"],
+ s:"<b>스태그플레이션(Stagflation)</b>입니다."},
+{u:1,ty:"m",q:"하이에크(Hayek)의 신자유주의 정책에 해당하는 것으로 가장 적절한 것은?",o:["공기업 설립 확대 및 정부 규제 강화","공기업 민영화, 노동 유연화, 규제 완화","소득 재분배를 위한 최고 세율의 대폭 인상","정부 주도의 대규모 공공 토목 사업 시행"],a:1,
+ s:"신자유주의는 '정부 실패'를 극복하기 위해 <b>공기업 민영화, 규제 완화, 감세, 노동 시장 유연화</b>를 추진했습니다."},
+{u:1,ty:"o",q:"1929년에 발생한 대공황은 정부가 시장에 지나치게 개입하여 발생한 '정부 실패'의 대표적 사례이다.",a:0,
+ s:"틀립니다. 대공황은 자유방임에 따른 독과점과 과잉 생산, 유효수요 부족으로 발생한 <b>'시장 실패'</b>의 대표 사례입니다."},
+{u:1,ty:"b",q:"애덤 스미스가 시장 경제에서 수요와 공급을 스스로 조절하여 자원을 가장 효율적으로 배분하는 가격 기구를 비유한 표현은 ( )이다.",a:["보이지 않는 손","보이지않는손"],
+ s:"<b>보이지 않는 손(Invisible Hand)</b>입니다."},
+
+/* ---- 2단원: 합리적 선택과 기회비용 ---- */
+{u:2,ty:"m",q:"경제학에서 '기회비용(Opportunity Cost)'을 계산하는 올바른 공식은?",o:["명시적 비용 - 암묵적 비용","명시적 비용 + 암묵적 비용","명시적 비용 + 매몰 비용","편익 - 명시적 비용"],a:1,
+ s:"<b>기회비용 = 명시적 비용(실제 지출액) + 암묵적 비용(포기한 가치 중 최대치)</b>입니다."},
+{u:2,ty:"m",q:"합리적 선택에 대한 설명으로 옳은 것은?",o:["기회비용이 편익보다 큰 대안을 선택해야 한다","이미 지출되어 회수할 수 없는 매몰 비용을 반드시 포함하여 평가해야 한다","순편익(편익 - 기회비용)이 0보다 크고 가장 큰 대안을 선택해야 한다","오직 실제 지갑에서 나간 명시적 비용만을 기준으로 선택해야 한다"],a:2,
+ s:"합리적 선택은 <b>편익이 기회비용보다 커서 순편익이 가장 큰 대안을 선택</b>하는 것입니다. 매몰 비용은 배제해야 합니다."},
+{u:2,ty:"b",q:"이미 지출되어 어떤 선택을 하더라도 다시 회수할 수 없는 비용으로, 합리적 선택을 할 때 반드시 고려에서 제외해야 하는 비용을 ( )이라 한다.",a:["매몰 비용","매몰비용"],
+ s:"<b>매몰 비용(Sunk Cost)</b>입니다."},
+{u:2,ty:"o",q:"1만 원짜리 영화 티켓을 샀는데 영화가 너무 지루하다면, 본전이 아깝다는 이유로 끝까지 앉아 있는 것이 경제학적으로 합리적인 행동이다.",a:0,
+ s:"틀립니다. 이미 지불한 티켓값 1만 원은 '매몰 비용'이므로, 남은 시간의 효용이 나가는 것보다 적다면 나오는 것이 합리적입니다."},
+{u:2,ty:"m",q:"A학생은 방과 후에 1시간 동안 1만 원의 알바를 할 수도 있고, 8천 원의 만족을 주는 낮잠을 잘 수도 있습니다. 이때 A학생이 1만 2천 원의 만족을 주는 학원 특강(수강료 5천 원)을 듣기로 선택했다면, 특강 선택의 기회비용은 얼마인가?",o:["5,000원","10,000원","15,000원","17,000원"],a:2,
+ s:"명시적 비용 = 수강료 5,000원. 포기한 대안 중 가장 가치 있는 것은 알바비 10,000원(암묵적 비용). 따라서 기회비용 = 5,000원 + 10,000원 = <b>15,000원</b>입니다."},
+{u:2,ty:"o",q:"자원의 희소성은 절대적인 양이 부족한 것만을 의미하며, 인간의 욕망 크기와는 상관이 없다.",a:0,
+ s:"틀립니다. 희소성은 절대적 양의 문제가 아니라, <b>인간의 무한한 욕망에 비해 상대적으로 부족한 상태</b>를 의미합니다."},
+{u:2,ty:"b",q:"경제학에서 어떤 선택을 통해 얻게 되는 모든 물질적·정신적 만족감을 ( )이라 부른다.",a:["편익"],
+ s:"<b>편익(Benefit)</b>입니다."},
+
+/* ---- 3단원: 시장 실패와 외부 효과 ---- */
+{u:3,ty:"m",q:"공공재(Public Goods)의 특징에 대한 설명으로 옳은 것은?",o:["대가를 치른 사람만 소비할 수 있는 배제성을 띤다","한 사람의 소비가 다른 사람의 소비를 줄이는 경합성을 띤다","시장에 맡겨둘 경우 사회적 최적 수준보다 과다 생산된다","비배제성으로 인해 대가를 치르지 않으려는 무임승차자 문제가 발생한다"],a:3,
+ s:"공공재는 <b>비배제성</b> 때문에 <b>무임승차자 문제</b>가 발생하며, 이윤이 나지 않아 시장에서 <b>과소 생산</b>됩니다."},
+{u:3,ty:"m",q:"외부 불경제(부정적 외부 효과)에 대한 설명으로 옳은 것은?",o:["사적 비용이 사회적 비용보다 더 크다","제3자에게 의도치 않은 이익을 주는 현상이다","시장의 자율에 맡길 경우 사회적 최적 수준보다 과다 생산된다","정부는 생산을 촉진하기 위해 보조금을 지급해야 한다"],a:2,
+ s:"외부 불경제는 오염 처리 비용을 치르지 않으므로 <b>사적 비용 &lt; 사회적 비용</b>이 되어 시장에서 <b>과다 생산</b>됩니다. 따라서 세금이나 과징금을 물려야 합니다."},
+{u:3,ty:"o",q:"독감 예방접종이나 과수원 옆의 양봉업은 제3자에게 이익을 주므로 외부 경제에 해당하며, 시장에 맡기면 과소 생산된다.",a:1,
+ s:"맞습니다. <b>외부 경제는 사적 편익 &lt; 사회적 편익이므로 시장에서 과소 생산</b>되어 정부가 보조금을 지급합니다."},
+{u:3,ty:"b",q:"외부 불경제를 유발하는 기업에게 오염 정화 비용만큼 세금을 부과하여 생산량을 줄이도록 유도하는 조세를 ( )세라고 한다.",a:["피구세","피구"],
+ s:"영국의 경제학자 피구의 이름을 딴 <b>피구세(Pigovian Tax)</b>입니다."},
+{u:3,ty:"m",q:"정보의 비대칭성으로 인해 발생하는 현상에 대한 설명으로 옳은 것은?",o:["역선택은 계약 체결 후에 주의 의무를 다하지 않는 현상이다","도덕적 해이는 계약 체결 전에 정보 부족으로 불리한 선택을 하는 현상이다","중고차 시장에서 좋은 차는 사라지고 결함 있는 차만 남는 현상은 역선택의 사례이다","정보의 비대칭성은 시장의 효율성을 극대화시켜 주는 요인이다"],a:2,
+ s:"거래 전에 정보 부족으로 불량품을 사게 되는 현상이 <b>역선택(레몬 마켓)</b>이고, 거래 후 나태해지는 현상이 <b>도덕적 해이</b>입니다."},
+{u:3,ty:"o",q:"정부는 외부 불경제를 해결하기 위해 기업들에게 배출할 수 있는 오염 한도를 할당하고 이를 사고팔 수 있게 하는 오염배출권 거래제를 시행하고 있다.",a:1,
+ s:"맞습니다. 시장 유인을 활용하여 오염 물질을 줄이는 대표 정책입니다."},
+
+/* ---- 4단원: 경제 주체의 역할과 기업가 정신 ---- */
+{u:4,ty:"m",q:"슘페터(Schumpeter)가 강조한 '기업가 정신'의 핵심 요소로 가장 적절한 것은?",o:["기존의 경영 방식을 고수하며 안전한 투자만 추구하는 태도","미래의 불확실성과 위험을 무릅쓰고 창조적 파괴와 혁신을 주도하는 도전 정신","시장의 독점적 지위를 이용하여 경쟁 기업의 진입을 막는 행위","오직 단기적인 주주 이익만을 극대화하기 위해 환경 규제를 회피하는 행위"],a:1,
+ s:"슘페터의 기업가 정신은 <b>새로운 기술과 시장을 개척하는 '창조적 파괴'와 모험적인 혁신</b>을 뜻합니다."},
+{u:4,ty:"m",q:"최근 기업 평가와 투자 유치에서 중요하게 대두된 ESG 경영의 구성 요소 3가지는?",o:["경제(Economic), 사회(Social), 성장(Growth)","환경(Environment), 사회(Social), 지배구조(Governance)","효율(Efficiency), 안정(Stability), 정부(Government)","수출(Export), 안전(Safety), 녹색(Green)"],a:1,
+ s:"ESG는 <b>환경(Environment), 사회(Social), 지배구조(Governance)</b>의 머리글자입니다."},
+{u:4,ty:"b",q:"개발도상국의 가난한 생산자에게 정당한 가격을 지불하고 아동 노동 착취를 금지하여 생산자의 자립을 돕는 윤리적 무역을 ( ) 무역이라 한다.",a:["공정 무역","공정무역"],
+ s:"<b>공정 무역(Fair Trade)</b>입니다."},
+{u:4,ty:"o",q:"소비자의 윤리적 소비는 단순히 싼 가격의 상품을 사는 것을 넘어, 상품의 생산과 유통 과정이 환경과 인권에 미치는 영향까지 고려하는 행위이다.",a:1,
+ s:"맞습니다. 가치 소비, 착한 소비, 친환경 소비를 포괄합니다."},
+{u:4,ty:"m",q:"노동자의 생존권을 보장하기 위해 헌법 제33조에 규정된 '근로 3권'이 <u>아닌</u> 것은?",o:["단결권","단체교섭권","단체행동권","무임승차권"],a:3,
+ s:"근로 3권은 <b>단결권, 단체교섭권, 단체행동권</b>입니다."},
+{u:4,ty:"o",q:"기업의 유일한 사회적 책임은 법을 어기지 않는 한도 내에서 주주의 이윤을 극대화하는 것뿐이라는 관점이 ESG 경영의 핵심이다.",a:0,
+ s:"틀립니다. ESG 경영은 주주뿐만 아니라 <b>환경, 노동자, 소비자, 지역 사회 등 모든 이해관계자와 상생하는 지속 가능한 책임</b>을 요구합니다."},
+
+/* ---- 5단원: 금융 자산의 특징과 자산 관리 ---- */
+{u:5,ty:"m",q:"자산 관리의 3대 원칙과 금융 자산의 특성에 대한 설명으로 옳은 것은?",o:["일반적으로 안전성이 높은 자산일수록 기대 수익성도 함께 높아진다","주식은 예금보다 안전성은 낮지만 기대 수익성은 높다","예금은 주식이나 채권보다 원금 손실 위험이 크다","요구불예금은 정기예금에 비해 유동성이 낮다"],a:1,
+ s:"<b>주식은 안전성이 낮지만 기대 수익성이 높습니다.</b> 안전성과 수익성은 서로 반비례 관계(High Risk, High Return)입니다."},
+{u:5,ty:"m",q:"주식과 채권의 차이점에 대한 설명으로 옳지 <u>않은</u> 것은?",o:["주식은 주식회사의 지분을 나타내며, 채권은 빚을 나타내는 채무 증서이다","주식은 만기가 없으나, 채권은 만기가 정해져 있다","주식은 배당금과 시세차익을 얻고, 채권은 확정 이자와 시세차익을 얻는다","회사가 부도나서 청산할 때 남은 재산 분배 순위는 주주가 채권자보다 우선한다"],a:3,
+ s:"회사가 망했을 때 잔여재산 청구권은 <b>채권자가 주주보다 우선</b>합니다. 주주는 가장 마지막 순위입니다."},
+{u:5,ty:"b",q:"투자 위험을 줄이기 위해 '계란을 한 바구니에 담지 마라'는 격언처럼 성격이 다른 여러 자산에 나누어 투자하는 것을 ( ) 투자라 한다.",a:["분산","분산 투자","분산투자","포트폴리오"],
+ s:"<b>분산 투자(포트폴리오 투자)</b>입니다."},
+{u:5,ty:"o",q:"예금자보호법에 따르면 주식, 채권, 펀드 등 실적 배당형 투자 상품도 금융회사별로 1인당 5,000만 원까지 원금이 보장된다.",a:0,
+ s:"틀립니다. 예금자보호법은 <b>은행의 예금·적금 등 보호 대상 상품에만 적용</b>되며, 주식·채권·펀드는 보호 대상이 아닙니다."},
+{u:5,ty:"b",q:"예금자보호법에 의해 보호되는 한도는 금융회사별로 1인당 원금과 이자를 합하여 최고 ( )만 원까지이다.",a:["5000","5,000","오천"],
+ s:"<b>5,000만 원</b>입니다."},
+{u:5,ty:"m",q:"펀드(Fund, 집합투자상품)에 대한 설명으로 옳은 것은?",o:["투자 원금이 국가에 의해 100% 보장된다","소액으로도 전문가를 통해 다양한 주식과 채권에 분산 투자할 수 있다","투자로 인한 손실이 발생하면 자산운용사가 전액 물어준다","예금자보호법에 의해 1인당 5,000만 원까지 보호된다"],a:1,
+ s:"펀드는 소액으로 전문가를 통한 <b>분산 투자</b>가 가능하지만, <b>실적 배당 원칙에 따라 원금 손실 위험</b>이 투자자에게 귀속됩니다."},
+
+/* ---- 6단원: 생애 주기와 금융 생활 설계 ---- */
+{u:6,ty:"m",q:"생애 주기(Life Cycle)와 소득·소비 곡선에 대한 설명으로 옳은 것은?",o:["유소년기는 소득이 소비보다 많아 저축이 발생하는 흑자 단계이다","노년기는 은퇴로 인해 소득이 줄어들고 소비가 소득을 초과하는 적자 단계이다","인생 전체에 걸쳐 소득 곡선은 일정하게 수평선을 유지한다","중장년기에는 소득이 완전히 단절되므로 부채를 지지 않는 것이 불가능하다"],a:1,
+ s:"노년기는 은퇴로 인해 근로 소득이 단절되어 <b>소비가 소득을 초과하는 적자 인생 단계</b>입니다."},
+{u:6,ty:"m",q:"안정적인 노후 보장을 위해 구축하는 '3층 연금 체계'의 1층부터 3층까지 순서대로 바르게 짝지어진 것은?",o:["퇴직연금 → 국민연금 → 개인연금","국민연금 → 퇴직연금 → 개인연금","개인연금 → 국민연금 → 퇴직연금","국민연금 → 개인연금 → 퇴직연금"],a:1,
+ s:"<b>1층 국민연금(공적) → 2층 퇴직연금(기업) → 3층 개인연금(사적)</b> 체계입니다."},
+{u:6,ty:"b",q:"시간의 흐름에 따라 유소년기, 청년기, 중장년기, 노년기를 거치며 소득과 소비가 변화하는 인생의 단계를 ( )라 한다.",a:["생애 주기","생애주기"],
+ s:"<b>생애 주기(Life Cycle)</b>입니다."},
+{u:6,ty:"o",q:"재무 설계를 할 때는 은퇴 후 노년기에 발생할 의료비와 생활비는 고려할 필요 없이 현재의 청년기 소비만을 극대화해야 한다.",a:0,
+ s:"틀립니다. 재무 설계의 핵심은 <b>생애 전체에 걸쳐 소득과 소비의 균형을 맞추고 노후를 대비</b>하는 것입니다."},
+{u:6,ty:"m",q:"고령화 사회에서 개인이 건전한 금융 생활을 영위하기 위한 태도로 가장 적절한 것은?",o:["고수익을 보장한다는 불법 금융 피라미드에 전 재산을 투자한다","자신의 소득 수준과 위험 감수 능력을 고려하여 장기적인 생애 재무 계획을 세운다","이자율이나 물가상승률을 전혀 고려하지 않고 현금만 장롱에 보관한다","노후 준비는 오직 국가에만 전적으로 의존하고 스스로는 저축하지 않는다"],a:1,
+ s:"자신의 생애 주기에 맞추어 <b>수익성과 안전성을 고려한 균형 있는 장기 재무 설계</b>를 실천해야 합니다."}
+];
+
+/* ---------- 퀴즈 렌더링 공통 ---------- */
+function qHTML(item,idx,prefix){
+ const label=item.ty==="m"?"객관식":item.ty==="o"?"O / X":"빈칸";
+ let body="";
+ if(item.ty==="m"){
+  body=`<div class="opts">`+item.o.map((o,i)=>
+   `<div class="opt" id="${prefix}-${idx}-${i}" onclick="pick('${prefix}',${idx},${i})"><i>${i+1}</i><span>${o}</span></div>`).join('')+`</div>`;
+ }else if(item.ty==="o"){
+  body=`<div class="opts">
+   <div class="opt" id="${prefix}-${idx}-1" onclick="pick('${prefix}',${idx},1)"><i>O</i><span>맞다</span></div>
+   <div class="opt" id="${prefix}-${idx}-0" onclick="pick('${prefix}',${idx},0)"><i>X</i><span>틀리다</span></div></div>`;
+ }else{
+  const cnt=Array.isArray(item.a)&&item.q.split('( )').length-1>1?2:1;
+  body=`<div style="display:flex;gap:10px;flex-wrap:wrap">`+
+   Array.from({length:cnt},(_,i)=>`<input class="blank" id="${prefix}-${idx}-b${i}" placeholder="정답 ${cnt>1?i+1:''} 입력">`).join('')+`</div>`;
+ }
+ return `<div class="q" id="${prefix}-q-${idx}">
+   <div class="q-top"><div class="q-no">${idx+1}</div>
+   <div class="q-txt">${item.q}<span class="q-type">${label}</span></div></div>
+   ${body}
+   <div class="sol" id="${prefix}-s-${idx}"></div></div>`;
+}
+
+const picked={quiz:{},exam:{}};
+
+function pick(prefix,idx,val){
+ picked[prefix][idx]=val;
+ const q=document.getElementById(prefix+'-q-'+idx);
+ q.querySelectorAll('.opt').forEach(o=>o.classList.remove('sel'));
+ document.getElementById(`${prefix}-${idx}-${val}`).classList.add('sel');
+}
+
+function normalize(s){return (s||"").replace(/\s|·|,/g,'').trim();}
+
+function gradeSet(list,prefix,resultId,scoreId){
+ let right=0;
+ list.forEach((item,idx)=>{
+  const q=document.getElementById(prefix+'-q-'+idx);
+  const sol=document.getElementById(prefix+'-s-'+idx);
+  q.classList.remove('ok','no');
+  let ok=false;
+  if(item.ty==="b"){
+   const inputs=q.querySelectorAll('.blank');
+   const ans=Array.isArray(item.a)?item.a:[item.a];
+   if(inputs.length===1){ ok=ans.some(a=>normalize(a)===normalize(inputs[0].value)); }
+   else{ ok=inputs.length===ans.length && Array.from(inputs).every((inp,i)=>normalize(inp.value)===normalize(ans[i])); }
+   inputs.forEach(i=>i.style.borderColor= ok?'#2f8666':'#c34871');
+   sol.innerHTML=`<b>정답: ${(Array.isArray(item.a)?item.a:[item.a]).join(' / ')}</b><p>${item.s}</p>`;
+  }else{
+   const sel=picked[prefix][idx];
+   ok = sel===item.a;
+   q.querySelectorAll('.opt').forEach((o,i)=>{
+    o.classList.remove('sel','right','wrong');
+    const v=item.ty==="o"?(i===0?1:0):i;
+    if(v===item.a)o.classList.add('right');
+    else if(v===sel)o.classList.add('wrong');
+   });
+   const ansTxt=item.ty==="o"?(item.a===1?"O (맞다)":"X (틀리다)"):`${item.a+1}번 — ${item.o[item.a]}`;
+   sol.innerHTML=`<b>정답: ${ansTxt}</b><p>${item.s}</p>`;
+  }
+  sol.classList.add('on');
+  q.classList.add(ok?'ok':'no');
+  if(ok)right++;
+ });
+ const pct=Math.round(right/list.length*100);
+ const msg = pct>=90?"완벽합니다! 경제와 자산관리 1등급 마스터 달성! 💯":pct>=70?"잘했어요! 오답 외부 효과와 금융 자산 비교만 다시 복습하세요 👍":pct>=50?"조금만 더! [자본주의 전개], [시장 실패와 외부효과] 요약을 다시 읽어보세요 📖":"개념부터 차근차근! [한눈에 보기] → [용어 사전] 순으로 다시 다져봅시다 🌱";
+ const r=document.getElementById(resultId);
+ r.innerHTML=`<div style="font-size:.9rem;color:#fff0f7">채점 결과</div>
+  <div class="big">${right} / ${list.length} <span style="font-size:1.3rem">(${pct}점)</span></div>
+  <div class="msg">${msg}</div>`;
+ r.classList.add('on');
+ if(scoreId)document.getElementById(scoreId).innerHTML=`맞힌 개수 <span>${right}</span> / ${list.length}`;
+ r.scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+
+/* ---------- 소단원별 연습문제 ---------- */
+let curUnit=1,quizList=[];
+document.getElementById('quiz-tabs').innerHTML=units.map(u=>
+ `<div class="chip ${u.k===1?'on':''}" onclick="setUnit(${u.k},this)">${u.k}. ${u.n}</div>`).join('');
+
+function setUnit(k,el){
+ curUnit=k;
+ document.querySelectorAll('#quiz-tabs .chip').forEach(c=>c.classList.remove('on'));
+ el.classList.add('on');
+ renderQuiz();
+}
+
+function renderQuiz(){
+ quizList=bank.filter(b=>b.u===curUnit);
+ picked.quiz={};
+ document.getElementById('quiz-score').innerHTML=`선택한 단원: <span>${units.find(u=>u.k===curUnit).n}</span> · 총 ${quizList.length}문항`;
+ document.getElementById('quiz-result').classList.remove('on');
+ document.getElementById('quiz-body').innerHTML=quizList.map((q,i)=>qHTML(q,i,'quiz')).join('');
+ document.querySelector('.main').scrollTop=0;
+}
+
+function gradeQuiz(){gradeSet(quizList,'quiz','quiz-result',null);}
+
+function showAllSol(){
+ quizList.forEach((item,idx)=>{
+  const sol=document.getElementById('quiz-s-'+idx);
+  const ansTxt=item.ty==="b"?(Array.isArray(item.a)?item.a:[item.a]).join(' / ')
+   :item.ty==="o"?(item.a===1?"O (맞다)":"X (틀리다)"):`${item.a+1}번 — ${item.o[item.a]}`;
+  sol.innerHTML=`<b>정답: ${ansTxt}</b><p>${item.s}</p>`;
+  sol.classList.add('on');
+ });
+}
+renderQuiz();
+
+/* ---------- 실전 모의고사 ---------- */
+let examList=[];
+function newExam(){
+ const pool=[...bank];
+ for(let i=pool.length-1;i>0;i--){
+   const j=Math.floor(Math.random()*(i+1));
+   [pool[i],pool[j]]=[pool[j],pool[i]];
+ }
+ examList=pool.slice(0,20);
+ picked.exam={};
+ document.getElementById('exam-result').classList.remove('on');
+ document.getElementById('exam-score').textContent='20문항 · 풀이 중…';
+ document.getElementById('exam-body').innerHTML=examList.map((q,i)=>qHTML(q,i,'exam')).join('');
+ document.querySelector('.main').scrollTop=0;
+}
+
+function gradeExam(){
+ if(!examList.length)return newExam();
+ gradeSet(examList,'exam','exam-result','exam-score');
+}
+newExam();
+</script>
+</body>
+</html>
