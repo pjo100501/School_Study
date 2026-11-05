@@ -1,0 +1,1296 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>미래엔 통합사회Ⅱ 완전정복 | 2. 사회 정의와 불평등 마스터 - Pink Edition</title>
+<style>
+:root{
+  --primary:#0F172A; --primary-soft:#1E293B;
+  --accent:#E11D48; --blue:#2563EB; --blue-dark:#1D4ED8;
+  --green:#059669; --amber:#D97706; --purple:#7C3AED;
+  --bg:#F1F5F9; --card:#FFFFFF; --line:#E2E8F0; --line-2:#CBD5E1;
+  --text:#334155; --text-dim:#64748B;
+  --r:18px;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;
+  font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Segoe UI",Roboto,sans-serif;}
+html,body{height:100%;}
+body{background:var(--bg);color:var(--text);display:flex;justify-content:center;align-items:center;overflow:hidden;}
+
+.app{width:100%;max-width:1440px;height:100vh;max-height:1000px;background:var(--card);
+  border-radius:var(--r);box-shadow:0 24px 50px rgba(15,23,42,.12);display:grid;
+  grid-template-columns:290px 1fr;overflow:hidden;border:1px solid var(--line);}
+
+/* ========== 사이드바 ========== */
+.sidebar{background:linear-gradient(170deg,#0F172A,#1E293B);display:flex;flex-direction:column;padding:26px 16px 16px;}
+.brand{font-size:1.3rem;font-weight:800;color:#fff;letter-spacing:-.5px;}
+.brand-sub{font-size:.78rem;color:#94A3B8;margin:6px 0 22px;line-height:1.5;}
+.nav{list-style:none;display:flex;flex-direction:column;gap:7px;flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;}
+.nav li{padding:15px 16px;border-radius:12px;font-size:.95rem;font-weight:700;color:#CBD5E1;
+  cursor:pointer;transition:.18s;display:flex;align-items:center;gap:10px;min-height:50px;}
+.nav li:active{transform:scale(.97);}
+.nav li.on{background:#fff;color:var(--primary);box-shadow:0 4px 14px rgba(0,0,0,.25);}
+.credit{margin-top:14px;padding:14px 12px;border-top:1px solid rgba(255,255,255,.12);
+  font-size:.72rem;color:#94A3B8;line-height:1.7;text-align:center;}
+.credit b{color:#E2E8F0;display:block;font-size:.8rem;margin-bottom:3px;}
+
+/* ========== 본문 ========== */
+.main{padding:28px 34px 34px;overflow-y:auto;-webkit-overflow-scrolling:touch;background:#FBFCFE;}
+.page{display:none;}
+.page.on{display:block;animation:fade .28s ease;}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+.head{border-bottom:3px solid var(--line);padding-bottom:16px;margin-bottom:22px;}
+.head h2{font-size:1.75rem;font-weight:800;color:var(--primary);letter-spacing:-.6px;}
+.head p{font-size:.92rem;color:var(--text-dim);margin-top:6px;line-height:1.6;}
+
+/* 칩 / 버튼 */
+.chips{display:flex;flex-wrap:wrap;gap:9px;margin-bottom:18px;}
+.chip{padding:11px 18px;border-radius:999px;border:2px solid var(--line-2);background:#fff;
+  font-size:.88rem;font-weight:700;color:var(--primary-soft);cursor:pointer;transition:.18s;min-height:44px;}
+.chip.on{background:var(--primary);color:#fff;border-color:var(--primary);}
+.btn{padding:13px 24px;border:none;border-radius:12px;background:var(--blue);color:#fff;
+  font-size:.95rem;font-weight:800;cursor:pointer;min-height:48px;transition:.18s;}
+.btn:active{transform:scale(.97);}
+.btn.ghost{background:#fff;color:var(--primary);border:2px solid var(--line-2);}
+.btn.red{background:var(--accent);} .btn.green{background:var(--green);}
+
+/* 카드 공통 */
+.card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:22px;margin-bottom:16px;
+  box-shadow:0 2px 8px rgba(15,23,42,.04);}
+.card h3{font-size:1.15rem;font-weight:800;color:var(--primary);margin-bottom:12px;
+  display:flex;align-items:center;gap:8px;}
+.card h4{font-size:1rem;font-weight:800;color:var(--blue-dark);margin:16px 0 8px;}
+.card p,.card li{font-size:.93rem;line-height:1.75;color:var(--text);}
+.card ul{padding-left:20px;} .card li{margin-bottom:5px;}
+.tag{display:inline-block;padding:3px 10px;border-radius:7px;font-size:.74rem;font-weight:800;margin-left:6px;vertical-align:middle;}
+.t-hot{background:#FEE2E2;color:#B91C1C;} .t-mid{background:#FEF3C7;color:#B45309;}
+.t-new{background:#DCFCE7;color:#15803D;} .t-key{background:#DBEAFE;color:#1D4ED8;}
+
+.box{border-left:5px solid;border-radius:10px;padding:15px 17px;margin-top:12px;}
+.box h6{font-size:.9rem;font-weight:800;margin-bottom:6px;}
+.box p{font-size:.9rem;line-height:1.7;}
+.b-why{background:#EFF6FF;border-color:var(--blue);} .b-why h6{color:#1D4ED8;} .b-why p{color:#1E3A8A;}
+.b-ex{background:#FEF3C7;border-color:var(--amber);} .b-ex h6{color:#B45309;} .b-ex p{color:#78350F;}
+.b-test{background:#FFE4E6;border-color:var(--accent);} .b-test h6{color:#BE123C;} .b-test p{color:#881337;}
+.b-tip{background:#F3E8FF;border-color:var(--purple);} .b-tip h6{color:#6D28D9;} .b-tip p{color:#4C1D95;}
+
+/* 사상가/제도 그리드 */
+.kgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;margin-bottom:18px;}
+.kbtn{background:#fff;border:2px solid var(--line);padding:14px 8px;border-radius:12px;text-align:center;
+  font-weight:700;font-size:.9rem;color:var(--primary);cursor:pointer;transition:.18s;min-height:52px;
+  display:flex;align-items:center;justify-content:center;}
+.kbtn:active{transform:scale(.96);}
+.kbtn.on{background:var(--blue);color:#fff;border-color:var(--blue);}
+.kbtn.hot{border-color:#FDA4AF;}
+
+/* 테이블 */
+table{width:100%;border-collapse:collapse;margin-top:10px;font-size:.89rem;}
+th,td{border:1px solid var(--line);padding:11px 12px;text-align:left;line-height:1.6;}
+th{background:#F1F5F9;font-weight:800;color:var(--primary);}
+td b{color:var(--blue-dark);}
+tr:nth-child(even) td{background:#FAFBFC;}
+
+/* 타임라인 */
+.tl{position:relative;padding-left:30px;}
+.tl::before{content:'';position:absolute;left:9px;top:6px;bottom:6px;width:3px;background:var(--line-2);border-radius:2px;}
+.tl-item{position:relative;margin-bottom:16px;}
+.tl-item::before{content:'';position:absolute;left:-26px;top:6px;width:13px;height:13px;border-radius:50%;
+  background:#fff;border:3px solid var(--blue);}
+.tl-item.hot::before{border-color:var(--accent);}
+.tl-y{font-size:.82rem;font-weight:800;color:var(--accent);}
+.tl-t{font-size:.95rem;font-weight:700;color:var(--primary);margin:2px 0 3px;}
+.tl-d{font-size:.86rem;color:var(--text-dim);line-height:1.6;}
+
+/* 용어사전 */
+.search{width:100%;padding:15px 18px;border:2px solid var(--line-2);border-radius:12px;font-size:1rem;
+  margin-bottom:16px;outline:none;min-height:50px;}
+.search:focus{border-color:var(--blue);}
+.terms{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.term{background:#fff;border:1px solid var(--line);border-left:4px solid var(--blue);border-radius:10px;padding:14px 16px;}
+.term dt{font-size:.98rem;font-weight:800;color:var(--primary);margin-bottom:5px;}
+.term dd{font-size:.87rem;line-height:1.65;color:var(--text);}
+.term .who{font-size:.75rem;color:var(--accent);font-weight:800;}
+
+/* 퀴즈 */
+.qbar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:18px;
+  background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px 18px;}
+.score{font-size:1.05rem;font-weight:800;color:var(--primary);}
+.score span{color:var(--accent);}
+.q{background:#fff;border:1px solid var(--line);border-radius:14px;padding:20px 22px;margin-bottom:14px;}
+.q.ok{border-color:#86EFAC;background:#F0FDF4;}
+.q.no{border-color:#FCA5A5;background:#FEF2F2;}
+.q-top{display:flex;gap:10px;align-items:flex-start;margin-bottom:14px;}
+.q-no{flex-shrink:0;width:32px;height:32px;border-radius:9px;background:var(--primary);color:#fff;
+  display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.86rem;}
+.q-txt{font-size:1rem;font-weight:700;color:var(--primary);line-height:1.65;}
+.q-type{display:inline-block;padding:2px 9px;border-radius:6px;font-size:.7rem;font-weight:800;
+  background:#E0E7FF;color:#4338CA;margin-left:6px;vertical-align:middle;}
+.opts{display:flex;flex-direction:column;gap:8px;}
+.opt{padding:13px 16px;border:2px solid var(--line);border-radius:11px;background:#fff;cursor:pointer;
+  font-size:.93rem;line-height:1.5;transition:.15s;min-height:48px;display:flex;align-items:center;gap:10px;}
+.opt:active{transform:scale(.99);}
+.opt.sel{border-color:var(--blue);background:#EFF6FF;font-weight:700;}
+.opt.right{border-color:var(--green);background:#ECFDF5;font-weight:700;}
+.opt.wrong{border-color:var(--accent);background:#FEF2F2;}
+.opt i{flex-shrink:0;width:24px;height:24px;border-radius:50%;border:2px solid var(--line-2);
+  display:flex;align-items:center;justify-content:center;font-style:normal;font-size:.75rem;font-weight:800;color:var(--text-dim);}
+.opt.sel i{border-color:var(--blue);background:var(--blue);color:#fff;}
+.opt.right i{border-color:var(--green);background:var(--green);color:#fff;}
+.opt.wrong i{border-color:var(--accent);background:var(--accent);color:#fff;}
+.blank{width:170px;padding:9px 12px;border:2px solid var(--line-2);border-radius:9px;font-size:.95rem;outline:none;}
+.blank:focus{border-color:var(--blue);}
+.sol{display:none;margin-top:13px;padding:14px 16px;background:#F8FAFC;border-left:4px solid var(--primary);border-radius:9px;}
+.sol.on{display:block;}
+.sol b{color:var(--green);} .sol p{font-size:.89rem;line-height:1.7;margin-top:5px;}
+
+.result{display:none;background:linear-gradient(135deg,#1E293B,#334155);color:#fff;border-radius:16px;
+  padding:26px;margin-bottom:16px;text-align:center;}
+.result.on{display:block;}
+.result .big{font-size:2.6rem;font-weight:800;margin:6px 0;}
+.result .msg{font-size:.95rem;color:#CBD5E1;line-height:1.6;}
+
+.foot{text-align:center;padding:22px 0 8px;font-size:.78rem;color:#94A3B8;line-height:1.8;border-top:1px solid var(--line);margin-top:24px;}
+.foot b{color:var(--text-dim);}
+
+@media (max-width:1100px){
+  .app{grid-template-columns:230px 1fr;} .terms{grid-template-columns:1fr;}
+}
+@media (max-width:760px){
+  html,body{height:auto;min-height:100%;overflow:auto;align-items:stretch}
+  .app{display:flex;flex-direction:column;height:auto;min-height:100vh;max-height:none;border-radius:0;border:0}
+  .sidebar{padding:14px 12px 10px;flex-shrink:0}
+  .brand{font-size:1.1rem}.brand-sub{margin:4px 0 10px}
+  .nav{flex-direction:row;gap:6px;overflow-x:auto;flex:none;padding:2px 0 4px}
+  .nav li{min-width:max-content;padding:10px 12px;min-height:44px;font-size:.83rem}
+  .credit{display:none}.main{padding:18px 14px 30px;overflow:visible;flex:1}
+  .head h2{font-size:1.4rem}.card{padding:16px}.kgrid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .terms{grid-template-columns:1fr}.chips{gap:6px}.chip{padding:8px 12px}
+  .blank{max-width:100%;width:140px}table{display:block;overflow-x:auto;white-space:normal}
+  th,td{min-width:95px} .qbar{padding:12px}.q{padding:16px 14px}
+}
+@media print{html,body{height:auto;overflow:visible}.app{display:block;height:auto;max-height:none;box-shadow:none;border:0}.sidebar{display:none}.main{overflow:visible;padding:0}.page{display:block!important;break-before:page}.qbar,.chips,.btn{display:none!important}.sol{display:block!important}.card,.q{break-inside:avoid}}
+
+/* ================================================================
+   PINK EDITION — coherent rose palette, large legible text, responsive.
+   ================================================================ */
+:root{
+ --primary:#682744; --primary-soft:#80435f;
+ --accent:#c43a75; --blue:#bd427b; --blue-dark:#962f60;
+ --green:#25765e; --amber:#aa5b79; --purple:#9e548f;
+ --bg:#fff4f8; --card:#fff; --line:#f2dbe6; --line-2:#e6bbcf;
+ --text:#59374a; --text-dim:#815e72;
+ --r:22px;
+}
+body{
+ background:radial-gradient(circle at 8% 5%,#ffe8f0 0,transparent 40%),
+            linear-gradient(135deg,#fff1f7 0%,#fff9fc 48%,#fcecf5 100%);
+ color:var(--text);
+}
+.app{
+ max-width:1440px;
+ background:#fff8fb;
+ border:1px solid #edcadb;
+ border-radius:25px;
+ box-shadow:0 28px 90px rgba(145,49,94,.15),0 4px 14px rgba(145,49,94,.05);
+}
+.sidebar{
+ position:relative;
+ background:linear-gradient(170deg,#8c3463 0%,#b64d81 51%,#d779a0 100%);
+ padding:30px 18px 18px;
+}
+.sidebar::before{
+ content:'';position:absolute;right:13px;top:10px;width:110px;height:110px;
+ border:1px solid rgba(255,255,255,.17);border-radius:50%;pointer-events:none;
+}
+.sidebar::after{
+ content:'';position:absolute;right:45px;top:44px;width:42px;height:42px;
+ background:rgba(255,255,255,.09);border-radius:50%;pointer-events:none;
+}
+.brand{
+ position:relative;z-index:1;font-size:1.35rem;line-height:1.32;
+ font-weight:900;color:#fff;letter-spacing:-.7px;
+ text-shadow:0 1px 2px rgba(85,18,52,.16);
+}
+.brand::before{
+ content:'';display:block;width:35px;height:5px;margin-bottom:14px;
+ background:#ffd4e5;border-radius:20px;
+}
+.brand-sub{position:relative;z-index:1;color:#ffe5ef;font-size:.84rem;line-height:1.7;margin:12px 0 27px;}
+.nav{gap:8px;}
+.nav li{
+ color:#fff0f6;font-weight:700;font-size:.96rem;
+ border:1px solid transparent;padding:14px 15px;
+ border-radius:13px;transition:background .15s ease,transform .15s ease;
+}
+.nav li:hover{background:rgba(255,255,255,.13);}
+.nav li.on{
+ color:#8c2e5c;background:#fff8fc;
+ border-color:rgba(255,255,255,.8);
+ box-shadow:0 7px 18px rgba(102,25,62,.17);
+}
+.credit{color:#ffe0eb;border-top-color:rgba(255,255,255,.26);font-size:.77rem;}
+.credit b{color:#fff;font-size:.89rem;}
+.main{background:linear-gradient(180deg,#fff8fb 0,#fff 55%,#fffafc 100%);padding:32px 38px 38px;}
+.head{position:relative;padding:0 0 21px 18px;border-bottom:2px solid #f4dae6;margin-bottom:24px;}
+.head::before{
+ content:'';position:absolute;top:5px;bottom:23px;left:0;width:5px;
+ background:linear-gradient(180deg,#d94a87,#ffc1d9);border-radius:10px;
+}
+.head h2{font-size:1.83rem;font-weight:900;color:#752c50;letter-spacing:-.75px;line-height:1.35;}
+.head p{font-size:.97rem;color:#806073;line-height:1.74;margin-top:9px;}
+.card{
+ border:1px solid #f0d7e3;border-radius:18px;padding:23px 24px;
+ background:#fff;box-shadow:0 6px 24px rgba(153,49,93,.055);
+}
+.card h3{font-size:1.18rem;color:#762b52;line-height:1.45;gap:8px;}
+.card h4{color:#9e3768;}
+.card p,.card li{font-size:.98rem;line-height:1.87;color:#50384a;}
+.card li::marker{color:#c65788;}
+.tag{margin-left:5px;border-radius:6px;letter-spacing:-.1px;}
+.t-hot{background:#ffe5ef;color:#ac295c;}
+.t-mid{background:#fff0e7;color:#99543f;}
+.t-new{background:#e8f5ef;color:#246649;}
+.t-key{background:#f4e9ff;color:#75468d;}
+.chips{gap:9px;margin-bottom:21px;}
+.chip,.kbtn,.btn,.opt{font-family:inherit;}
+.chip{
+ background:#fff;color:#84405f;border-color:#e9c3d5;
+ box-shadow:0 2px 3px rgba(138,38,82,.025);font-size:.94rem;
+}
+.chip:hover,.kbtn:hover{border-color:#c95c90;background:#fff5f9;}
+.chip.on{background:#b73e78;color:#fff;border-color:#b73e78;box-shadow:0 4px 12px rgba(178,55,113,.16);}
+.btn{
+ background:linear-gradient(135deg,#c2437c,#a83368);
+ border:1px solid #b53e73;color:#fff;
+ box-shadow:0 3px 10px rgba(166,47,98,.12);
+ border-radius:11px;font-size:.94rem;
+}
+.btn:hover{filter:brightness(1.04);}
+.btn.ghost{background:#fff;color:#8e365f;border:2px solid #e8bed0;box-shadow:none;}
+.btn.ghost:hover{background:#fff4f9;}
+.btn.red{background:#ab2e59;border-color:#ab2e59;}
+.btn.green{background:linear-gradient(135deg,#b83c77,#902d60);border-color:#9e315f;}
+.box{border-radius:11px;border-left-width:5px;padding:17px 18px;}
+.box h6{font-size:.96rem;}
+.box p{font-size:.95rem;line-height:1.78;}
+.b-why{background:#fff1f7;border-color:#c84d85;}.b-why h6{color:#90345d;}.b-why p{color:#6c3d57;}
+.b-ex{background:#fff5f0;border-color:#d9948d;}.b-ex h6{color:#a35658;}.b-ex p{color:#76464a;}
+.b-test{background:#fff0f4;border-color:#d04a78;}.b-test h6{color:#a22d5b;}.b-test p{color:#6e3551;}
+.b-tip{background:#f9eff9;border-color:#ba79a8;}.b-tip h6{color:#8b4a7b;}.b-tip p{color:#60465f;}
+.kgrid{grid-template-columns:repeat(auto-fill,minmax(148px,1fr));gap:11px;}
+.kbtn{border-color:#edd1df;color:#7c3155;background:#fff;border-radius:13px;font-size:.93rem;line-height:1.35;padding:12px 6px;}
+.kbtn.hot{border-color:#dc8bb1;}
+.kbtn.on{border-color:#bd437d;background:#bd437d;color:#fff;box-shadow:0 5px 16px rgba(167,53,104,.14);}
+.kbtn.on:hover{background:#a8326c;}
+table{font-size:.93rem;border-collapse:separate;border-spacing:0;}
+th,td{border-right:1px solid #f0dbe5;border-bottom:1px solid #f0dbe5;border-top:0;border-left:0;padding:12px 13px;}
+tr th:first-child,tr td:first-child{border-left:1px solid #f0dbe5;}
+table tr:first-child th{border-top:1px solid #f0dbe5;}
+tr:first-child th:first-child{border-top-left-radius:9px;}
+tr:first-child th:last-child{border-top-right-radius:9px;}
+th{background:#faeaf1;color:#74334e;}
+td{background:#fff;color:#53384a;}
+tr:nth-child(even) td{background:#fffafd;}
+td b{color:#993761;}
+.tl::before{background:#eed3df;}
+.tl-item::before{border-color:#be5488;background:#fff7fb;}
+.tl-item.hot::before{border-color:#b62b67;background:#ffdcea;}
+.tl-y{color:#bb3c75;font-size:.88rem;}
+.tl-t{color:#773354;font-size:1rem;}
+.tl-d{color:#765568;font-size:.91rem;}
+.search{background:#fff;color:#643b50;border-color:#e6bfce;border-radius:13px;}
+.search:focus,.blank:focus{border-color:#bd4a81;box-shadow:0 0 0 3px rgba(198,73,130,.12);}
+.search::placeholder{color:#aa8799;}
+.term{border-color:#efd8e3;border-left:4px solid #be5186;border-radius:12px;box-shadow:0 3px 13px rgba(139,44,86,.045);}
+.term dt{color:#8d335d;font-size:1.02rem;}.term dd{color:#5c4050;font-size:.92rem;}.term .who{color:#aa3972;}
+.qbar{border-color:#edd0de;background:#fff7fa;border-radius:14px;}
+.score{color:#713050;}.score span{color:#b43873;}
+.q{border-color:#ecd2df;border-radius:15px;background:#fff;box-shadow:0 3px 14px rgba(140,41,89,.035);}
+.q.ok{background:#f4fbf7;border-color:#85b9a0;}
+.q.no{background:#fff5f8;border-color:#e1a3b9;}
+.q-no{background:#b84479;border-radius:9px;}
+.q-txt{color:#65324d;font-size:1.02rem;}
+.q-type{color:#8c3467;background:#fae4ef;}
+.opt{border-color:#f0dbe4;color:#603e52;border-radius:11px;font-size:.97rem;}
+.opt:hover{background:#fff7fb;border-color:#deb0c8;}
+.opt.sel{border-color:#be5188;background:#fff0f7;color:#793455;}
+.opt.right{border-color:#2f8666;background:#f0fcf5;color:#205c47;}
+.opt.wrong{border-color:#c34871;background:#fff0f4;color:#8d3155;}
+.opt.sel i{border-color:#bd4b83;background:#bd4b83;}.opt.right i{border-color:#2f8666;background:#2f8666;}
+.opt.wrong i{border-color:#bc3a67;background:#bc3a67;}
+.blank{border-color:#e4bfce;background:#fff;color:#60344c;}
+.sol{background:#fff5f9;border-left-color:#b34a7c;color:#5d384c;}
+.sol b{color:#8e2e5b;}
+.result{
+ background:linear-gradient(130deg,#9a3668,#c9578c 65%,#e58bb1);
+ box-shadow:0 6px 20px rgba(155,48,99,.12);
+}
+.result .msg{color:#fff3f8;}
+.foot{border-top-color:#f1dce7;color:#97738a;}.foot b{color:#8b4a69;}
+a{color:#a72e67;}a:hover{color:#7f2252;}
+:focus-visible{outline:3px solid #e079a3;outline-offset:3px;}
+@media (max-width:1100px){.app{grid-template-columns:250px 1fr;}}
+@media (max-width:760px){
+ body{background:#fff7fb;}
+ .app{border-radius:0;box-shadow:none;border:0;}
+ .sidebar{padding:17px 14px 12px;}
+ .sidebar::before{width:75px;height:75px;}
+ .sidebar::after{width:30px;height:30px;right:31px;top:27px;}
+ .brand{font-size:1.15rem;}
+ .brand::before{width:27px;height:4px;margin-bottom:10px;}
+ .brand-sub{font-size:.78rem;margin:5px 0 13px;}
+ .nav{gap:7px;}
+ .nav li{padding:10px 13px;font-size:.9rem;}
+ .main{padding:21px 15px 32px;}
+ .head{padding-left:14px;margin-bottom:18px;}
+ .head h2{font-size:1.48rem;}.head p{font-size:.9rem;}
+ .card{padding:17px 16px;}.card p,.card li{font-size:.94rem;}
+ .kgrid{grid-template-columns:repeat(2,minmax(0,1fr));}
+ .chip{padding:10px 12px;font-size:.87rem;}
+ .q{padding:17px 14px;}.q-txt{font-size:1rem;}
+ .opt{padding:13px 11px;}
+}
+@media print{
+ body,.main{background:#fff!important;color:#000;}
+ .app{border:0;border-radius:0;box-shadow:none;}
+ .card,.q,.term{box-shadow:none;}
+ .head h2,.card h3{color:#502437;}
+ .sidebar{display:none!important;}
+ .page{break-before:page;}
+}
+</style>
+</head>
+<body>
+
+<div class="app">
+  <!-- 사이드바 -->
+  <aside class="sidebar">
+    <div class="brand">통합사회Ⅱ 완전정복</div>
+    <div class="brand-sub">미래엔(정창우 외) · 2. 사회 정의와 불평등<br>개념요약 · 정의관/사상가 · 용어 · 문제풀이 마스터</div>
+    <ul class="nav">
+      <li class="on" onclick="go(event,'p-home')">한눈에 보기</li>
+      <li onclick="go(event,'p-thinker')">핵심 사상가·제도</li>
+      <li onclick="go(event,'p-theme')">핵심 테마 요약</li>
+      <li onclick="go(event,'p-term')">시험 용어 사전</li>
+      <li onclick="go(event,'p-quiz')">소단원별 연습문제</li>
+      <li onclick="go(event,'p-exam')">실전 모의고사</li>
+    </ul>
+    <div class="credit"><b>미래엔 통합사회Ⅱ 연구회</b>대표저자 : 정창우 (서울대 교수 외)</div>
+  </aside>
+
+  <!-- 본문 -->
+  <main class="main">
+
+    <!-- ===== 한눈에 보기 ===== -->
+    <section id="p-home" class="page on">
+      <div class="head">
+        <h2>2. 사회 정의와 불평등 한눈에 보기</h2>
+        <p>정의의 기준부터 자유주의 vs 공동체주의 정의관, 사회 복지 제도와 공간 불평등까지 핵심을 잡으세요. <span class="tag t-hot">최빈출</span>은 내신·수능 1순위 개념입니다.</p>
+      </div>
+
+      <div class="card">
+        <h3>1등급 완성을 위한 핵심 학습 주제 10선</h3>
+        <table>
+          <tr><th style="width:52px">번호</th><th style="width:220px">핵심 주제</th><th>반드시 기억할 출제 포인트 한 줄</th></tr>
+          <tr><td>1</td><td><b>정의의 3대 구분</b></td><td><b>분배적 정의</b>(가치 배분), <b>교정적 정의</b>(피해 보상·처벌), <b>절차적 정의</b>(공정한 합의 절차)의 개념 구분</td></tr>
+          <tr><td>2</td><td><b>분배적 정의의 3대 기준</b></td><td><b>능력</b>(잠재력·자격) vs <b>업적</b>(결과·생산성) vs <b>필요</b>(기본적 욕구·약자 배려)의 장단점 비교</td></tr>
+          <tr><td>3</td><td><b>교정적 정의와 형벌관</b></td><td><b>응보주의</b>(칸트: 죄를 지은 만큼 상응하는 죗값을 치름) ↔ <b>예방주의</b>(공리주의: 범죄 예방과 사회 방위)</td></tr>
+          <tr><td>4</td><td><b>롤스의 정의론</b></td><td>원초적 입장과 <b>무지의 베일</b> → <b>제1원칙(평등한 자유)</b> &gt; <b>제2원칙(공정한 기회균등 &gt; 차등의 원칙)</b></td></tr>
+          <tr><td>5</td><td><b>노직의 자유지상주의</b></td><td><b>소유 권리론</b>(취득·양도·교정의 정의), <b>최소 국가론</b>, 강제적 세금을 통한 소득 재분배는 '강제 노동'과 같다고 비판</td></tr>
+          <tr><td>6</td><td><b>왈처의 복합 평등론</b></td><td>각 삶의 영역(돈, 권력, 교육 등)마다 고유한 분배 기준이 존재하며, <b>한 영역의 재화가 다른 영역을 지배(전제)해서는 안 됨</b></td></tr>
+          <tr><td>7</td><td><b>매킨타이어의 공동체주의</b></td><td>개인은 진공상태의 원자가 아니라 공동체의 역사와 서사에 뿌리내린 <b>연고적 자아</b>, 과거 세대의 과오에 대한 현세대의 도덕적 책임</td></tr>
+          <tr><td>8</td><td><b>사회 불평등의 3대 양상</b></td><td><b>소득 불평등</b>(양극화, 지니계수), <b>사회적 불평등</b>(비정규직·유리천장), <b>공간 불평등</b>(수도권 과밀 vs 지방 소멸)</td></tr>
+          <tr><td>9</td><td><b>사회 복지 제도 3체계</b></td><td><b>사회보험</b>(강제 가입, 사전 예방, 소득 비례 기여) ↔ <b>공공부조</b>(전액 국비, 사후 처방, 소득 재분배 효과 극대, 낙인감)</td></tr>
+          <tr><td>10</td><td><b>정의로운 사회 실현 방안</b></td><td><b>적극적 우대조치</b>(실질적 기회균등과 역차별 논쟁), <b>성장 거점 개발 vs 균형 개발</b>, 조세 제도(누진세)를 통한 소득 재분배</td></tr>
+        </table>
+      </div>
+
+      <div class="card">
+        <h3>반드시 외우는 정의 사상사 &amp; 불평등 극복 제도 연표</h3>
+        <div class="tl" id="timeline"></div>
+      </div>
+
+      <div class="card" id="verification-card">
+        <h3>개념 및 학술 쟁점 검증 안내 (미래엔 정창우 교과서 기준)</h3>
+        <p>이 학습 자료는 2022 개정 교육과정 고등학교 통합사회2 교과서(미래엔, 대표저자 정창우 외) 및 교육과정평가원 수능 기출 분석을 바탕으로 시험에 자주 출제되는 핵심 오답 지문을 엄밀히 검증하였습니다.</p>
+        <ul style="margin-top:10px">
+          <li><b>롤스(Rawls)의 차등의 원칙 오해:</b> 롤스는 결과를 똑같이 나누는 결과적 평등주의자가 아닙니다. <b>최소 수혜자에게 최대의 이익이 돌아간다면 경제적 불평등을 정당한 것으로 인정</b>합니다.</li>
+          <li><b>노직(Nozick)의 복지·자선에 대한 입장:</b> 노직은 개인이나 민간이 자발적으로 기부하고 돕는 자선 활동을 반대하지 않습니다. 오직 <b>국가가 법과 세금으로 강제 징수하여 재분배하는 것을 반대</b>할 뿐입니다.</li>
+          <li><b>왈처(Walzer)의 복합 평등 개념:</b> 왈처는 모든 재화를 모든 사람에게 똑같이 나누어주자는 '단순 평등'을 비판하고, <b>한 영역에서 성공한 재화(예: 부)가 다른 영역(예: 정치 권력, 대학 입학)을 지배하거나 매수하지 못하게 하는 '복합 평등'</b>을 주장했습니다.</li>
+          <li><b>사회보험과 공공부조의 소득 재분배 효과:</b> 사회보험도 소득 비례 보험료와 균등 급여로 인해 소득 재분배 효과가 있으나, <b>조세로 전액 충당하여 빈곤층에게만 집중 지급하는 '공공부조'가 소득 재분배 효과는 훨씬 더 큽니다.</b></li>
+          <li><b>공간 불평등의 배경:</b> 과거 경제 성장 초기에는 효율성을 극대화하기 위해 수도권과 남동 임해 지역에 집중 투자하는 <b>'성장 거점 개발 방식'</b>을 채택하였고, 이것이 오늘날 수도권 과밀과 지방 소멸이라는 공간 불평등의 역사적 원인이 되었습니다.</li>
+        </ul>
+        <p style="margin-top:12px;font-size:.82rem"><b>확인 자료:</b>
+        <a href="https://encykorea.aks.ac.kr" target="_blank" rel="noopener">한국민족문화대백과사전</a> ·
+        <a href="https://kostat.go.kr" target="_blank" rel="noopener">통계청 지니계수 및 소득 5분위 배율</a> ·
+        <a href="https://www.mohw.go.kr" target="_blank" rel="noopener">보건복지부 사회보장기본법</a> ·
+        <a href="https://plato.stanford.edu/entries/justice-distributive/" target="_blank" rel="noopener">스탠퍼드 철학 백과(Stanford Encyclopedia of Philosophy)</a></p>
+      </div>
+
+      <div class="card">
+        <h3>시험 직전 1분 암기법</h3>
+        <div class="box b-tip">
+          <h6>4대 사상가 정의관 1초 구별 공식</h6>
+          <p><b>롤스</b>: 공정으로서의 정의, 원초적 입장, 무지의 베일, 최소 수혜자 배려(차등의 원칙)<br>
+          <b>노직</b>: 자유지상주의, 소유 권리론, 취득·양도·교정의 정의, 최소 국가(강제 재분배 반대)<br>
+          <b>왈처</b>: 공동체주의, 복합 평등론, 다원적 정의, 영역별 자율성, 부의 정치 지배(전제) 금지<br>
+          <b>매킨타이어</b>: 공동체주의, 연고적·서사적 자아, 역사와 전통의 유산 승계, 과거 과오 반성</p>
+        </div>
+        <div class="box b-tip">
+          <h6>사회 복지 제도 3분류 판별 공식</h6>
+          <p><b>사회보험</b>: <b>강제 가입</b> / 비용은 <b>능력별 분담</b> / <b>사전 예방적</b> (국민연금, 건강보험, 고용보험, 산재보험, 장기요양)<br>
+          <b>공공부조</b>: <b>선별 지원</b> / 비용은 <b>국가 재정 전액 부담</b> / <b>사후 처방적</b> / 소득 재분배 극대화 / 낙인감 (기초생활보장, 기초연금, 의료급여)<br>
+          <b>사회서비스</b>: <b>비금전적 지원</b> (상담, 돌봄, 재활, 사회 시설 이용)</p>
+        </div>
+        <div class="box b-tip">
+          <h6>분배 기준 3요소 장단점 암기</h6>
+          <p><b>업적</b>: 성취동기 고취·생산성 증대 ↔ 과열 경쟁·사회적 약자 배려 부족<br>
+          <b>능력</b>: 전문성 발휘 ↔ 타고난 재능과 가정 배경의 불평등 반영<br>
+          <b>필요</b>: 최소한의 인간다운 삶 보장 ↔ 자원 한계·열심히 일할 성취동기 저하</p>
+        </div>
+        <div class="box b-tip">
+          <h6>개발 방식 비교 공식</h6>
+          <p><b>성장 거점 개발</b>: 하향식 / 불균등 성장 / 효율성 극대화 / 수도권·남동임해 / 지역 격차 심화 부작용<br>
+          <b>균형 개발</b>: 상향식 / 균등 성장 / 형평성 추구 / 혁신도시·공공기관 이전 / 중복 투자 우려</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 핵심 사상가 & 정의 제도 정리 ===== -->
+    <section id="p-thinker" class="page">
+      <div class="head">
+        <h2>핵심 사상가 &amp; 정의 제도 20선 상세 정리</h2>
+        <p>사상가나 제도를 누르면 핵심 성격 · 주요 사상 내용 · 등장 배경 · 쉬운 예시 · <b>시험 출제 포인트</b>가 나타납니다.</p>
+      </div>
+      <div class="chips" id="thinker-era"></div>
+      <div class="kgrid" id="thinker-grid"></div>
+      <div id="thinker-detail"></div>
+    </section>
+
+    <!-- ===== 핵심 테마 요약 ===== -->
+    <section id="p-theme" class="page">
+      <div class="head">
+        <h2>주제별 핵심 요약</h2>
+        <p>2단원의 방대한 철학과 제도를 6대 테마로 일목요연하게 묶었습니다. 수능 및 내신 고난도 킬러 문항은 여기서 출제됩니다.</p>
+      </div>
+      <div class="chips" id="theme-tabs"></div>
+      <div id="theme-body"></div>
+    </section>
+
+    <!-- ===== 시험 용어 사전 ===== -->
+    <section id="p-term" class="page">
+      <div class="head">
+        <h2>시험에 나오는 정의·불평등 용어 사전</h2>
+        <p>헷갈리는 철학 개념과 사회 복지 용어를 검색해 보세요. 초성이나 일부 단어만 입력해도 실시간 검색됩니다.</p>
+      </div>
+      <input class="search" id="term-search" placeholder=" 예: 무지의 베일, 최소 수혜자, 복합 평등, 사회보험, 공공부조, 지니계수 …" oninput="renderTerms()">
+      <div class="chips" id="term-tabs"></div>
+      <div class="terms" id="term-list"></div>
+    </section>
+
+    <!-- ===== 소단원별 연습문제 ===== -->
+    <section id="p-quiz" class="page">
+      <div class="head">
+        <h2>소단원별 연습문제</h2>
+        <p>단원을 고르고 객관식, O/X, 빈칸 문제를 푼 뒤 <b>채점하기</b>를 누르면 정답과 깊이 있는 해설이 나타납니다.</p>
+      </div>
+      <div class="chips" id="quiz-tabs"></div>
+      <div class="qbar">
+        <div class="score" id="quiz-score">선택한 단원: <span id="quiz-unit-name">정의의 의미와 실질적 기준</span></div>
+        <button class="btn green" onclick="gradeQuiz()">채점하기</button>
+        <button class="btn ghost" onclick="renderQuiz()">다시 풀기</button>
+        <button class="btn ghost" onclick="showAllSol()">해설 전체 보기</button>
+      </div>
+      <div class="result" id="quiz-result"></div>
+      <div id="quiz-body"></div>
+    </section>
+
+    <!-- ===== 실전 모의고사 ===== -->
+    <section id="p-exam" class="page">
+      <div class="head">
+        <h2>실전 모의고사 (랜덤 20문항)</h2>
+        <p>2단원 전 범위 문제 은행에서 무작위로 20문항을 추출합니다. 수능·내신 실전처럼 한 번에 풀고 채점해 보세요.</p>
+      </div>
+      <div class="qbar">
+        <button class="btn" onclick="newExam()">새 문제 뽑기</button>
+        <button class="btn green" onclick="gradeExam()">제출 &amp; 채점</button>
+        <div class="score" id="exam-score">20문항 · 100점 만점</div>
+      </div>
+      <div class="result" id="exam-result"></div>
+      <div id="exam-body"></div>
+    </section>
+
+    <div class="foot">
+      <b>미래엔 통합사회Ⅱ 연구회</b> &nbsp;|&nbsp; 대표저자 : 서울대 정창우 교수 외 10인<br>
+      고등학교 통합사회2 · 2단원 [사회 정의와 불평등] 내신 및 수능 1등급 대비 통합 학습 앱
+    </div>
+  </main>
+</div>
+
+<script>
+/* ====================== 공통 내비게이션 ====================== */
+function go(e,id){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('on'));
+  document.querySelectorAll('.nav li').forEach(n=>n.classList.remove('on'));
+  document.getElementById(id).classList.add('on');
+  e.currentTarget.classList.add('on');
+  document.querySelector('.main').scrollTop=0;
+}
+
+/* ====================== 연표 데이터 ====================== */
+const timeline=[
+ {y:"BC 4C",t:"아리스토텔레스 니코마코스 윤리학",d:"일반적 정의(준법)와 특수적 정의(분배적·교정적 정의) 정립. '같은 것은 같게, 다른 것은 다르게 대우하라'",hot:1},
+ {y:"1789",t:"벤담 공리주의 양적 공리론",d:"'최대 다수의 최대 행복'을 정의의 기준으로 제시. 총효용의 극대화 중시 (개인의 권리 침해 한계 노정)",hot:0},
+ {y:"1883",t:"독일 비스마르크 사회보험 도입",d:"질병보험(1883), 산재보험(1884), 노령·폐질보험(1889)을 제정하여 국가가 노동자의 위험을 분담하는 세계 최초 사회보험 탄생",hot:1},
+ {y:"1942",t:"영국 베버리지 보고서 발표",d:"5대 사회악(결핍·질병·무지·나태·불결) 퇴치와 '요람에서 무덤까지' 전 국민 복지국가 기본 틀 제시",hot:1},
+ {y:"1971",t:"존 롤스 『정의론』 출간",d:"공리주의의 한계를 극복하고 계약론을 부활시켜 '공정으로서의 정의'와 '차등의 원칙' 정립. 현대 정치철학의 거대한 분수령",hot:1},
+ {y:"1974",t:"로버트 노직 『아나키에서 유토피아로』 출간",d:"롤스의 재분배론을 비판하며 소유권과 개인의 절대적 자유를 옹호하는 '자유지상주의(Libertarianism)' 이론 완성",hot:1},
+ {y:"1981",t:"알래스デア 매킨타이어 『덕의 상실』 출간",d:"자유주의의 무연고적 자아관을 비판하고, 공동체의 역사와 서사 속에서 도덕적 의무를 찾는 '공동체주의' 부활",hot:1},
+ {y:"1983",t:"마이클 왈처 『정의의 영역』 출간",d:"돈이나 권력이 다른 영역의 가치를 침범하지 못하도록 하는 '복합 평등(Complex Equality)'과 다원적 정의론 제시",hot:1},
+ {y:"1988",t:"대한민국 국민연금 제도 도입",d:"노후 빈곤 예방과 세대 간·계층 간 소득 재분배를 위한 국가 연금 제도 시행",hot:0},
+ {y:"1999",t:"국민기초생활보장법 제정",d:"시혜적 구호에 머물던 생활보호법을 폐지하고, 국민의 권리로서 최저생계비를 보장하는 공공부조 체계 완성",hot:1},
+ {y:"2000",t:"국민건강보험 단일 통합",d:"수백 개로 나뉘어 있던 의료보험 조합을 국민건강보험공단 단일 체계로 통합하여 소득 재분배 및 사회연대 강화",hot:0},
+ {y:"2007",t:"국가균형발전특별법 및 혁신도시 건설",d:"수도권 과밀을 해소하고 공간 불평등을 치유하기 위해 공공기관의 지방 이전 및 혁신도시 개발 본격화",hot:1},
+ {y:"2008",t:"노인장기요양보험 시행",d:"고령이나 노인성 질병으로 일상생활이 어려운 어르신을 위한 5번째 사회보험 신설",hot:0},
+ {y:"2021",t:"국민취업지원제도 시행",d:"고용보험의 사각지대에 있던 저소득 구직자를 지원하는 '한국형 실업부조' 도입",hot:0},
+ {y:"현대",t:"다차원적 불평등과 기본소득·ESG 논쟁",d:"인공지능(AI)과 플랫폼 경제 시대의 노동 양극화, 기후 불평등을 해결하기 위한 포용적 정의 논의 확산",hot:1}
+];
+document.getElementById('timeline').innerHTML=timeline.map(t=>
+ `<div class="tl-item ${t.hot?'hot':''}"><div class="tl-y">${t.y}</div>
+  <div class="tl-t">${t.t}${t.hot?' <span class="tag t-hot">최빈출</span>':''}</div>
+  <div class="tl-d">${t.d}</div></div>`).join('');
+
+/* ====================== 20대 핵심 사상가 & 제도 데이터 ====================== */
+const thinkers={
+ aristotle:{n:"아리스토텔레스 (Aristoteles)",era:1,hot:1,s:"분배적 정의와 교정적 정의를 체계화한 고대 철학의 거두",
+  a:["'정의란 각자에게 그의 정당한 몫을 주는 것이다'",
+     "<b>일반적 정의</b>: 법을 준수하는 것(준법)",
+     "<b>특수적 정의</b>: ① <b>분배적 정의</b>(가치와 업적에 따른 기하학적 비례 배분) ② <b>교정적 정의</b>(손해와 이익의 균형을 맞추는 산술적 비례) ③ 교환적 정의",
+     "'같은 것은 같게, 다른 것은 다르게 대우하라'는 비례적 평등의 원조"],
+  w:"고대 그리스 폴리스에서 시민들 간의 명예, 권력, 재산 배분을 둘러싼 갈등을 합리적으로 해결하기 위해 정의의 기준을 정립했습니다.",
+  e:" 능력과 기여도가 높은 사람에게 더 많은 성과급을 주는 것은 분배적 정의이고, 남에게 100만 원의 손해를 입혔을 때 정확히 100만 원을 배상하게 하는 것은 교정적 정의입니다.",
+  t:"'분배적 정의 = 각자의 가치에 따른 비례적 분배', '교정적 정의 = 손익의 동등한 회복(산술적 비례)' 짝 맞추기가 단골 출제됩니다."},
+ bentham:{n:"벤담 (J. Bentham)",era:1,s:"'최대 다수의 최대 행복'을 주장한 양적 공리주의의 창시자",
+  a:["행위의 옳고 그름은 그것이 낳는 쾌락과 고통의 양(효용)에 의해 결정됨",
+     "사회 전체의 쾌락의 총합을 극대화하는 것이 사회 정의",
+     "한계: 다수의 행복을 위해 소수의 희생을 정당화할 위험(소수자 권리 침해)",
+     "분배의 공정성이나 절차보다는 '결과적 유용성'에만 초점"],
+  w:"소수 귀족의 특권에 맞서 '모든 사람은 하나로 계산되어야지, 결코 하나 이상으로 계산되어서는 안 된다'며 만인의 평등한 효용을 계산하고자 했습니다.",
+  e:" 99명의 쾌락을 위해 무고한 1명을 희생시키는 결정을 내릴 위험이 있어 롤스가 가장 강하게 비판한 이론입니다.",
+  t:"롤스 정의론의 출발점이 바로 '공리주의에 대한 비판'이라는 점을 연결해 기억하세요."},
+ rawls:{n:"존 롤스 (J. Rawls)",era:1,hot:1,s:"'공정으로서의 정의'와 차등의 원칙을 정립한 현대 정의론의 거장",
+  a:["<b>원초적 입장(Original Position)</b>: 자유롭고 평등한 합리적 행위자들이 모인 가상적 상황",
+     "<b>무지의 베일(Veil of Ignorance)</b>: 자신의 성별, 지능, 재산, 신분, 가치관을 전혀 모르는 상태 → 최악의 상황(최소 수혜자)을 고려하여 합의",
+     "<b>제1원칙 (평등한 자유의 원칙)</b>: 모든 사람은 기본적 자유를 평등하게 누려야 함 (가장 우선함)",
+     "<b>제2원칙 (사회적·경제적 불평등의 허용 조건)</b>:<br>① <b>공정한 기회균등의 원칙</b>: 모든 직위와 직책은 공정하게 개방되어야 함<br>② <b>차등의 원칙</b>: 사회적 불평등은 <b>최소 수혜자에게 최대의 이익</b>이 돌아갈 때만 정당화됨"],
+  w:"자본주의의 불평등을 방치하는 자유방임주의와, 개인의 권리를 희생시키는 공리주의를 모두 비판하며 자유와 평등을 조화시키고자 했습니다.",
+  e:" 빵을 나누는 사람이 자신이 어떤 조각을 갖게 될지 모른다면, 가장 작은 조각이 최대한 커지도록 공평하게 자를 수밖에 없습니다.",
+  t:"제1원칙이 제2원칙에 우선하며, 제2원칙 내에서도 <b>'기회균등의 원칙이 차등의 원칙보다 우선'</b>합니다. 최소 수혜자 배려가 수능 1순위 키워드!"},
+ nozick:{n:"로버트 노직 (R. Nozick)",era:1,hot:1,s:"개인의 절대적 소유권과 최소국가를 옹호한 자유지상주의 철학자",
+  a:["<b>소유 권리론 (Entitlement Theory)</b>: 정당하게 취득되고 이전된 재산에 대한 개인의 배타적 소유권 강조",
+     "<b>정의의 3원리</b>: ① <b>취득의 정의</b>(노동을 통한 정당한 획득) ② <b>양도의 정의</b>(자발적 교환과 증여) ③ <b>교정의 정의</b>(부정취득에 대한 시정)",
+     "<b>최소 국가론 (Night-watchman State)</b>: 국가는 시민을 폭력, 절도, 사기로부터 보호하고 계약을 집행하는 기능에만 한정되어야 함",
+     "<b>강제 재분배 반대</b>: 세금을 걷어 복지 정책을 펴는 것은 노동의 대가를 빼앗는 것으로서 '강제 노동'과 같다고 비판"],
+  w:"롤스처럼 국가가 개인의 정당한 소득을 복지라는 이름으로 강제 징수하는 것은 개인의 자유와 자기소유권을 침해하는 폭력이라고 보았습니다.",
+  e:" 농구 스타 윌트 체임벌린의 화려한 플레이를 보려고 관객들이 자발적으로 25센트씩 더 내어 부자가 되었다면, 이는 완벽히 정당하다는 논리입니다.",
+  t:"노직은 <b>'자발적 자선이나 기부'는 찬성하지만 '국가에 의한 강제적 소득 재분배'를 반대</b>한다는 지문이 킬러 선지입니다."},
+ walzer:{n:"마이클 왈처 (M. Walzer)",era:1,hot:1,s:"'복합 평등'과 다원적 정의론을 주창한 현대 공동체주의 철학자",
+  a:["<b>다원적 정의론</b>: 사회적 재화(돈, 권력, 교육, 명예, 신의 은총 등)는 각 사회의 역사와 문화 속에서 고유한 의미를 가짐",
+     "재화마다 분배되는 기준이 달라야 함 (예: 돈은 자유 시장, 공직은 자격과 투표, 교육은 필요와 능력)",
+     "<b>단순 평등 비판</b>: 모든 재화를 균등하게 배분하려는 시도는 국가의 전제를 낳음",
+     "<b>복합 평등 (Complex Equality)</b>: 한 영역에서 성공하여 얻은 재화가 <b>다른 영역의 재화를 지배(전제)하지 않는</b> 상태"],
+  w:"현대 사회의 가장 큰 비극은 돈이 많은 사람이 정치 권력을 매수하고, 자녀의 대학 입학을 독점하고, 명예까지 싹쓸이하는 '전제(Tyranny)'에 있다고 보았습니다.",
+  e:" 돈이 많은 것은 시장에서 물건을 살 때만 유효해야지, 돈으로 법원 재판을 매수하거나 국회의원 자리를 사는 것을 막는 것이 복합 평등입니다.",
+  t:"'한 영역의 재화가 다른 영역을 침범하지 않는 상태 = <b>복합 평등</b>', '돈의 권력 지배 = <b>전제</b>' 키워드를 반드시 외우세요."},
+ macintyre:{n:"알래스デア 매킨타이어 (A. MacIntyre)",era:1,hot:1,s:"연고적 자아와 서사적 정체성을 강조한 덕 윤리학적 공동체주의자",
+  a:["<b>자유주의의 무연고적 자아(Unencumbered Self) 비판</b>: 인간은 사회적 관계와 무관하게 허공에 존재하는 고립된 원자가 아님",
+     "<b>연고적 자아 / 서사적 자아</b>: 개인은 가족, 이웃, 도시, 민족이라는 공동체의 역사와 전통 속에서 정체성을 형성함",
+     "<b>도덕적 책임의 계승</b>: 개인은 공동체의 혜택뿐만 아니라 공동체의 과거 역사적 부채(과오)에 대해서도 도덕적 책임과 반성의 의무를 짐",
+     "공동체 속에서 좋은 삶을 공유하고 '덕(Virtue)'을 실천하는 것이 정의의 길"],
+  w:"자유주의가 개인의 선택권만 강조하다 보니 공동체에 대한 애착, 도덕적 유대감, 역사에 대한 책임 의식이 실종되었다고 비판했습니다.",
+  e:" 현세대 독일인이나 일본인이 '과거 전쟁 범죄는 조상들이 한 일이지 내가 태어나기 전 일이니까 나와 상관없다'고 말해서는 안 된다는 근거를 제공합니다.",
+  t:"'과거 세대의 잘못에 대해 현세대는 책임이 없다'는 주장은 매킨타이어의 입장에 정면으로 반대되는 오답 선지입니다."},
+ merit:{n:"업적주의 분배",era:2,hot:1,s:"개인의 노력과 기여로 달성한 성과에 따라 자원을 배분하는 기준",
+  a:["정의: 사회적 목적 달성에 기여한 실적과 객관적 성과에 비례하여 보상",
+     "장점: 열심히 일할 성취동기를 자극하여 사회적 생산성을 비약적으로 높임, 공정성 확보 용이",
+     "단점: 과열 경쟁과 승자 독식 유발, 출발선의 불평등(가정 배경, 천부적 재능)을 정당화하여 약자를 도태시킬 우려",
+     "평가 기준의 계량화가 어려운 영역(돌봄, 학술, 예술 등)에 적용하기 곤란"],
+  w:"신분이나 혈연에 따른 부당한 배분을 타파하고, 노력한 사람이 보상받는 자본주의 시장 경제의 핵심 원리입니다.",
+  e:" 영업 사원이 판매한 실적에 비례하여 인센티브를 차등 지급받는 시스템입니다.",
+  t:"장점(동기 부여, 생산성 향상)과 단점(과열 경쟁, 사회적 약자 배려 부족)을 대비하는 문제가 단골 출제됩니다."},
+ ability:{n:"능력주의 분배",era:2,s:"신체적·지적 잠재력과 전문적 자격에 따라 기회와 보상을 주는 기준",
+  a:["정의: 지식, 기술, 전문적 자격, 재능 등 개인이 지닌 능력의 크기에 따라 배분",
+     "장점: 적재적소에 뛰어난 인재를 배치하여 사회적 효율성을 극대화함",
+     "단점: 타고난 유전적 재능이나 부모의 지원 등 '우연적 요소'가 능력 형성에 큰 영향을 미치므로 진정한 공정성을 해칠 수 있음"],
+  w:"자격증 시험이나 임용고시처럼 전문적 식견을 갖춘 인재에게 공직과 직무를 맡기기 위해 발달했습니다.",
+  e:" 의사 면허증이나 변호사 자격증을 취득한 사람에게 해당 직업의 독점적 권한을 인정해 주는 것입니다.",
+  t:"롤스는 타고난 재능과 지능은 도덕적 관점에서 볼 때 <b>'임의적이고 우연한 자연적 자산'</b>이므로 이를 온전히 개인의 공로로 볼 수 없다고 보았습니다."},
+ need:{n:"필요주의 분배",era:2,s:"기본적 삶을 유지하는 데 필요한 욕구의 결핍 정도에 따른 배분",
+  a:["정의: 모든 사람이 인간다운 생활을 할 수 있도록 최소한의 필수 조건을 채워주는 배분",
+     "장점: 사회적 약자의 생존권을 보장하고 빈부 격차와 사회적 갈등을 완화함",
+     "단점: 사회적 자원은 유한한데 모든 사람의 필요를 충족하기 어려우며, 열심히 일하려는 성취동기를 저하시켜 '복지병'을 부를 수 있음"],
+  w:"시장 경쟁에서 탈락한 빈곤층과 장애인, 노약자를 방치하지 않고 인간의 존엄성을 지키기 위해 고안되었습니다.",
+  e:" 소득이 최저생계비에 못 미치는 가구에 국민기초생활보장 생계급여를 지급하거나, 장애인에게 보조기구를 무료 지급하는 제도입니다.",
+  t:"필요에 따른 분배의 가장 큰 단점은 <b>'개인의 근로 의욕 및 생산성 저하'</b>라는 점을 기억하세요."},
+ retributive:{n:"응보주의 처벌관",era:2,hot:1,s:"죄를 지은 자는 그에 상응하는 고통을 받아야 한다는 칸트적 정의관",
+  a:["교정적 정의의 대표 관점: 범죄에 대한 정당한 죗값을 치르게 하는 것이 정의",
+     "칸트(I. Kant): 형벌은 다른 선을 증진하기 위한 수단이 될 수 없으며, 오직 죄를 범했기 때문에 가해지는 도덕적 응보",
+     "'동해보복법(탈리오 법칙: 눈에는 눈, 이에는 이)'의 근대적 계승",
+     "범죄자의 책임에 비례하는 형벌을 부과함으로써 사법적 정의 실현"],
+  w:"처벌을 단순히 사회 질서 유지나 공포를 주기 위한 도구로 쓰지 않고, 범죄자의 책임을 묻는 행위 자체에 정의가 있다고 보았습니다.",
+  e:" 살인범에게 사형을 선고하는 이유는 다른 사람들에게 겁을 주기 위해서가 아니라, 무고한 생명을 앗아간 자신의 죄에 대한 마땅한 죗값이라는 논리입니다.",
+  t:"응보주의(과거의 범죄 행위에 대한 보복) ↔ 예방주의(미래의 범죄 방지와 교화)를 비교하는 문제가 빈출입니다."},
+ preventive:{n:"예방주의 처벌관",era:2,s:"형벌의 목적을 미래의 범죄 예방과 사회 방위에 두는 공리주의적 관점",
+  a:["교정적 정의의 공리주의적 관점: 형벌은 범죄를 예방하여 사회 전체의 효용을 높이기 위한 수단",
+     "<b>일반 예방</b>: 일반 시민들에게 경각심을 주어 범죄를 저지르지 못하게 함",
+     "<b>특별 예방</b>: 범죄자 본인을 교화·개선하여 다시는 재범을 저지르지 않게 함",
+     "비판: 사회 방위를 위해 죄질에 비해 지나치게 가혹한 형벌을 내리거나, 억울한 자를 희생시킬 위험"],
+  w:"형벌 그 자체는 고통(악)이므로, 더 큰 고통(범죄)을 막을 수 있을 때만 정당화될 수 있다는 공리주의 원리에서 출발했습니다.",
+  e:" 음주운전 처벌 수위를 대폭 올려 일반 운전자들이 술을 마시고 운전대를 잡지 못하도록 억제하는 정책입니다.",
+  t:"'범죄자의 교화와 재범 방지'는 예방주의 중에서도 특별 예방에 해당합니다."},
+ pension:{n:"국민연금",era:3,hot:1,s:"노령·장애·사망에 대비하여 소득을 보장하는 대표 사회보험",
+  a:["사회보장기본법상 <b>사회보험</b>의 핵심 기둥",
+     "운영 원리: <b>강제 가입</b> 원칙, 근로자와 사업주가 보험료를 절반씩 분담",
+     "기능: 노후 빈곤 방지, <b>세대 간 연대</b>(현세대가 이전 세대 부양) 및 <b>소득 재분배</b>(소득이 낮을수록 납부 대비 급여율 높음)",
+     "초고령화 사회 진입에 따른 기금 고갈 논쟁과 연금 개혁이 주요 쟁점"],
+  w:"개인이 혼자서 80~90세까지의 노후를 저축만으로 대비하기 어려우므로 국가가 전 국민을 묶어 위험을 분산시켰습니다.",
+  e:" 직장인이 매달 월급에서 일정 비율의 연금 보험료를 내고, 만 65세 이후 평생 매달 연금을 받는 제도입니다.",
+  t:"국민연금은 사보험과 달리 <b>소득 재분배 기능</b>(균등 급여 부분)이 내장되어 있다는 점이 중요합니다."},
+ health_ins:{n:"국민건강보험",era:3,s:"질병과 부상에 대한 의료비를 국가가 상호 분담하는 사회보험",
+  a:["사회보험의 대표 제도: <b>강제 가입</b> 및 소득·재산에 따른 <b>능력별 보험료 차등 부과</b>",
+     "급여의 균등성: <b>보험료는 차등 납부하지만, 아플 때 받는 의료 혜택은 동일</b>함",
+     "사회적 연대성과 강력한 소득 재분배 효과 발휘",
+     "환자 본인 부담금을 낮추어 의료 접근권 보장"],
+  w:"고액의 진료비 때문에 가정이 파탄 나는 메디컬 푸어(Medical Poor)를 방지하고 국민의 건강권을 지키기 위해 설립되었습니다.",
+  e:" 부자는 건강보험료를 매달 수십만 원 내고 저소득층은 수만 원 내지만, 병원에서 진료받을 때의 보험 혜택률은 똑같습니다.",
+  t:"<b>'보험료는 능력에 따라 차등 부담, 급여는 필요에 따라 균등 이용'</b>이라는 문장은 100% 맞는 선지입니다."},
+ employment:{n:"고용보험 &amp; 산재보험",era:3,s:"실업과 산업재해의 경제적 위험을 방어하는 노동 사회보험",
+  a:["<b>고용보험</b>: 실직 시 구직급여(실업급여) 지급, 재취업 훈련 지원, 육아휴직 급여 지원",
+     "<b>산업재해보상보험(산재보험)</b>: 근로자가 일하다가 다치거나 질병에 걸렸을 때 치료비와 휴업급여, 유족급여 지급",
+     "산재보험의 특징: 보험료 전액을 <b>'사업주(고용주)'가 100% 부담</b>함 (근로자 부담금 없음)",
+     "노동자의 고용 안정과 기본적 생계권 수호"],
+  w:"현대 자본주의 사회에서 실직과 산업재해는 개인의 게으름 때문이 아니라 구조적 위험이므로 국가와 기업이 보상하도록 제도화했습니다.",
+  e:" 공장에서 기계를 다루다 손을 다쳤을 때 산재 처리를 통해 병원비 전액과 치료 기간 월급의 70%를 보장받는 제도입니다.",
+  t:"산재보험은 <b>'보험료를 사업주가 전액 부담한다'</b>는 점이 다른 4대 보험과의 결정적 차이점이자 함정 출제 포인트!"},
+ basic_livelihood:{n:"국민기초생활보장제도",era:3,hot:1,s:"빈곤층의 최저생활을 보장하고 자립을 지원하는 공공부조의 대표",
+  a:["사회보장기본법상 <b>공공부조</b>의 핵심 제도",
+     "대상: 소득인정액이 기준 중위소득 일정 비율 이하인 절대 빈곤 가구",
+     "비용 부담: <b>국가 및 지방자치단체의 조세(세금)로 100% 전액 부담</b> (수혜자 보험료 납부 없음)",
+     "급여 종류: 생계급여, 의료급여, 주거급여, 교육급여의 맞춤형 급여 체계",
+     "특징: <b>사후 처방적 성격</b>, <b>소득 재분배 효과가 사회보험보다 큼</b>, 수혜자에게 낙인감(Stigma) 및 근로의욕 저하 우려 존재"],
+  w:"1997년 IMF 외환위기 이후 대량 실업과 빈곤이 폭증하자, 헌법상 '인간다운 생활을 할 권리'를 구체적으로 실현하기 위해 1999년 제정되었습니다.",
+  e:" 스스로 돈을 벌기 어려운 기초생활수급자 가구에 매달 생계비와 주거비, 학비를 전액 국비로 보조해 주는 제도입니다.",
+  t:"<b>'수혜자 비용 부담 없음'</b>, <b>'사후 처방적 성격'</b>, <b>'소득 재분배 효과 가장 큼'</b>, <b>'낙인감 발생 우려'</b> 4대 특징 암기 필수!"},
+ basic_pension:{n:"기초연금",era:3,s:"노인 빈곤을 완화하기 위해 65세 이상 어르신에게 지급하는 공공부조",
+  a:["공공부조적 성격의 연금 제도 (조세로 충당)",
+     "지급 대상: 만 65세 이상 노인 중 소득인정액 기준 <b>하위 70%</b>의 어르신",
+     "특징: 국민연금 보험료를 낸 적이 없어도 자격 요건만 충족하면 전액 세금으로 매월 일정액 지급",
+     "OECD 국가 중 최고 수준인 우리나라 노인 빈곤율을 완화하는 핵심 완충재"],
+  w:"과거 자녀 교육과 국가 발전을 위해 희생하느라 정작 자신의 국민연금을 제대로 준비하지 못한 현세대 어르신들의 노후를 지원합니다.",
+  e:" 농촌에서 농사를 지으시며 국민연금에 가입하지 못했던 할머니께서 65세가 넘어 매달 국가에서 기초연금을 수령하시는 사례입니다.",
+  t:"'국민연금(사회보험)'과 <b>'기초연금(공공부조 성격)'</b>을 혼동하게 만드는 문제가 자주 나옵니다."},
+ social_service:{n:"사회서비스 (Social Service)",era:3,s:"비금전적 지원을 통해 삶의 질을 높이는 복지 제도",
+  a:["정의: 국가·지자체 및 민간의 도움이 필요한 모든 국민에게 복지, 보건의료, 교육, 고용, 주거, 문화, 환경 등의 분야에서 제공하는 서비스",
+     "특징: 현금이나 의료비(금전적)가 아니라 <b>'상담, 재활, 돌봄, 정보 제공, 시설 이용' 등 비금전적 서비스</b> 중심",
+     "민간 부문과의 협력 및 사회적 일자리 창출 효과 동반",
+     "예시: 노인 맞춤 돌봄 서비스, 장애인 활동 지원 서비스, 산모·신생아 건강관리 서비스 등"],
+  w:"단순히 돈만 쥐여주는 복지만으로는 고독사, 간병 살인, 돌봄 공백 같은 현대 사회의 복합적 고통을 해결할 수 없기 때문에 발달했습니다.",
+  e:" 거동이 불편한 독거 어르신 댁에 요양보호사가 정기적으로 방문하여 식사를 챙겨드리고 말벗이 되어 드리는 서비스입니다.",
+  t:"<b>'비금전적 지원이 원칙'</b>이라는 점이 사회보험·공공부조와의 가장 뚜렷한 차이점입니다."},
+ progressive_tax:{n:"누진세 제도",era:4,hot:1,s:"소득이 많을수록 더 높은 세율을 적용하는 소득 재분배 조세",
+  a:["원리: 과세 표준(소득) 금액이 커질수록 점차 높은 세율을 적용 (예: 6%~45% 누진 구조)",
+     "목적: 고소득자의 세금 부담을 늘려 빈부 격차를 줄이고, 확보된 재정으로 저소득층 복지 재원 마련 (<b>소득 재분배</b>)",
+     "조세 평등주의의 '수직적 형평성(부담 능력이 큰 자가 더 많이 부담)' 구현",
+     "쟁점: 지나친 누진세율은 고소득자의 근로 및 투자 의욕을 저해할 수 있다는 논쟁 존재"],
+  w:"모든 사람에게 동일한 비율의 세금을 매기면 저소득층의 체감 고통이 훨씬 크므로, 실질적 평등을 위해 누진세를 채택했습니다.",
+  e:" 연봉 3천만 원 직장인의 실효세율은 낮지만, 연봉 5억 원을 버는 대기업 임원은 최고 40% 이상의 높은 세율로 세금을 냅니다.",
+  t:"누진세는 <b>'소득 불평등을 완화하는 대표적인 재정 정책'</b>으로 단골 출제됩니다."},
+ affirmative_act:{n:"적극적 우대조치",era:4,hot:1,s:"사회적 약자의 실질적 평등을 위한 잠정적 우대 정책",
+  a:["개념: 여성, 장애인, 저소득층, 농어촌 학생 등 과거 차별을 받아온 집단에게 입학·채용 등에서 혜택을 부여",
+     "유형: 장애인 의무고용제, 양성평등채용목표제, 대학 입시 기회균형 선발제(농어촌 특별전형 등)",
+     "정당성: 형식적 기회균등만으로는 누적된 차별을 극복할 수 없으므로 <b>'실질적 평등'</b>을 달성하기 위한 잠정적 조치",
+     "한계와 쟁점: 능력 있는 일반 지원자가 역으로 탈락하는 <b>'역차별(Reverse Discrimination)'</b> 논란 유발"],
+  w:"출발선 자체가 다른 불리한 조건의 경기에서 똑같은 규칙만 적용하는 것은 진정한 공정이 아니라는 반성에서 나왔습니다.",
+  e:" 공공기관 신규 채용 시 합격자 중 특정 성별이 30%에 미달할 경우 해당 성별을 추가 합격시키는 양성평등채용목표제입니다.",
+  t:"적극적 우대조치는 영구적인 특권이 아니라 <b>'실질적 평등이 달성될 때까지만 유지되는 잠정적(한시적) 조치'</b>라는 점이 핵심!"},
+ growth_pole:{n:"성장 거점 vs 균형 개발",era:4,hot:1,s:"공간 불평등을 초래한 개발 방식과 이를 치유하기 위한 정책 대안",
+  a:["<b>성장 거점 개발 (하향식)</b>: 투자 효과가 큰 대도시나 특정 거점 지역(수도권, 남동 임해)에 집중 투자 → 파급 효과(Trickle-down) 기대 → <b>수도권 과밀과 국토 불균형(공간 불평등) 초래</b>",
+     "<b>균형 개발 정책 (상향식)</b>: 낙후 지역에 우선 투자하여 지역 간 격차를 해소하고 상생 도모 → 형평성 중시",
+     "대안 정책: 세종특별자치시 행정중심복합도시 건설, 지방 <b>혁신도시</b>(공공기관 이전), 지역인재 채용 목표제, 지방소멸대응기금"],
+  w:"한정된 국가 자본으로 빠르게 경제를 일으키려다 보니 공간적 불평등이 발생했고, 이제는 지방 소멸을 막기 위해 균형 개발이 절실해졌습니다.",
+  e:" 한국전력 본사를 나주 혁신도시로, 도로교통공단을 원주로 이전하여 지방에 일자리와 인구를 유치하는 사업입니다.",
+  t:"<b>성장 거점 개발 = 효율성 중심(불평등 심화)</b> ↔ <b>균형 개발 = 형평성 중심(공간 불평등 완화)</b> 대비 암기!"}
+};
+
+const thinkerEras=[
+ {k:0,n:"전체 20선"},
+ {k:1,n:"1. 고전 및 현대 정의 이론"},
+ {k:2,n:"2. 분배 기준 및 처벌 이론"},
+ {k:3,n:"3. 사회 복지 제도 3체계"},
+ {k:4,n:"4. 불평등 완화 및 공간 균형 정책"}
+];
+let curThinkerEra=0;
+
+document.getElementById('thinker-era').innerHTML=thinkerEras.map(e=>
+ `<div class="chip ${e.k===0?'on':''}" onclick="setThinkerEra(${e.k},this)">${e.n}</div>`).join('');
+
+function setThinkerEra(k,el){
+ curThinkerEra=k;
+ document.querySelectorAll('#thinker-era .chip').forEach(c=>c.classList.remove('on'));
+ el.classList.add('on');
+ renderThinkers();
+ document.getElementById('thinker-detail').innerHTML='';
+}
+
+function renderThinkers(){
+ const list=Object.entries(thinkers).filter(([k,v])=>curThinkerEra===0||v.era===curThinkerEra);
+ document.getElementById('thinker-grid').innerHTML=list.map(([k,v])=>
+  `<div class="kbtn ${v.hot?'hot':''}" onclick="showThinker('${k}',this)">${v.n.split(' ')[0]}${v.hot?' ':''}</div>`).join('');
+}
+
+function showThinker(k,el){
+ const d=thinkers[k];
+ document.querySelectorAll('.kbtn').forEach(b=>b.classList.remove('on'));
+ el.classList.add('on');
+ document.getElementById('thinker-detail').innerHTML=`
+ <div class="card" style="border:2px solid var(--line-2)">
+   <h3 style="color:var(--blue);font-size:1.3rem">${d.n}</h3>
+   <p style="font-size:1rem;font-weight:700;color:var(--primary);margin-bottom:6px">📌 ${d.s}</p>
+   <h4>핵심 사상 내용 및 주요 원리</h4>
+   <ul>${d.a.map(x=>`<li>${x}</li>`).join('')}</ul>
+   ${d.w?`<div class="box b-why"><h6>등장 배경 및 이론적 문제의식</h6><p>${d.w}</p></div>`:''}
+   ${d.e?`<div class="box b-ex"><h6>이해를 돕는 쉬운 예시 / 현실 적용 사례</h6><p>${d.e}</p></div>`:''}
+   ${d.t?`<div class="box b-test"><h6>시험 출제 포인트 &amp; 오답 함정 정복</h6><p>${d.t}</p></div>`:''}
+ </div>`;
+ document.getElementById('thinker-detail').scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+renderThinkers();
+
+/* ====================== 핵심 테마 요약 (6대 테마) ====================== */
+const themes=[
+{n:"① 정의의 기준과 분류",h:`
+<div class="card"><h3>정의(Justice)가 요구되는 까닭</h3>
+<ul>
+<li>인간의 욕망은 무한하지만 재화와 기회 등 사회적 자원은 <b>희소</b>하기 때문에 필연적으로 이해관계의 대립과 갈등이 발생함</li>
+<li>사회 구성원 각자가 정당한 몫을 받고 납득할 수 있는 공정한 기준이 확립되어야 <b>사회적 신뢰와 통합</b>이 유지됨</li>
+<li>기본적 인권을 실현하고 공동체의 평화로운 공존을 가능하게 하는 토대</li>
+</ul>
+</div>
+<div class="card"><h3>아리스토텔레스의 정의 분류 체계</h3>
+<table>
+<tr><th style="width:130px">구분</th><th style="width:170px">하위 영역</th><th>핵심 내용 및 적용 공식</th></tr>
+<tr><td><b>일반적 정의</b></td><td>준법으로서의 정의</td><td>사회 공동체의 법률과 도덕 규범을 지키는 행위</td></tr>
+<tr><td rowspan="2"><b>특수적 정의</b></td><td><b>분배적 정의</b></td><td>각자의 가치와 업적에 비례하여 부와 명예를 분배하는 <b>기하학적 비례의 평등</b> (같은 것은 같게, 다른 것은 다르게)</td></tr>
+<tr><td><b>교정적 정의</b></td><td>손해를 입히거나 부당한 이익을 얻었을 때 이를 바로잡는 <b>산술적 비례의 평등</b> (손해액 = 배상액)</td></tr>
+</table>
+</div>
+<div class="card"><h3>분배적 정의의 3대 실질적 기준 비교</h3>
+<table>
+<tr><th style="width:100px">기준</th><th>의미</th><th>장점 (의의)</th><th>단점 및 한계</th></tr>
+<tr><td><b>업적</b></td><td>기여한 실적과 성과에 따른 배분</td><td>능률과 생산성 향상, 공정한 평가 가능</td><td>과열 경쟁 유발, 우연적 배경(가정환경)에 따른 출발선 불평등을 정당화함</td></tr>
+<tr><td><b>능력</b></td><td>지식, 전문성, 자격, 신체적 재능에 따른 배분</td><td>인재의 효율적 배치 가능</td><td>타고난 천부적 재능의 불평등 반영, 능력의 객관적 측정 곤란</td></tr>
+<tr><td><b>필요</b></td><td>기본적 욕구 결핍과 생존권에 따른 배분</td><td>사회적 약자 보호, 인간다운 생활 보장</td><td>자원의 희소성 한계, 개인의 성취동기 및 근로의욕 저하(복지병)</td></tr>
+</table>
+<div class="box b-test"><h6>교정적 정의: 응보주의 vs 예방주의</h6><p>
+• <b>응보주의(칸트)</b>: 범죄자가 지은 죄에 대한 정당한 죗값을 물리는 것 자체가 목적 (도덕적 인과응보)<br>
+• <b>예방주의(벤담)</b>: 미래의 범죄를 방지하고 일반 대중을 경계(일반예방)하거나 범죄자를 교화(특별예방)하기 위한 수단
+</p></div>
+</div>`},
+
+{n:"② 자유주의 정의관: 롤스 vs 노직",h:`
+<div class="card"><h3>자유주의적 정의관의 기본 공통점</h3>
+<p>개인의 자유와 권리를 최고의 가치로 여기며, 개인이 자신의 이익과 삶의 방식을 스스로 자유롭게 결정할 수 있어야 한다고 봄. 그러나 <b>사회적 불평등을 해결하기 위한 국가의 역할</b>을 두고 롤스와 노직이 첨예하게 대립함.</p>
+</div>
+<div class="card"><h3>존 롤스 (John Rawls) — 평등주의적 자유주의</h3>
+<h4>1. 공정으로서의 정의와 원초적 입장</h4>
+<ul>
+<li><b>원초적 입장</b>: 정의의 원칙을 합의하기 위해 설정한 순수한 가상적 계약 상황</li>
+<li><b>무지의 베일</b>: 자신의 지위, 계층, 성별, 지능, 재능, 가치관을 전혀 알지 못하는 상태</li>
+<li><b>합의의 심리</b>: 사람들은 자신이 사회의 가장 비참한 처지(최소 수혜자)가 될 가능성을 두려워하여 <b>최악의 상황을 극대화(Maximin)하는 원칙</b>을 선택함</li>
+</ul>
+<h4>2. 정의의 두 원칙</h4>
+<table>
+<tr><th style="width:140px">원칙</th><th>구체적 규정 내용</th><th>우선순위</th></tr>
+<tr><td><b>제1원칙<br>(평등한 자유의 원칙)</b></td><td>모든 사람은 다른 사람의 유사한 자유와 양립할 수 있는 가장 광범위한 기본적 자유에 대해 평등한 권리를 가짐</td><td><b>최우선</b> (어떠한 경제적 이익을 위해서도 기본적 자유를 침해할 수 없음)</td></tr>
+<tr><td><b>제2원칙<br>(불평등 허용 조건)</b></td><td>사회적·경제적 불평등은 다음 두 조건을 만족할 때만 허용됨:<br>
+1) <b>공정한 기회균등의 원칙</b>: 모든 직책과 직위는 공정한 기회균등 아래 모든 이에게 개방되어야 함<br>
+2) <b>차등의 원칙</b>: 불평등이 <b>'최소 수혜자에게 최대의 이익'</b>을 가져다줄 때만 정당화됨</td><td><b>기회균등의 원칙 &gt; 차등의 원칙</b></td></tr>
+</table>
+</div>
+<div class="card"><h3>로버트 노직 (Robert Nozick) — 자유지상주의</h3>
+<ul>
+<li><b>소유 권리론</b>: 개인이 소유한 재산에 대한 배타적이고 절대적인 권리를 강조</li>
+<li><b>정의의 원리</b>:
+  <ol>
+    <li><b>취득의 정의</b>: 누구의 것도 아닌 사물을 타인에게 피해를 주지 않고 정당하게 취득</li>
+    <li><b>양도의 정의</b>: 자발적인 교환, 증여, 매매를 통해 자유롭게 이전</li>
+    <li><b>교정의 정의</b>: 강탈, 사기, 도난 등 부정의하게 취득된 경우 원상 복구</li>
+  </ol>
+</li>
+<li><b>최소 국가론</b>: 국가는 오직 침략, 절도, 폭력, 사기를 방어하는 야경국가 기능에 머물러야 함</li>
+<li><b>강제 재분배 반대</b>: 복지를 위해 부자에게 세금을 강제로 걷는 것은 부자의 노동을 강탈하는 행위(강제 노동)라고 맹비난함</li>
+</ul>
+<div class="card"><h3>롤스와 노직의 핵심 비교 총정리 (수능 1순위)</h3>
+<table>
+<tr><th>비교 항목</th><th>존 롤스 (Rawls)</th><th>로버트 노직 (Nozick)</th></tr>
+<tr><td><b>이론 명칭</b></td><td>공정으로서의 정의 (순수 절차적 정의)</td><td>소유 권리로서의 정의 (역사적 정의)</td></tr>
+<tr><td><b>핵심 가치</b></td><td>자유와 평등의 조화, 최소 수혜자 배려</td><td>개인의 절대적 자유와 소유권 수호</td></tr>
+<tr><td><b>자연적 재능의 취급</b></td><td><b>사회 공동의 자산</b>으로 간주</td><td>개인에게 완전히 귀속되는 <b>자기소유권</b></td></tr>
+<tr><td><b>국가의 복지 재분배</b></td><td><b>찬성</b> (최소 수혜자를 위해 적극 개입)</td><td><b>반대</b> (강제 재분배는 소유권 침해)</td></tr>
+<tr><td><b>국가관</b></td><td>복지 증진과 복합적 재산소유 민주주의</td><td>치안과 국방만 담당하는 <b>최소 국가</b></td></tr>
+</table>
+</div>
+</div>`},
+
+{n:"③ 공동체주의 정의관: 왈처 vs 매킨타이어",h:`
+<div class="card"><h3>공동체주의 정의관의 등장 배경과 자유주의 비판</h3>
+<ul>
+<li>자유주의는 개인을 공동체와 역사로부터 완전히 분리된 <b>'무연고적 자아(원자화된 개인)'</b>로 파악하는 치명적 오류를 범함</li>
+<li>인간은 태어날 때부터 특정한 언어, 역사, 전통, 문화를 가진 공동체의 일원으로 성장하며 정체성을 형성함</li>
+<li>따라서 정의란 보편적·추상적 원칙 하나로 규정할 수 없으며, <b>공동체의 역사적 맥락과 공유된 가치</b> 속에서 찾아야 함</li>
+</ul>
+</div>
+<div class="card"><h3>알래스デア 매킨타이어 (MacIntyre) — 연고적 자아와 서사적 정체성</h3>
+<ul>
+<li><b>연고적 자아 (Encumbered Self)</b>: 개인은 가족의 아들·딸, 도시의 시민, 민족의 구성원이라는 사회적 연고 속에서 자신의 삶을 서사적으로 엮어감</li>
+<li><b>도덕적 책임의 역사적 확장</b>:
+  <ul>
+    <li>자유주의는 "내가 직접 저지르지 않은 과거 조상의 죄에는 책임이 없다"고 하지만 이는 오만임</li>
+    <li>개인은 공동체의 유산과 혜택을 물려받았으므로, <b>공동체의 과거 과오(전쟁 범죄, 식민 지배, 노예제 등)에 대해서도 반성하고 도덕적 책임을 질 의무</b>가 있음</li>
+  </ul>
+</li>
+</ul>
+</div>
+<div class="card"><h3>마이클 왈처 (Walzer) — 복합 평등과 다원적 정의론</h3>
+<ul>
+<li><b>다원적 분배 기준</b>:
+  <ul>
+    <li>사회에는 돈, 정치 권력, 교육, 의료, 안전 등 다양한 삶의 영역이 존재함</li>
+    <li>각 영역마다 고유한 사회적 의미가 있으므로 분배 기준도 달라야 함 (예: 시장 재화는 자유 교환, 의료는 필요, 공직은 자격과 투표)</li>
+  </ul>
+</li>
+<li><b>단순 평등의 위험성</b>: 모든 재화를 모든 사람에게 똑같이 나누어주려는 시도는 국가 권력의 전제적 통제를 부름</li>
+<li><b>복합 평등 (Complex Equality)</b>:
+  <ul>
+    <li>한 영역에서 특정 재화를 많이 가진 사람(예: 재벌)이라 할지라도, 그 재화를 이유로 <b>다른 영역의 재화(정치 권력, 재판 결과, 학위 등)를 지배하지 못하게 하는 상태</b></li>
+    <li>돈으로 정치 권력을 매수하거나 명예를 사는 현상을 <b>'전제(Tyranny)'</b>라고 부르고 엄격히 금지함</li>
+  </ul>
+</li>
+</ul>
+<div class="box b-why"><h6>자유주의와 공동체주의의 바람직한 조화</h6><p>
+자유주의는 개인의 독창성과 인권을 지키는 방패가 되고, 공동체주의는 공동체의 연대감과 공공선을 지키는 뿌리가 됩니다. 두 관점은 대립을 넘어 <b>상호 보완적 관계</b>로 이해해야 합니다.
+</p></div>
+</div>`},
+
+{n:"④ 사회 불평등의 양상: 소득과 공간",h:`
+<div class="card"><h3>사회 불평등과 계층화 현상</h3>
+<p>사회적 희소 자원(부, 권력, 위신 등)이 개인이나 집단 간에 불균등하게 배분되어 서열화되어 있는 상태를 <b>사회 불평등</b>이라고 합니다.</p>
+</div>
+<div class="card"><h3>1. 소득 및 자산 불평등 (경제적 양극화)</h3>
+<ul>
+<li><b>양상</b>: 고소득층과 저소득층 간의 격차가 벌어지는 '사회 양극화(소득 불평등)' 심화, 중산층 축소</li>
+<li><b>측정 지표</b>:
+  <ul>
+    <li><b>지니계수(Gini Coefficient)</b>: 0에 가까울수록 완전 평등, 1에 가까울수록 완전 불평등 (보통 0.4를 넘으면 불평등 심각)</li>
+    <li><b>소득 5분위 배율</b>: 최상위 20%(5분위)의 소득을 최하위 20%(1분위)의 소득으로 나눈 값 (클수록 불평등)</li>
+    <li><b>상대적 빈곤율</b>: 중위소득의 50% 미만에 속하는 인구 비율</li>
+  </ul>
+</li>
+<li><b>문제점</b>: 계층 이동성(사회적 사다리) 약화, 상대적 박탈감, 경제 성장 잠재력 저하, 사회적 갈등 폭발</li>
+</ul>
+</div>
+<div class="card"><h3>2. 공간 불평등 (수도권 vs 지방)</h3>
+<table>
+<tr><th style="width:130px">구분</th><th>주요 내용 및 특징</th></tr>
+<tr><td><b>개념</b></td><td>수도권과 비수도권, 대도시와 농어촌 간에 일자리, 교육, 의료, 문화 인프라가 편중되어 삶의 질 격차가 발생하는 현상</td></tr>
+<tr><td><b>원인 (역사적)</b></td><td>과거 경제 개발 초기 효율성을 극대화하기 위해 수도권과 남동 임해 지역에 집중 투자한 <b>'성장 거점 개발 정책'</b>의 누적된 부작용</td></tr>
+<tr><td><b>현재 양상</b></td><td>국토 면적의 12%에 불과한 수도권에 인구의 50% 이상과 상위 대기업 및 대학 집중 ↔ 지방은 청년 유출과 <b>지방 소멸 위험</b> 직면</td></tr>
+<tr><td><b>해결 방안</b></td><td>공공기관 지방 이전(<b>혁신도시 건설</b>), 세종 행정중심복합도시 육성, 지방 거점 국립대 지원, 지방소멸대응기금 운영</td></tr>
+</table>
+</div>`},
+
+{n:"⑤ 사회 복지 제도의 이해: 사회보험 vs 공공부조",h:`
+<div class="card"><h3>우리나라 사회보장제도의 3대 축</h3>
+<p>사회보장기본법에 따라 모든 국민이 사회적 위험(질병, 장애, 노령, 실업, 사망 등)으로부터 벗어나 행복한 삶을 누릴 수 있도록 국가가 마련한 제도입니다.</p>
+</div>
+<div class="card"><h3>사회보험 vs 공공부조 vs 사회서비스 완벽 비교 (★무조건 출제)</h3>
+<table>
+<tr><th>비교 항목</th><th>사회보험 (Social Insurance)</th><th>공공부조 (Public Assistance)</th><th>사회서비스 (Social Service)</th></tr>
+<tr><td><b>제도의 성격</b></td><td>국민의 기본적 생계를 보장하는 <b>1차 사회 안전망</b></td><td>최후의 생계를 책임지는 <b>2차 사회 안전망</b></td><td>삶의 질을 높이는 맞춤형 지원</td></tr>
+<tr><td><b>운영 이념</b></td><td>상호 부조 (사회적 연대)</td><td>국민의 생존권 보장 (국가 책임)</td><td>보편적 복지와 삶의 질 증진</td></tr>
+<tr><td><b>수혜 대상</b></td><td><b>전 국민</b> (원칙적 강제 가입)</td><td><b>소득 인정액 기준 하위 빈곤층</b> (선별적)</td><td>도움이 필요한 모든 국민</td></tr>
+<tr><td><b>비용 부담</b></td><td><b>수혜자(근로자)와 사업주 분담</b> (능력별 차등 부담)</td><td><b>국가 및 지자체 전액 부담 (수혜자 부담 없음)</b></td><td>국가 부담 원칙 (일부 본인 부담)</td></tr>
+<tr><td><b>지급 시기</b></td><td><b>사전 예방적</b> 성격</td><td><b>사후 처방적</b> 성격</td><td>상시적 지원 성격</td></tr>
+<tr><td><b>급여 형태</b></td><td>금전적 급여 (의료 급여 포함)</td><td>금전적 급여 (생계비 등)</td><td><b>비금전적 지원 (상담·돌봄·재활)</b></td></tr>
+<tr><td><b>소득 재분배 효과</b></td><td>존재함 (상대적으로 보통)</td><td><b>가장 큼 (소득 재분배 효과 극대)</b></td><td>분야별 상이</td></tr>
+<tr><td><b>부작용 / 단점</b></td><td>도덕적 해이 발생 가능</td><td><b>낙인 효과(Stigma)</b>, 근로 의욕 저하(복지병)</td><td>서비스 품질 격차 및 재정 부담</td></tr>
+<tr><td><b>해당 제도 예시</b></td><td><b>국민연금, 국민건강보험, 고용보험, 산재보험, 노인장기요양보험 (5대 보험)</b></td><td><b>국민기초생활보장제도, 의료급여, 기초연금</b></td><td>노인맞춤돌봄, 장애인활동지원, 아이돌봄서비스</td></tr>
+</table>
+<div class="box b-test"><h6>시험 킬러 선지 체크</h6><p>
+1. "사회보험은 수혜 정도에 따라 보험료를 부담한다" → <b>오답!</b> (지불 능력에 따라 부담함)<br>
+2. "공공부조는 사회보험보다 소득 재분배 효과가 작다" → <b>오답!</b> (공공부조가 훨씬 큼)<br>
+3. "산재보험은 사업주와 근로자가 절반씩 분담한다" → <b>오답!</b> (사업주가 전액 부담함)
+</p></div>
+</div>`},
+
+{n:"⑥ 정의로운 사회를 위한 제도와 실천",h:`
+<div class="card"><h3>1. 적극적 우대조치 (Affirmative Action)의 명분과 쟁점</h3>
+<ul>
+<li><b>명분 (찬성 입장)</b>:
+  <ul>
+    <li>오랜 차별로 인해 뒤처진 출발선을 보정하는 <b>실질적 기회균등</b> 조치</li>
+    <li>사회적 다양성 증진 및 소수자 집단의 대표성 강화</li>
+  </ul>
+</li>
+<li><b>비판 (반대 입장)</b>:
+  <ul>
+    <li>개인의 실력과 업적이 아닌 특정 집단 소속을 기준으로 선발하므로 개인주의 정의관에 위배</li>
+    <li>해당 혜택을 받지 못하는 일반 집단에 대한 <b>역차별(Reverse Discrimination)</b> 발생</li>
+  </ul>
+</li>
+</ul>
+</div>
+<div class="card"><h3>2. 조세 제도와 소득 재분배</h3>
+<table>
+<tr><th style="width:130px">구분</th><th>누진세 (소득세, 상속세, 종합부동산세)</th><th>비례세 (부가가치세)</th></tr>
+<tr><td><b>세율 구조</b></td><td>과세 표준이 커질수록 <b>세율이 높아짐</b></td><td>소득이나 금액에 관계없이 <b>동일한 세율(10%)</b> 적용</td></tr>
+<tr><td><b>소득 재분배</b></td><td><b>소득 재분배 효과 큼</b> (빈부 격차 완화)</td><td>소득이 적을수록 세부담 체감이 커지는 <b>역진성</b> 발생</td></tr>
+</table>
+</div>
+<div class="card"><h3>3. 공간 불평등 완화: 성장 거점 개발 vs 균형 개발</h3>
+<table>
+<tr><th>비교 항목</th><th>성장 거점 개발 정책</th><th>지역 균형 개발 정책</th></tr>
+<tr><td><b>개발 방식</b></td><td>중앙 정부 주도의 <b>하향식 개발</b></td><td>지역 주민과 지자체 주도의 <b>상향식 개발</b></td></tr>
+<tr><td><b>핵심 가치</b></td><td><b>효율성</b>과 경제 성장 극대화</td><td><b>형평성</b>과 지역 간 격차 해소</td></tr>
+<tr><td><b>투자 대상</b></td><td>발전 잠재력이 큰 거점 지역(수도권·대도시)</td><td>소외되고 낙후된 농산어촌 및 지방 중소도시</td></tr>
+<tr><td><b>결과 / 부작용</b></td><td>파급 효과를 기대했으나 <b>역류 효과로 지역 격차 심화</b></td><td>지역 균형을 도모하나 <b>중복 투자 및 비효율</b> 발생 우려</td></tr>
+</table>
+</div>`}];
+
+let curTheme=0;
+document.getElementById('theme-tabs').innerHTML=themes.map((t,i)=>
+ `<div class="chip ${i===0?'on':''}" onclick="setTheme(${i},this)">${t.n}</div>`).join('');
+
+function setTheme(i,el){
+ curTheme=i;
+ document.querySelectorAll('#theme-tabs .chip').forEach(c=>c.classList.remove('on'));
+ el.classList.add('on');
+ document.getElementById('theme-body').innerHTML=themes[i].h;
+ document.querySelector('.main').scrollTop=0;
+}
+document.getElementById('theme-body').innerHTML=themes[0].h;
+
+/* ====================== 시험 용어 사전 (45개 용어) ====================== */
+const terms=[
+{c:"정의이론",t:"분배적 정의",w:"아리스토텔레스",d:"사회적 희소 자원(부, 권력, 명예 등)을 각자의 가치와 기여도에 따라 공정하게 배분하는 기하학적 비례의 평등."},
+{c:"정의이론",t:"교정적 정의",w:"아리스토텔레스",d:"타인에게 해를 끼치거나 부당한 이득을 취했을 때 이를 원상태로 바로잡고 처벌하는 산술적 비례의 평등."},
+{c:"정의이론",t:"절차적 정의",w:"롤스",d:"분배 결과 자체보다 공정하고 정당한 절차를 거쳤는지를 중시하는 정의관."},
+{c:"정의이론",t:"순수 절차적 정의",w:"롤스",d:"올바른 결과에 대한 독립된 기준은 없지만 공정한 절차가 존재하여, 그 절차를 준수하면 그 결과도 무조건 정당하다고 보는 정의."},
+{c:"정의이론",t:"응보주의",w:"칸트",d:"형벌은 과거에 저지른 죄에 대한 마땅한 죗값을 치르게 하는 것 자체가 목적이라는 교정적 정의관."},
+{c:"정의이론",t:"예방주의",w:"벤담",d:"형벌의 목적을 미래의 범죄 예방과 사회 방위, 범죄자의 교화에 두는 공리주의적 처벌관."},
+
+{c:"자유주의",t:"원초적 입장",w:"롤스",d:"자유롭고 평등한 합리적 행위자들이 사회 정의의 원칙을 합의하기 위해 모인 순수한 가상적 계약 상황."},
+{c:"자유주의",t:"무지의 베일",w:"롤스",d:"원초적 입장의 당사자들이 자신의 지위, 계층, 성별, 지능, 재산, 가치관을 전혀 알지 못하게 차단하는 가상의 장막."},
+{c:"자유주의",t:"평등한 자유의 원칙",w:"롤스 제1원칙",d:"모든 사람이 기본적 자유를 가장 광범위하게 평등하게 누려야 한다는 원칙으로, 경제적 효율성을 위해 희생될 수 없음."},
+{c:"자유주의",t:"차등의 원칙",w:"롤스 제2원칙",d:"사회적·경제적 불평등은 사회의 가장 열악한 처지에 있는 '최소 수혜자에게 최대의 이익'이 돌아갈 때만 정당화된다는 원칙."},
+{c:"자유주의",t:"공정한 기회균등의 원칙",w:"롤스 제2원칙",d:"사회적 지위나 직책은 모든 사람에게 실질적으로 공정하게 개방되어야 한다는 원칙 (차등의 원칙보다 우선함)."},
+{c:"자유주의",t:"최소 수혜자",w:"롤스",d:"사회적·경제적 조건(소득, 권력, 기회 등)이 가장 열악한 위치에 놓여 있는 사회적 약자 계층."},
+{c:"자유주의",t:"소유 권리론",w:"노직",d:"정당하게 취득되고 자발적으로 이전된 재산에 대해 개인이 가지는 배타적이고 절대적인 권리."},
+{c:"자유주의",t:"취득의 정의",w:"노직",d:"임자 없는 사물을 타인에게 손해를 끼치지 않고 자신의 노동을 결합하여 정당하게 소유권을 획득하는 원리."},
+{c:"자유주의",t:"양도의 정의",w:"노직",d:"자발적인 매매, 증여, 상속 등 자유로운 의사에 의해 재산이 타인에게 공정하게 이전되는 원리."},
+{c:"자유주의",t:"교정의 정의",w:"노직",d:"취득이나 양도 과정에서 강탈, 사기, 착취 등 부정의가 개입되었을 때 이를 바로잡아 원래 소유자에게 돌려주는 원리."},
+{c:"자유주의",t:"최소 국가",w:"노직",d:"국가는 오직 외적의 침략, 절도, 폭력, 사기를 방어하고 계약을 집행하는 경찰·국방 기능에만 머물러야 한다는 국가관."},
+
+{c:"공동체주의",t:"복합 평등",w:"왈처",d:"한 영역에서 성공한 재화(예: 부)가 다른 영역(예: 정치 권력, 대학 입학)을 지배하거나 매수하지 못하는 다원적 평등 상태."},
+{c:"공동체주의",t:"전제 (Tyranny)",w:"왈처",d:"특정 영역의 재화(특히 돈)가 다른 영역의 자율성을 침범하여 지배력을 행사하는 부당한 상태."},
+{c:"공동체주의",t:"다원적 정의",w:"왈처",d:"각 사회적 재화는 고유한 역사와 문화적 맥락이 있으므로 배분 기준도 서로 달라야 한다는 정의론."},
+{c:"공동체주의",t:"연고적 자아",w:"매킨타이어",d:"가족, 이웃, 민족, 국가라는 공동체의 역사와 서사 속에서 도덕적 정체성을 발견하는 자아관."},
+{c:"공동체주의",t:"서사적 자아",w:"매킨타이어",d:"자신의 인생을 공동체의 과거와 미래가 연결된 한 편의 이야기(서사)로 이해하는 자아관."},
+{c:"공동체주의",t:"무연고적 자아",w:"자유주의 비판",d:"공동체나 역사적 배경과 완전히 단절된 채 순수한 개인의 선택만 강조하는 자유주의적 자아관을 비판하는 용어."},
+
+{c:"불평등현상",t:"사회 불평등",w:"사회학 개념",d:"부, 권력, 사회적 위신 등 희소 자원이 개인이나 집단 간에 불균등하게 배분되어 서열화되어 있는 현상."},
+{c:"불평등현상",t:"사회 양극화",w:"소득 불평등",d:"중간 계층이 줄어들고 상위층과 하위층의 양 극단으로 사회적 격차가 극심하게 벌어지는 현상."},
+{c:"불평등현상",t:"지니계수",w:"소득불평등 지표",d:"소득 분배의 불평등도를 나타내는 수치(0~1). 0에 가까울수록 평등, 1에 가까울수록 불평등을 나타냄."},
+{c:"불평등현상",t:"소득 5분위 배율",w:"소득불평등 지표",d:"상위 20%(5분위)의 소득을 하위 20%(1분위)의 소득으로 나눈 값. 배율이 클수록 빈부 격차가 심함."},
+{c:"불평등현상",t:"상대적 빈곤",w:"빈곤 개념",d:"사회의 전체 소득 중 중간 수준(중위소득)의 50% 미만의 소득을 얻는 상태."},
+{c:"불평등현상",t:"공간 불평등",w:"국토 지리",d:"수도권과 비수도권, 대도시와 농어촌 간에 경제, 교육, 의료, 문화 인프라가 편중되어 나타나는 지역 간 불평등."},
+{c:"불평등현상",t:"지방 소멸 위험",w:"인구·공간",d:"청년층 유출과 고령화로 인해 특정 시·군·구가 인구 자연 감소로 사라질 위기에 처한 현상."},
+
+{c:"사회복지",t:"사회보험",w:"사회보장기본법",d:"국민에게 발생하는 사회적 위험(질병, 노령, 실업, 산재 등)을 보험 방식으로 대처하는 강제 가입 제도 (사전 예방적)."},
+{c:"사회복지",t:"공공부조",w:"사회보장기본법",d:"국가와 지자체가 세금 100%를 부담하여 생활 능력이 없거나 어려운 국민의 최저생활을 보장하는 제도 (사후 처방적)."},
+{c:"사회복지",t:"사회서비스",w:"사회보장기본법",d:"국민의 삶의 질 향상을 위해 상담, 재활, 돌봄, 시설 이용 등을 제공하는 비금전적 복지 제도."},
+{c:"사회복지",t:"국민연금",w:"사회보험",d:"노령, 장애, 사망 시 연금을 지급하여 본인과 유족의 생활 안정을 돕는 소득 보장 사회보험."},
+{c:"사회복지",t:"국민건강보험",w:"사회보험",d:"소득과 재산에 따라 보험료를 내고, 아플 때 누구나 균등하게 병원 진료비 혜택을 받는 의료 보장 사회보험."},
+{c:"사회복지",t:"고용보험",w:"사회보험",d:"실직 시 구직급여(실업급여)를 지급하고 직업 훈련과 고용 안정을 지원하는 사회보험."},
+{c:"사회복지",t:"산업재해보상보험",w:"사회보험",d:"업무상 재해나 질병을 입은 근로자에게 보상하는 제도로, 보험료를 사업주가 전액 부담함."},
+{c:"사회복지",t:"노인장기요양보험",w:"사회보험",d:"치매, 중풍 등 노인성 질환으로 혼자 일상생활이 어려운 어르신에게 요양 서비스를 제공하는 제5의 사회보험."},
+{c:"사회복지",t:"국민기초생활보장",w:"공공부조",d:"소득인정액이 기준 중위소득 이하인 빈곤 가구에 생계, 의료, 주거, 교육 급여를 전액 국비로 지원하는 공공부조."},
+{c:"사회복지",t:"소득 재분배",w:"재정 정책",d:"세금(누진세)과 사회 복지 제도를 통해 고소득층의 소득 일부를 저소득층에게 이전시켜 빈부 격차를 줄이는 기능."},
+{c:"사회복지",t:"낙인 효과 (Stigma)",w:"공공부조 부작용",d:"공공부조 수급자로 선정되는 과정에서 자신이 가난하다는 수치심이나 사회적 편견을 겪게 되는 심리적 부작용."},
+
+{c:"정책대안",t:"누진세",w:"조세 제도",d:"과세 대상 소득이 높아질수록 점차 높은 세율을 적용하여 소득 재분배 효과를 내는 세금 (소득세 등)."},
+{c:"정책대안",t:"적극적 우대조치",w:"Affirmative Action",d:"과거 차별받았던 여성, 장애인, 지역 인재 등에게 취업·입학 등에서 잠정적으로 가산점이나 할당 혜택을 주는 제도."},
+{c:"정책대안",t:"역차별",w:"우대조치 쟁점",d:"사회적 약자를 우대하는 조치로 인해 비수혜 집단의 유능한 개인이 부당하게 불이익을 당하게 되는 현상."},
+{c:"정책대안",t:"성장 거점 개발",w:"하향식 개발",d:"투자 효과가 큰 대도시나 거점 지역에 집중 투자한 후 그 효과가 주변으로 퍼져나가기를 기대한 효율성 중심 개발 방식."},
+{c:"정책대안",t:"지역 균형 개발",w:"상향식 개발",d:"낙후 지역에 우선 투자하여 수도권 과밀을 해소하고 국토의 균형 있는 발전을 추구하는 형평성 중심 개발 방식."},
+{c:"정책대안",t:"혁신도시",w:"국가균형발전",d:"수도권에 집중된 공공기관을 지방으로 이전하여 지역의 산·학·연과 협력 거점을 조성한 지방 신도시."}
+];
+
+const tcats=["전체","정의이론","자유주의","공동체주의","불평등현상","사회복지","정책대안"];
+let tcat="전체";
+
+document.getElementById('term-tabs').innerHTML=tcats.map(c=>
+ `<div class="chip ${c==='전체'?'on':''}" onclick="setTcat('${c}',this)">${c}</div>`).join('');
+
+function setTcat(c,el){
+ tcat=c;
+ document.querySelectorAll('#term-tabs .chip').forEach(x=>x.classList.remove('on'));
+ el.classList.add('on');
+ renderTerms();
+}
+
+function renderTerms(){
+ const q=document.getElementById('term-search').value.trim();
+ const list=terms.filter(t=>(tcat==="전체"||t.c===tcat)&&(!q||t.t.includes(q)||t.d.includes(q)||t.w.includes(q)));
+ document.getElementById('term-list').innerHTML=list.length?list.map(t=>
+  `<dl class="term"><dt>${t.t} ${t.w?`<span class="who">· ${t.w}</span>`:''}</dt><dd>${t.d}</dd></dl>`).join('')
+  :`<p style="color:var(--text-dim);padding:20px">검색 결과가 없습니다. 다른 단어로 검색해 보세요.</p>`;
+}
+renderTerms();
+
+/* ====================== 문제 은행 (6단원 40문항) ====================== */
+const units=[
+ {k:1,n:"정의의 의미와 실질적 기준"},
+ {k:2,n:"자유주의 정의관: 롤스와 노직"},
+ {k:3,n:"공동체주의 정의관: 왈처와 매킨타이어"},
+ {k:4,n:"사회 및 공간 불평등 현상"},
+ {k:5,n:"사회 복지 제도의 이해"},
+ {k:6,n:"정의로운 사회 실현을 위한 대안"}
+];
+
+const bank=[
+/* ---- 1단원: 정의의 의미와 실질적 기준 ---- */
+{u:1,ty:"m",q:"아리스토텔레스가 제시한 특수적 정의에 대한 설명으로 옳은 것은?",o:["분배적 정의는 모든 사람에게 산술적으로 똑같이 나누어주는 것이다","교정적 정의는 개인의 가치와 기여도에 따라 기하학적 비례로 보상하는 것이다","분배적 정의는 '같은 것은 같게, 다른 것은 다르게' 대우하는 기하학적 비례를 따른다","교정적 정의는 형벌보다는 사회 전체의 효용 극대화를 최우선 목표로 삼는다"],a:2,
+ s:"아리스토텔레스의 <b>분배적 정의는 각자의 가치와 업적에 따른 기하학적 비례의 평등</b>을 뜻하며, 교정적 정의는 손익을 원래대로 맞추는 산술적 비례를 뜻합니다."},
+{u:1,ty:"m",q:"업적(실적)에 따른 분배 기준의 장점으로 가장 적절한 것은?",o:["모든 사회 구성원의 최소한의 기본 욕구를 보장해 준다","개인의 성취동기를 자극하여 사회적 생산성을 높일 수 있다","사회적 약자를 배려하여 계층 간 불평등을 완전히 해소한다","선천적 재능이나 가정 배경의 차이를 완벽히 무력화한다"],a:1,
+ s:"업적에 따른 분배는 일한 성과에 비례하여 보상하므로 <b>성취동기를 고취하고 생산성을 증대</b>시킵니다."},
+{u:1,ty:"o",q:"필요에 따른 분배는 사회적 약자의 인간다운 삶을 보장할 수 있으나, 모든 사람의 필요를 충족하기에는 자원이 한정되어 있고 근로 의욕을 떨어뜨릴 수 있다는 단점이 있다.",a:1,
+ s:"맞습니다. 필요주의는 생존권을 보장하지만 자원의 희소성과 근로 의욕 저하(복지병)라는 한계를 지닙니다."},
+{u:1,ty:"b",q:"범죄자에 대한 처벌 목적을 과거의 잘못에 대한 정당한 죗값을 치르게 하는 데 두는 관점을 ( )주의라 하고, 미래의 범죄 예방에 두는 관점을 ( )주의라 한다.",a:["응보","예방"],
+ s:"칸트의 <b>응보주의</b>와 공리주의의 <b>예방주의</b>입니다."},
+{u:1,ty:"m",q:"공리주의 정의관에 대한 비판으로 가장 적절한 것은?",o:["개인의 자유와 기본권을 지나치게 신성불가침으로 여긴다","사회의 총효용을 극대화하는 과정에서 소수의 기본권이 침해될 위험이 있다","국가의 개입을 전면 부정하고 최소 국가만을 옹호한다","공동체의 역사와 전통을 개인의 선택보다 우선시한다"],a:1,
+ s:"공리주의는 '최대 다수의 최대 행복'을 추구하다 보니 <b>다수의 이익을 위해 무고한 소수를 희생시킬 수 있다는 치명적 한계</b>가 있습니다."},
+{u:1,ty:"o",q:"아리스토텔레스의 교정적 정의는 타인에게 입힌 손해보다 더 큰 벌을 주어 사회적 공포를 조성하는 것을 목적으로 한다.",a:0,
+ s:"틀립니다. 교정적 정의는 가해진 손해와 배상의 균형을 맞추는 <b>산술적 비례의 동등성</b>을 추구합니다."},
+{u:1,ty:"b",q:"능력에 따른 분배 기준은 지식과 자격, 재능을 중시하지만, 타고난 천부적 재능이나 부모의 지원 같은 ( )인 요소가 개입되어 불공정할 수 있다는 비판을 받는다.",a:["우연적","우연"],
+ s:"가정 환경이나 유전적 재능 같은 <b>우연적(도덕적 임의성)</b> 요소입니다."},
+
+/* ---- 2단원: 자유주의 정의관: 롤스와 노직 ---- */
+{u:2,ty:"m",q:"존 롤스의 정의관에 대한 설명으로 옳지 <u>않은</u> 것은?",o:["무지의 베일을 쓴 당사자들은 최소 수혜자의 처지를 가장 먼저 고려한다","제1원칙인 평등한 자유의 원칙은 어떠한 경제적 이익을 위해서도 침해될 수 없다","사회의 모든 경제적 불평등은 원천적으로 완전히 금지되어야 한다","차등의 원칙보다 공정한 기회균등의 원칙이 우선한다"],a:2,
+ s:"롤스는 모든 불평등을 금지하는 결과적 평등론자가 아닙니다. <b>최소 수혜자에게 최대 이익이 돌아간다면 경제적 불평등을 정당한 것으로 인정</b>합니다."},
+{u:2,ty:"m",q:"로버트 노직(Nozick)의 소유 권리론에 대한 설명으로 옳은 것은?",o:["정의로운 사회를 위해 국가는 고소득자에게 누진세를 매겨 재분배해야 한다","취득과 양도 과정에 하자가 없다면 그 결과로 생긴 불평등은 완벽히 정당하다","사회적 약자를 배려하는 최소 수혜자 원칙이 제1원칙보다 우선한다","공동체의 전통과 역사적 책임을 위해 현세대는 세금을 더 내야 한다"],a:1,
+ s:"노직은 <b>취득과 양도의 절차가 정당하다면 결과가 불평등하더라도 정당한 소유권</b>이라고 봅니다."},
+{u:2,ty:"b",q:"롤스가 제시한 원초적 입장에서 당사자들이 자신의 지위나 재능, 가치관을 전혀 알지 못하도록 가정한 가상의 장막을 ( )이라 한다.",a:["무지의 베일","무지의베일"],
+ s:"<b>무지의 베일(Veil of Ignorance)</b>입니다."},
+{u:2,ty:"o",q:"롤스는 타고난 자연적 재능과 우연한 사회적 조건을 개인의 온전한 배타적 권리가 아니라 '사회 공동의 자산'으로 보아야 한다고 주장했다.",a:1,
+ s:"맞습니다. 롤스는 자연적 재능의 분포를 공동 자산으로 보고, 그 재능으로 얻은 혜택을 최소 수혜자와 나누어야 한다고 보았습니다."},
+{u:2,ty:"m",q:"노직이 옹호한 국가의 형태로, 국방과 치안, 계약 집행에만 역할을 한정하는 국가는?",o:["복지 국가","최소 국가","행정 국가","사회주의 국가"],a:1,
+ s:"노직은 개인의 자유와 재산권을 지키는 데에만 머무는 <b>최소 국가(야경국가)</b>를 주장했습니다."},
+{u:2,ty:"o",q:"노직은 개인이 자신의 재산을 가난한 이웃에게 자발적으로 기부하거나 자선을 베푸는 행위조차 소유권 침해라며 금지해야 한다고 주장했다.",a:0,
+ s:"틀립니다. 노직은 <b>자발적인 기부와 자선은 양도의 자유에 해당하므로 적극 권장</b>하지만, 국가가 '세금으로 강제 징수'하는 것을 반대했습니다."},
+{u:2,ty:"b",q:"롤스의 정의의 제2원칙 중, 사회적·경제적 불평등은 사회의 가장 취약한 계층인 ( )에게 최대의 이익을 줄 때만 정당화된다는 원칙을 차등의 원칙이라 한다.",a:["최소 수혜자","최소수혜자"],
+ s:"<b>최소 수혜자(the least advantaged)</b>입니다."},
+
+/* ---- 3단원: 공동체주의 정의관: 왈처와 매킨타이어 ---- */
+{u:3,ty:"m",q:"마이클 왈처(Walzer)의 복합 평등론에 대한 설명으로 옳은 것은?",o:["모든 시민에게 사회의 모든 재화를 산술적으로 똑같이 나누어주어야 한다","경제적 부를 많이 가진 사람이 정치 권력이나 명예까지 지배해서는 안 된다","단 하나의 절대적 원칙(차등의 원칙)으로 모든 영역을 규율해야 한다","국가는 개인의 자유에 일체 간섭하지 않는 최소 국가가 되어야 한다"],a:1,
+ s:"왈처의 <b>복합 평등</b>은 돈이 많은 사람이 정치 권력, 교육, 명예 등 다른 영역의 재화까지 지배(전제)하는 것을 막는 상태를 뜻합니다."},
+{u:3,ty:"m",q:"매킨타이어(MacIntyre)가 바라본 자아관과 도덕적 책임에 대한 설명으로 옳은 것은?",o:["개인은 공동체의 역사와 무관하게 완전히 자유로운 선택자이다","과거 세대가 저지른 역사적 잘못에 대해 현세대는 도덕적 책임을 질 필요가 없다","개인은 공동체의 서사와 전통 속에서 자신의 정체성을 발견하는 연고적 자아이다","정의는 오직 원초적 입장에서 무지의 베일을 쓰고 도출되는 보편 법칙이다"],a:2,
+ s:"매킨타이어는 인간을 공동체의 역사와 유산 속에서 살아가는 <b>연고적·서사적 자아</b>로 파악했습니다."},
+{u:3,ty:"b",q:"왈처는 특정 영역의 재화(예: 돈)가 고유한 영역을 벗어나 다른 영역의 재화(예: 정치 권력)를 매수하고 지배하는 부당한 현상을 ( )라 불렀다.",a:["전제"],
+ s:"<b>전제(Tyranny)</b>입니다."},
+{u:3,ty:"o",q:"공동체주의는 개인의 권리보다 공동체의 전통과 미덕을 강조하므로, 자유주의와는 어떠한 조화도 이룰 수 없는 절대적 대립 관계이다.",a:0,
+ s:"틀립니다. 자유주의(개인의 권리 보호)와 공동체주의(공동체적 연대와 책임)는 상호 비판을 통해 <b>상호 보완적인 조화</b>를 추구할 수 있습니다."},
+{u:3,ty:"b",q:"매킨타이어는 개인의 삶이 공동체의 과거와 미래로 이어지는 한 편의 이야기 속에서 형성된다는 의미에서 인간을 ( ) 자아라고 표현하였다.",a:["서사적","서사적 자아"],
+ s:"<b>서사적 자아(narrative self)</b>입니다."},
+{u:3,ty:"o",q:"왈처의 다원적 정의론에 따르면, 의료 혜택은 시장에서의 구매 능력에 따라 분배되어야 가장 정의롭다.",a:0,
+ s:"틀립니다. 왈처에 따르면 의료는 시장 재화가 아니라 생명과 직결된 것이므로 <b>'필요'</b>에 따라 분배되어야 합니다."},
+
+/* ---- 4단원: 사회 및 공간 불평등 현상 ---- */
+{u:4,ty:"m",q:"소득 불평등을 측정하는 지표에 대한 설명으로 옳은 것은?",o:["지니계수는 1에 가까울수록 소득 분배가 평등함을 나타낸다","소득 5분위 배율은 상위 20%의 소득을 하위 20%의 소득으로 나눈 값이다","상대적 빈곤율은 최저생계비 미만의 소득을 얻는 절대적 빈곤 인구의 비율이다","지니계수가 0이면 한 사람이 사회의 모든 소득을 독점하고 있음을 의미한다"],a:1,
+ s:"<b>소득 5분위 배율 = 5분위(최상위 20%) 소득 / 1분위(최하위 20%) 소득</b>입니다. 지니계수는 0이 완전 평등, 1이 완전 불평등입니다."},
+{u:4,ty:"m",q:"과거 우리나라의 '성장 거점 개발 정책'에 대한 설명으로 옳지 <u>않은</u> 것은?",o:["투자 효과가 큰 대도시와 특정 거점 지역에 우선 투자하였다","중앙 정부 주도의 하향식 개발 방식으로 진행되었다","국가 전체의 경제 성장을 단기간에 견인하는 효율성을 발휘하였다","전국의 모든 지역이 골고루 발전하여 지역 격차를 해소하였다"],a:3,
+ s:"성장 거점 개발은 수도권과 남동 임해에 자원이 편중되어 <b>수도권 과밀과 국토 불균형(공간 불평등)을 심화</b>시키는 부작용을 낳았습니다."},
+{u:4,ty:"b",q:"소득 불평등 지표 중 소득 분배의 불균형도를 0과 1 사이의 값으로 나타낸 것으로, 0에 가까울수록 평등한 상태를 뜻하는 지표는 ( )이다.",a:["지니계수"],
+ s:"<b>지니계수(Gini Coefficient)</b>입니다."},
+{u:4,ty:"o",q:"공간 불평등을 해소하기 위해 추진된 대표적인 정책 사례로는 세종 행정중심복합도시 건설과 공공기관의 지방 혁신도시 이전이 있다.",a:1,
+ s:"맞습니다. 수도권 집중을 완화하고 지역 균형 발전을 꾀하기 위한 정책입니다."},
+{u:4,ty:"m",q:"사회 불평등 현상 중 '사회적 이동성(Social Mobility)'이 저하되었을 때 나타나는 현상으로 가장 적절한 것은?",o:["노력하면 누구나 계층 상승을 이룰 수 있다는 희망이 커진다","부모의 경제적 지위가 자녀에게 세습되어 계층이 고착화된다","중산층의 비율이 비약적으로 증가하여 빈부 격차가 사라진다","지역 간의 인구 이동이 자유로워져 공간 불평등이 완화된다"],a:1,
+ s:"사회적 이동성이 낮아지면 '수저 계급론'처럼 <b>부모의 배경이 대물림되어 사회적 사다리가 끊어지는 문제</b>가 발생합니다."},
+{u:4,ty:"o",q:"상대적 빈곤은 사회 전체 소득의 중위소득 50% 미만에 속하는 경우를 가리킨다.",a:1,
+ s:"맞습니다. 한 사회의 전반적인 소득 수준을 고려하여 상대적 박탈감을 측정하는 기준입니다."},
+
+/* ---- 5단원: 사회 복지 제도의 이해 ---- */
+{u:5,ty:"m",q:"사회보험과 공공부조의 특징을 비교한 내용으로 옳은 것은?",o:["사회보험은 전액 국가 재정으로만 충당한다","공공부조는 수혜자가 사전에 보험료를 납부해야만 혜택을 받는다","소득 재분배 효과는 공공부조가 사회보험보다 더 크다","사회보험은 사후 처방적 성격이 강하고 공공부조는 사전 예방적 성격이 강하다"],a:2,
+ s:"<b>공공부조는 조세로 충당하여 빈곤층에게만 지급하므로 소득 재분배 효과가 가장 큽니다.</b> 사회보험은 사전 예방적이며 수혜자가 보험료를 분담합니다."},
+{u:5,ty:"m",q:"우리나라 5대 사회보험에 속하지 <u>않는</u> 것은?",o:["국민연금","국민건강보험","산업재해보상보험","국민기초생활보장제도"],a:3,
+ s:"국민기초생활보장제도는 <b>공공부조</b>입니다. 5대 사회보험은 국민연금, 국민건강보험, 고용보험, 산업재해보상보험, 노인장기요양보험입니다."},
+{u:5,ty:"b",q:"공공부조의 수혜자가 되는 과정에서 가난하다는 수치심이나 사회적 편견을 겪게 되는 심리적 부작용을 ( ) 효과라고 한다.",a:["낙인","낙인 효과","낙인효과"],
+ s:"<b>낙인 효과(Stigma Effect)</b>입니다."},
+{u:5,ty:"o",q:"산업재해보상보험(산재보험)은 근로자와 사업주가 보험료를 절반씩 균등하게 분담하여 납부한다.",a:0,
+ s:"틀립니다. 5대 보험 중 <b>산재보험은 사업주가 보험료 전액(100%)을 부담</b>합니다. (매우 빈출되는 함정 선지)"},
+{u:5,ty:"m",q:"상담, 재활, 돌봄, 시설 이용 등 국민에게 금전이 아닌 '비금전적 지원'을 제공하는 복지 제도는?",o:["사회보험","공공부조","사회서비스","기초연금"],a:2,
+ s:"<b>사회서비스(Social Service)</b>는 비금전적 현물 및 돌봄 지원을 핵심으로 합니다."},
+{u:5,ty:"o",q:"사회보험은 능력에 따라 보험료를 차등 부과하지만, 공공부조는 소득에 관계없이 전 국민에게 균등하게 현금을 분배한다.",a:0,
+ s:"틀립니다. 공공부조는 전 국민이 아니라 <b>소득인정액이 일정 기준 이하인 저소득 빈곤층에게만 선별적으로 지급</b>합니다."},
+{u:5,ty:"b",q:"만 65세 이상 노인 중 소득인정액 하위 70%의 어르신에게 세금으로 매월 일정액을 지급하는 공공부조 성격의 제도는 ( )이다.",a:["기초연금"],
+ s:"<b>기초연금</b>입니다. (국민연금은 사회보험)"},
+
+/* ---- 6단원: 정의로운 사회 실현을 위한 대안 ---- */
+{u:6,ty:"m",q:"적극적 우대조치(Affirmative Action)에 대한 찬성 근거로 가장 적절한 것은?",o:["모든 개인의 타고난 재능과 업적만을 엄격하게 평가할 수 있다","과거의 차별로 누적된 격차를 시정하여 실질적 기회균등을 도모한다","일반 지원자들의 능력을 객관적으로 검증할 수 있는 최선의 수단이다","일체의 사회 복지 예산을 절감하여 국가 재정을 튼튼히 한다"],a:1,
+ s:"적극적 우대조치는 사회적 소수자의 불리한 출발선을 보정하여 <b>실질적 평등</b>을 달성하기 위한 제도입니다."},
+{u:6,ty:"m",q:"조세 제도의 소득 재분배 효과에 대한 설명으로 옳은 것은?",o:["비례세는 소득이 많을수록 높은 세율을 적용하여 소득 재분배 효과가 크다","누진세는 과세 대상 소득이 커질수록 높은 세율을 적용하여 빈부 격차를 완화한다","부가가치세와 같은 간접세는 고소득자에게 더 높은 세율을 적용한다","모든 조세는 소득 재분배 효과가 완전히 동일하다"],a:1,
+ s:"<b>누진세는 소득이 많을수록 세율이 높아지므로 소득 재분배 효과가 가장 큽니다.</b> 비례세(부가가치세)는 역진성을 띨 수 있습니다."},
+{u:6,ty:"b",q:"적극적 우대조치로 인해 사회적 약자가 아닌 일반 다수 집단의 개인이 능력과 상관없이 역으로 불이익을 당하게 되는 현상을 ( )이라 한다.",a:["역차별"],
+ s:"<b>역차별(Reverse Discrimination)</b>입니다."},
+{u:6,ty:"o",q:"지역 균형 개발은 지역 주민과 지방 자치 단체가 주도하는 상향식 개발 방식을 취하며, 지역 간 형평성을 중시한다.",a:1,
+ s:"맞습니다. 과거 중앙 주도의 하향식(성장 거점)과 대비되는 지방 주도의 상향식 균형 개발입니다."},
+{u:6,ty:"m",q:"정의로운 사회를 실현하기 위해 시민 개인이 실천할 수 있는 윤리적 자세로 적절하지 <u>않은</u> 것은?",o:["사회적 약자의 고통에 공감하고 연대 의식을 함양한다","자신의 기득권을 지키기 위해 공공기관의 지방 이전을 결사 저지한다","소외 계층을 돕기 위해 자발적으로 기부와 봉사 활동에 참여한다","공동체의 역사와 환경 문제에 관심을 가지고 성숙한 시민성을 발휘한다"],a:1,
+ s:"지역 이기주의(님비 현상)나 집단 이기주의는 정의로운 사회 실현을 저해하는 태도입니다."}
+];
+
+/* ---------- 퀴즈 렌더링 공통 ---------- */
+function qHTML(item,idx,prefix){
+ const label=item.ty==="m"?"객관식":item.ty==="o"?"O / X":"빈칸";
+ let body="";
+ if(item.ty==="m"){
+  body=`<div class="opts">`+item.o.map((o,i)=>
+   `<div class="opt" id="${prefix}-${idx}-${i}" onclick="pick('${prefix}',${idx},${i})"><i>${i+1}</i><span>${o}</span></div>`).join('')+`</div>`;
+ }else if(item.ty==="o"){
+  body=`<div class="opts">
+   <div class="opt" id="${prefix}-${idx}-1" onclick="pick('${prefix}',${idx},1)"><i>O</i><span>맞다</span></div>
+   <div class="opt" id="${prefix}-${idx}-0" onclick="pick('${prefix}',${idx},0)"><i>X</i><span>틀리다</span></div></div>`;
+ }else{
+  const cnt=Array.isArray(item.a)&&item.q.split('( )').length-1>1?2:1;
+  body=`<div style="display:flex;gap:10px;flex-wrap:wrap">`+
+   Array.from({length:cnt},(_,i)=>`<input class="blank" id="${prefix}-${idx}-b${i}" placeholder="정답 ${cnt>1?i+1:''} 입력">`).join('')+`</div>`;
+ }
+ return `<div class="q" id="${prefix}-q-${idx}">
+   <div class="q-top"><div class="q-no">${idx+1}</div>
+   <div class="q-txt">${item.q}<span class="q-type">${label}</span></div></div>
+   ${body}
+   <div class="sol" id="${prefix}-s-${idx}"></div></div>`;
+}
+
+const picked={quiz:{},exam:{}};
+
+function pick(prefix,idx,val){
+ picked[prefix][idx]=val;
+ const q=document.getElementById(prefix+'-q-'+idx);
+ q.querySelectorAll('.opt').forEach(o=>o.classList.remove('sel'));
+ document.getElementById(`${prefix}-${idx}-${val}`).classList.add('sel');
+}
+
+function normalize(s){return (s||"").replace(/\s|·|,/g,'').trim();}
+
+function gradeSet(list,prefix,resultId,scoreId){
+ let right=0;
+ list.forEach((item,idx)=>{
+  const q=document.getElementById(prefix+'-q-'+idx);
+  const sol=document.getElementById(prefix+'-s-'+idx);
+  q.classList.remove('ok','no');
+  let ok=false;
+  if(item.ty==="b"){
+   const inputs=q.querySelectorAll('.blank');
+   const ans=Array.isArray(item.a)?item.a:[item.a];
+   if(inputs.length===1){ ok=ans.some(a=>normalize(a)===normalize(inputs[0].value)); }
+   else{ ok=inputs.length===ans.length && Array.from(inputs).every((inp,i)=>normalize(inp.value)===normalize(ans[i])); }
+   inputs.forEach(i=>i.style.borderColor= ok?'#2f8666':'#c34871');
+   sol.innerHTML=`<b>정답: ${(Array.isArray(item.a)?item.a:[item.a]).join(' / ')}</b><p>${item.s}</p>`;
+  }else{
+   const sel=picked[prefix][idx];
+   ok = sel===item.a;
+   q.querySelectorAll('.opt').forEach((o,i)=>{
+    o.classList.remove('sel','right','wrong');
+    const v=item.ty==="o"?(i===0?1:0):i;
+    if(v===item.a)o.classList.add('right');
+    else if(v===sel)o.classList.add('wrong');
+   });
+   const ansTxt=item.ty==="o"?(item.a===1?"O (맞다)":"X (틀리다)"):`${item.a+1}번 — ${item.o[item.a]}`;
+   sol.innerHTML=`<b>정답: ${ansTxt}</b><p>${item.s}</p>`;
+  }
+  sol.classList.add('on');
+  q.classList.add(ok?'ok':'no');
+  if(ok)right++;
+ });
+ const pct=Math.round(right/list.length*100);
+ const msg = pct>=90?"완벽합니다! 정의론과 복지 제도 1등급 정복 완료! 💯":pct>=70?"잘했어요! 오답 사상가와 복지 제도 비교만 다시 복습하세요 👍":pct>=50?"조금만 더! [롤스 vs 노직], [사회보험 vs 공공부조] 요약을 다시 읽어보세요 📖":"개념부터 차근차근! [한눈에 보기] → [용어 사전] 순으로 다시 다져봅시다 🌱";
+ const r=document.getElementById(resultId);
+ r.innerHTML=`<div style="font-size:.9rem;color:#fff0f7">채점 결과</div>
+  <div class="big">${right} / ${list.length} <span style="font-size:1.3rem">(${pct}점)</span></div>
+  <div class="msg">${msg}</div>`;
+ r.classList.add('on');
+ if(scoreId)document.getElementById(scoreId).innerHTML=`맞힌 개수 <span>${right}</span> / ${list.length}`;
+ r.scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+
+/* ---------- 소단원별 연습문제 ---------- */
+let curUnit=1,quizList=[];
+document.getElementById('quiz-tabs').innerHTML=units.map(u=>
+ `<div class="chip ${u.k===1?'on':''}" onclick="setUnit(${u.k},this)">${u.k}. ${u.n}</div>`).join('');
+
+function setUnit(k,el){
+ curUnit=k;
+ document.querySelectorAll('#quiz-tabs .chip').forEach(c=>c.classList.remove('on'));
+ el.classList.add('on');
+ renderQuiz();
+}
+
+function renderQuiz(){
+ quizList=bank.filter(b=>b.u===curUnit);
+ picked.quiz={};
+ document.getElementById('quiz-score').innerHTML=`선택한 단원: <span>${units.find(u=>u.k===curUnit).n}</span> · 총 ${quizList.length}문항`;
+ document.getElementById('quiz-result').classList.remove('on');
+ document.getElementById('quiz-body').innerHTML=quizList.map((q,i)=>qHTML(q,i,'quiz')).join('');
+ document.querySelector('.main').scrollTop=0;
+}
+
+function gradeQuiz(){gradeSet(quizList,'quiz','quiz-result',null);}
+
+function showAllSol(){
+ quizList.forEach((item,idx)=>{
+  const sol=document.getElementById('quiz-s-'+idx);
+  const ansTxt=item.ty==="b"?(Array.isArray(item.a)?item.a:[item.a]).join(' / ')
+   :item.ty==="o"?(item.a===1?"O (맞다)":"X (틀리다)"):`${item.a+1}번 — ${item.o[item.a]}`;
+  sol.innerHTML=`<b>정답: ${ansTxt}</b><p>${item.s}</p>`;
+  sol.classList.add('on');
+ });
+}
+renderQuiz();
+
+/* ---------- 실전 모의고사 ---------- */
+let examList=[];
+function newExam(){
+ const pool=[...bank];
+ for(let i=pool.length-1;i>0;i--){
+   const j=Math.floor(Math.random()*(i+1));
+   [pool[i],pool[j]]=[pool[j],pool[i]];
+ }
+ examList=pool.slice(0,20);
+ picked.exam={};
+ document.getElementById('exam-result').classList.remove('on');
+ document.getElementById('exam-score').textContent='20문항 · 풀이 중…';
+ document.getElementById('exam-body').innerHTML=examList.map((q,i)=>qHTML(q,i,'exam')).join('');
+ document.querySelector('.main').scrollTop=0;
+}
+
+function gradeExam(){
+ if(!examList.length)return newExam();
+ gradeSet(examList,'exam','exam-result','exam-score');
+}
+newExam();
+</script>
+</body>
+</html>
