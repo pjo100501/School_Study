@@ -1,0 +1,1564 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>나만의 통합 공부학습 앱</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      font-family: 'Noto Sans KR', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: #f8fafc;
+      color: #0f172a;
+      overflow-x: hidden;
+    }
+    .canvas-container {
+      touch-action: none;
+    }
+    .split-divider {
+      touch-action: none;
+      cursor: col-resize;
+      user-select: none;
+    }
+    .split-divider:hover .divider-pill,
+    .split-divider.dragging .divider-pill {
+      background-color: #4f46e5;
+      transform: scaleY(1.08);
+    }
+    .flashcard-inner {
+      transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+      transform-style: preserve-3d;
+    }
+    .flashcard.flipped .flashcard-inner {
+      transform: rotateY(180deg);
+    }
+    .flashcard-face {
+      backface-visibility: hidden;
+    }
+    .flashcard-back {
+      transform: rotateY(180deg);
+    }
+    .textbook-paper {
+      background: #ffffff;
+      box-shadow: 0 4px 20px rgba(15, 23, 42, 0.08);
+    }
+    /* Custom scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+  <!-- Top Navigation Bar -->
+  <header class="sticky top-0 z-30 bg-white/90 backdrop-blur border-b border-slate-200 px-4 py-2.5 flex items-center justify-between gap-2">
+    <div class="flex items-center gap-2 min-w-0">
+      <button id="btn-home" class="flex items-center gap-2 text-left font-bold text-slate-800 hover:text-indigo-600 transition truncate">
+        <span class="w-8 h-8 rounded-lg bg-indigo-600 text-white flex items-center justify-center text-sm shrink-0">📚</span>
+        <span class="truncate text-base sm:text-lg">나만의 통합 공부학습 앱</span>
+      </button>
+      <span id="breadcrumb-sep" class="hidden text-slate-300">/</span>
+      <button id="breadcrumb-subject" class="hidden text-sm font-semibold px-2.5 py-1 rounded-full bg-indigo-50 text-indigo-700 hover:bg-indigo-100 transition truncate"></button>
+      <span id="breadcrumb-view-sep" class="hidden text-slate-300">/</span>
+      <span id="breadcrumb-view" class="hidden text-sm font-medium text-slate-600 truncate"></span>
+    </div>
+
+    <div class="flex items-center gap-2 shrink-0">
+      <button id="btn-quick-split" class="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-indigo-600 text-white hover:bg-indigo-700 transition shadow-sm">
+        <span>⚡</span><span>창 분할 공부</span>
+      </button>
+      <button id="btn-back" class="hidden inline-flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-100 text-slate-700 hover:bg-slate-200 transition">
+        <span>←</span><span>뒤로</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Main Content Area -->
+  <main id="app-main" class="flex-1 flex flex-col min-h-0">
+
+    <!-- 1. HOME VIEW (3x3 Subject Grid) -->
+    <section id="view-home" class="max-w-5xl w-full mx-auto px-4 py-6 sm:py-10">
+      <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-6">
+        <div>
+          <h1 class="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight">과목별 학습 공간</h1>
+          <p class="text-sm text-slate-500 mt-1">공부할 과목을 선택하면 교과서, 필기, 암기, 내 자료실로 바로 이동합니다.</p>
+        </div>
+        <div class="flex items-center gap-2">
+          <button id="btn-add-subject" class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-sm font-semibold bg-white border border-slate-200 text-slate-700 hover:border-indigo-300 hover:text-indigo-600 transition shadow-sm">
+            <span>＋</span><span>과목 추가</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- 3x3 Grid -->
+      <div id="subject-grid" class="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4"></div>
+    </section>
+
+    <!-- 2. SUBJECT HUB VIEW (국어 -> 교과서 ebook 바로가기 / 나의 필기 / 나의 암기 / 나의 폴더) -->
+    <section id="view-subject" class="hidden max-w-4xl w-full mx-auto px-4 py-6 sm:py-8">
+      <div id="subject-hero" class="rounded-2xl p-5 sm:p-6 text-white shadow-md mb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div class="flex items-center gap-4">
+          <div id="subject-hero-icon" class="w-14 h-14 rounded-2xl bg-white/20 backdrop-blur flex items-center justify-center text-3xl shrink-0"></div>
+          <div>
+            <h2 id="subject-hero-title" class="text-2xl sm:text-3xl font-bold"></h2>
+            <p id="subject-hero-sub" class="text-sm text-white/85 mt-0.5"></p>
+          </div>
+        </div>
+        <div class="flex flex-wrap gap-2">
+          <button id="btn-hub-annotate" class="px-4 py-2 rounded-xl bg-white text-slate-900 font-semibold text-sm hover:bg-slate-100 transition shadow-sm">
+            ✏️ 교과서 위에 필기하기
+          </button>
+          <button id="btn-hub-split" class="px-4 py-2 rounded-xl bg-slate-900/30 hover:bg-slate-900/40 text-white font-semibold text-sm border border-white/25 transition">
+            🪟 창 분할 (교과서 | 필기)
+          </button>
+        </div>
+      </div>
+
+      <!-- 4 Main Shortcuts matching sketch + prompt -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <button id="shortcut-ebook" class="group text-left bg-white rounded-2xl p-5 border border-slate-200 hover:border-indigo-400 hover:shadow-md transition flex items-start gap-4">
+          <div class="w-12 h-12 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center text-2xl shrink-0 group-hover:scale-105 transition">📖</div>
+          <div class="min-w-0 flex-1">
+            <div class="flex items-center justify-between gap-2">
+              <h3 class="font-bold text-slate-900 text-base">교과서 eBook 바로가기</h3>
+              <span class="text-slate-400 group-hover:text-indigo-600 transition">→</span>
+            </div>
+            <p class="text-xs text-slate-500 mt-1">교과서 본문 보기, 내 PDF/이미지 불러오기, 교과서 위 직접 필기</p>
+            <div id="badge-ebook" class="mt-2.5 inline-block text-[11px] font-medium px-2 py-0.5 rounded-md bg-slate-100 text-slate-600"></div>
+          </div>
+        </button>
+
+        <button id="shortcut-notes" class="group text-left bg-white rounded-2xl p-5 border border-slate-200 hover:border-emerald-400 hover:shadow-md transition flex items-start gap-4">
+          <div class="w-12 h-12 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-2xl shrink-0 group-hover:scale-105 transition">📝</div>
+          <div class="min-w-0 flex-1">
+            <div class="flex items-center justify-between gap-2">
+              <h3 class="font-bold text-slate-900 text-base">나의 필기</h3>
+              <span class="text-slate-400 group-hover:text-emerald-600 transition">→</span>
+            </div>
+            <p class="text-xs text-slate-500 mt-1">과목별 필기 노트 목록, 손글씨 캔버스 및 텍스트 정리</p>
+            <div id="badge-notes" class="mt-2.5 inline-block text-[11px] font-medium px-2 py-0.5 rounded-md bg-emerald-50 text-emerald-700"></div>
+          </div>
+        </button>
+
+        <button id="shortcut-memo" class="group text-left bg-white rounded-2xl p-5 border border-slate-200 hover:border-amber-400 hover:shadow-md transition flex items-start gap-4">
+          <div class="w-12 h-12 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center text-2xl shrink-0 group-hover:scale-105 transition">🧠</div>
+          <div class="min-w-0 flex-1">
+            <div class="flex items-center justify-between gap-2">
+              <h3 class="font-bold text-slate-900 text-base">나의 암기</h3>
+              <span class="text-slate-400 group-hover:text-amber-600 transition">→</span>
+            </div>
+            <p class="text-xs text-slate-500 mt-1">핵심 개념 플래시카드 암기 및 복습 체크</p>
+            <div id="badge-memo" class="mt-2.5 inline-block text-[11px] font-medium px-2 py-0.5 rounded-md bg-amber-50 text-amber-700"></div>
+          </div>
+        </button>
+
+        <button id="shortcut-folder" class="group text-left bg-white rounded-2xl p-5 border border-slate-200 hover:border-sky-400 hover:shadow-md transition flex items-start gap-4">
+          <div class="w-12 h-12 rounded-xl bg-sky-50 text-sky-600 flex items-center justify-center text-2xl shrink-0 group-hover:scale-105 transition">🗂️</div>
+          <div class="min-w-0 flex-1">
+            <div class="flex items-center justify-between gap-2">
+              <h3 class="font-bold text-slate-900 text-base">나의 폴더 · 자료</h3>
+              <span class="text-slate-400 group-hover:text-sky-600 transition">→</span>
+            </div>
+            <p class="text-xs text-slate-500 mt-1">강의안, 이미지, 참고 링크 및 학습 자료 보관함</p>
+            <div id="badge-folder" class="mt-2.5 inline-block text-[11px] font-medium px-2 py-0.5 rounded-md bg-sky-50 text-sky-700"></div>
+          </div>
+        </button>
+      </div>
+    </section>
+
+    <!-- 3. STUDY WORKSPACE VIEW (교과서 위에 필기하기 + 창분할 교과서|필기공간) -->
+    <section id="view-workspace" class="hidden flex-1 flex flex-col min-h-0 bg-slate-100">
+      <!-- Workspace Top Control Bar -->
+      <div class="bg-white border-b border-slate-200 px-3 py-2 flex flex-wrap items-center justify-between gap-2">
+        <div class="flex items-center gap-1.5 flex-wrap">
+          <!-- Mode Switcher -->
+          <div class="inline-flex rounded-lg bg-slate-100 p-0.5">
+            <button id="mode-annotate" class="px-2.5 py-1 rounded-md text-xs font-semibold transition">✏️ 교과서 위 필기</button>
+            <button id="mode-split" class="px-2.5 py-1 rounded-md text-xs font-semibold transition">🪟 창 분할 (교과서|필기)</button>
+            <button id="mode-note-only" class="px-2.5 py-1 rounded-md text-xs font-semibold transition">📝 필기공간만</button>
+          </div>
+          <!-- Split Presets (visible in split mode) -->
+          <div id="split-presets" class="hidden items-center gap-1 ml-1">
+            <button data-ratio="50" class="split-preset-btn px-2 py-1 rounded text-[11px] font-medium bg-slate-100 hover:bg-slate-200 text-slate-700">50:50</button>
+            <button data-ratio="65" class="split-preset-btn px-2 py-1 rounded text-[11px] font-medium bg-slate-100 hover:bg-slate-200 text-slate-700">65:35</button>
+            <button data-ratio="35" class="split-preset-btn px-2 py-1 rounded text-[11px] font-medium bg-slate-100 hover:bg-slate-200 text-slate-700">35:65</button>
+          </div>
+        </div>
+
+        <!-- Textbook Page & File Controls -->
+        <div class="flex items-center gap-1.5 flex-wrap">
+          <div class="inline-flex items-center bg-slate-100 rounded-lg px-1.5 py-0.5 gap-1">
+            <button id="btn-prev-page" class="px-2 py-0.5 text-xs font-semibold text-slate-700 hover:bg-white rounded">◀</button>
+            <span id="page-indicator" class="text-xs font-semibold text-slate-700 px-1.5">1 / 3</span>
+            <button id="btn-next-page" class="px-2 py-0.5 text-xs font-semibold text-slate-700 hover:bg-white rounded">▶</button>
+          </div>
+          <label class="cursor-pointer inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-semibold bg-slate-100 hover:bg-slate-200 text-slate-700 transition">
+            <span>📄 교과서 파일 열기</span>
+            <input id="input-textbook-file" type="file" accept="image/*,.pdf" class="hidden" />
+          </label>
+          <button id="btn-ebook-url" class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-semibold bg-slate-100 hover:bg-slate-200 text-slate-700 transition">
+            <span>🔗 eBook 링크</span>
+          </button>
+          <button id="btn-export-png" class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-semibold bg-indigo-50 hover:bg-indigo-100 text-indigo-700 transition">
+            <span>💾 필기 저장</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Main Split Container -->
+      <div id="workspace-panes" class="flex-1 flex min-h-0 relative overflow-hidden">
+        <!-- LEFT PANE: 교과서 + Overlay Annotation Canvas + Collapsible Right Tool Drawer -->
+        <div id="pane-textbook" class="relative flex flex-col min-w-0 min-h-0 bg-slate-200/70 overflow-hidden" style="width: 100%;">
+          <div id="textbook-scroll" class="flex-1 overflow-auto p-3 sm:p-6 flex justify-center items-start">
+            <div id="textbook-stage" class="relative textbook-paper rounded-xl overflow-hidden w-full max-w-3xl min-h-[560px]">
+              <!-- Textbook Content Layer -->
+              <div id="textbook-content" class="p-6 sm:p-10 select-text"></div>
+              <!-- Transparent Annotation Canvas Overlay -->
+              <canvas id="overlay-canvas" class="canvas-container absolute inset-0 w-full h-full z-10"></canvas>
+              <!-- Floating Text Annotations Layer -->
+              <div id="text-annotations-layer" class="absolute inset-0 z-20 pointer-events-none"></div>
+            </div>
+          </div>
+
+          <!-- Collapsible Side Toolbar ("필기툴" drawer matching bottom-left sketch!) -->
+          <div id="tool-drawer" class="absolute top-3 right-0 z-30 flex items-start transition-transform duration-200">
+            <!-- Handle Tab -->
+            <button id="btn-toggle-drawer" title="필기툴 열기/닫기" class="mt-8 -ml-6 w-6 h-16 bg-white border border-r-0 border-slate-300 rounded-l-xl shadow-md flex flex-col items-center justify-center gap-1 text-slate-500 hover:text-indigo-600">
+              <span class="w-1 h-5 rounded-full bg-slate-300"></span>
+            </button>
+            <!-- Drawer Body -->
+            <div class="w-48 bg-white/95 backdrop-blur border border-r-0 border-slate-200 rounded-l-2xl shadow-xl p-3 flex flex-col gap-3 max-h-[calc(100vh-140px)] overflow-y-auto">
+              <div class="flex items-center justify-between border-b border-slate-100 pb-1.5">
+                <span class="text-xs font-bold text-slate-800">필기툴</span>
+                <span id="active-tool-label" class="text-[11px] font-medium text-indigo-600">펜</span>
+              </div>
+
+              <!-- Tools -->
+              <div class="grid grid-cols-2 gap-1.5">
+                <button data-tool="pencil" class="tool-btn flex items-center gap-1.5 px-2 py-1.5 rounded-lg text-xs font-medium border border-slate-200 hover:bg-slate-50">
+                  <span>✏️</span><span>연필</span>
+                </button>
+                <button data-tool="pen" class="tool-btn flex items-center gap-1.5 px-2 py-1.5 rounded-lg text-xs font-medium border border-slate-200 hover:bg-slate-50">
+                  <span>🖊️</span><span>펜</span>
+                </button>
+                <button data-tool="highlighter" class="tool-btn flex items-center gap-1.5 px-2 py-1.5 rounded-lg text-xs font-medium border border-slate-200 hover:bg-slate-50">
+                  <span>🖍️</span><span>형광펜</span>
+                </button>
+                <button data-tool="text" class="tool-btn flex items-center gap-1.5 px-2 py-1.5 rounded-lg text-xs font-medium border border-slate-200 hover:bg-slate-50">
+                  <span>🔤</span><span>글씨</span>
+                </button>
+                <button data-tool="eraser" class="tool-btn col-span-2 flex items-center justify-center gap-1.5 px-2 py-1.5 rounded-lg text-xs font-medium border border-slate-200 hover:bg-slate-50">
+                  <span>🧽</span><span>지우개</span>
+                </button>
+              </div>
+
+              <!-- Colors -->
+              <div>
+                <div class="text-[11px] font-semibold text-slate-500 mb-1.5">색깔</div>
+                <div class="flex flex-wrap items-center gap-1.5">
+                  <button data-color="#0f172a" class="color-btn w-6 h-6 rounded-full bg-slate-900 border-2 border-white ring-2 ring-indigo-500"></button>
+                  <button data-color="#ef4444" class="color-btn w-6 h-6 rounded-full bg-red-500 border-2 border-white"></button>
+                  <button data-color="#2563eb" class="color-btn w-6 h-6 rounded-full bg-blue-600 border-2 border-white"></button>
+                  <button data-color="#16a34a" class="color-btn w-6 h-6 rounded-full bg-green-600 border-2 border-white"></button>
+                  <button data-color="#eab308" class="color-btn w-6 h-6 rounded-full bg-yellow-400 border-2 border-white"></button>
+                  <button data-color="#9333ea" class="color-btn w-6 h-6 rounded-full bg-purple-600 border-2 border-white"></button>
+                  <input id="input-custom-color" type="color" value="#0f172a" title="직접 색상 선택" class="w-6 h-6 rounded-full cursor-pointer border-0 p-0 bg-transparent" />
+                </div>
+              </div>
+
+              <!-- Stroke Width -->
+              <div>
+                <div class="flex justify-between text-[11px] font-semibold text-slate-500 mb-1">
+                  <span>굵기</span>
+                  <span id="width-label">3px</span>
+                </div>
+                <input id="input-stroke-width" type="range" min="1" max="24" value="3" class="w-full accent-indigo-600" />
+              </div>
+
+              <!-- Actions -->
+              <div class="grid grid-cols-2 gap-1.5 pt-1 border-t border-slate-100">
+                <button id="btn-undo" class="px-2 py-1.5 rounded-lg text-xs font-medium bg-slate-100 hover:bg-slate-200 text-slate-700">↩ 취소</button>
+                <button id="btn-clear-overlay" class="px-2 py-1.5 rounded-lg text-xs font-medium bg-rose-50 hover:bg-rose-100 text-rose-600">🗑️ 지우기</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- CENTER DRAGGABLE SPLIT DIVIDER -->
+        <div id="split-divider" class="hidden split-divider w-3 bg-slate-200 hover:bg-indigo-100 border-x border-slate-300 flex items-center justify-center shrink-0 z-20">
+          <div class="divider-pill w-1.5 h-12 rounded-full bg-slate-400 transition-all"></div>
+        </div>
+
+        <!-- RIGHT PANE: 필기공간 (Split-Screen Note Space) -->
+        <div id="pane-notes" class="hidden flex-col min-w-0 min-h-0 bg-white overflow-hidden" style="width: 50%;">
+          <div class="px-3 py-2 border-b border-slate-200 flex items-center justify-between gap-2 bg-slate-50">
+            <div class="flex items-center gap-1.5">
+              <span class="text-xs font-bold text-slate-700">필기공간</span>
+              <div class="inline-flex rounded-md bg-slate-200/70 p-0.5 ml-1">
+                <button id="tab-note-text" class="px-2 py-0.5 rounded text-[11px] font-semibold bg-white text-slate-800 shadow-sm">텍스트 노트</button>
+                <button id="tab-note-draw" class="px-2 py-0.5 rounded text-[11px] font-semibold text-slate-600">손글씨 캔버스</button>
+              </div>
+            </div>
+            <span id="note-save-status" class="text-[11px] text-emerald-600 font-medium">자동 저장됨</span>
+          </div>
+
+          <!-- Text Note Area -->
+          <div id="split-text-area" class="flex-1 flex flex-col p-3 sm:p-4 min-h-0">
+            <input id="split-note-title" type="text" placeholder="필기 제목을 입력하세요..." class="text-base font-bold text-slate-900 border-b border-slate-200 pb-2 mb-3 focus:outline-none focus:border-indigo-500" />
+            <textarea id="split-note-body" placeholder="여기에 교과서 내용을 요약하거나 자유롭게 필기하세요..." class="flex-1 w-full resize-none text-sm leading-relaxed text-slate-700 focus:outline-none bg-transparent"></textarea>
+          </div>
+
+          <!-- Freehand Canvas Area inside Split Note Space -->
+          <div id="split-draw-area" class="hidden flex-1 flex-col min-h-0 relative bg-[radial-gradient(#e2e8f0_1px,transparent_1px)] [background-size:16px_16px]">
+            <div class="px-3 py-1.5 border-b border-slate-100 flex items-center gap-2 bg-white/90 flex-wrap">
+              <button data-ntool="pen" class="ntool-btn px-2 py-1 rounded text-xs font-semibold bg-indigo-50 text-indigo-700">🖊️ 펜</button>
+              <button data-ntool="eraser" class="ntool-btn px-2 py-1 rounded text-xs font-semibold text-slate-600 hover:bg-slate-100">🧽 지우개</button>
+              <input id="input-note-color" type="color" value="#0f172a" class="w-6 h-6 rounded cursor-pointer border-0 bg-transparent" />
+              <button id="btn-clear-note-canvas" class="ml-auto px-2 py-1 rounded text-xs font-medium text-rose-600 hover:bg-rose-50">전체 지우기</button>
+            </div>
+            <div class="flex-1 relative min-h-0">
+              <canvas id="note-canvas" class="canvas-container w-full h-full block"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. MY NOTES LIST VIEW (나의 필기) -->
+    <section id="view-notes" class="hidden max-w-4xl w-full mx-auto px-4 py-6 sm:py-8">
+      <div class="flex items-center justify-between gap-4 mb-5">
+        <div>
+          <h2 class="text-xl sm:text-2xl font-bold text-slate-900">나의 필기</h2>
+          <p class="text-xs sm:text-sm text-slate-500">저장된 노트 목록입니다. 클릭하면 필기 공간에서 바로 이어서 작성할 수 있습니다.</p>
+        </div>
+        <button id="btn-new-note" class="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-semibold transition shadow-sm">
+          ＋ 새 필기
+        </button>
+      </div>
+      <div id="notes-list" class="grid grid-cols-1 sm:grid-cols-2 gap-3"></div>
+    </section>
+
+    <!-- 5. MY MEMORIZATION VIEW (나의 암기 - Flashcards) -->
+    <section id="view-memo" class="hidden max-w-3xl w-full mx-auto px-4 py-6 sm:py-8">
+      <div class="flex items-center justify-between gap-4 mb-5">
+        <div>
+          <h2 class="text-xl sm:text-2xl font-bold text-slate-900">나의 암기 카드</h2>
+          <p class="text-xs sm:text-sm text-slate-500">카드를 클릭하면 정답이 보입니다.</p>
+        </div>
+        <button id="btn-add-card" class="px-4 py-2 rounded-xl bg-amber-500 hover:bg-amber-600 text-white text-sm font-semibold transition shadow-sm">
+          ＋ 암기 카드 추가
+        </button>
+      </div>
+
+      <!-- Active Flashcard -->
+      <div id="flashcard-stage" class="mb-6"></div>
+
+      <!-- Card List -->
+      <h3 class="text-sm font-bold text-slate-700 mb-2.5">전체 암기 목록</h3>
+      <div id="memo-list" class="space-y-2"></div>
+    </section>
+
+    <!-- 6. MY FOLDER / MATERIALS VIEW (나의 폴더 · 자료) -->
+    <section id="view-folder" class="hidden max-w-4xl w-full mx-auto px-4 py-6 sm:py-8">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-5">
+        <div>
+          <h2 class="text-xl sm:text-2xl font-bold text-slate-900">나의 폴더 · 자료</h2>
+          <p class="text-xs sm:text-sm text-slate-500">교과서 자료, 이미지, PDF, 참고 링크를 과목별로 정리하세요.</p>
+        </div>
+        <div class="flex items-center gap-2">
+          <label class="cursor-pointer px-3.5 py-2 rounded-xl bg-sky-600 hover:bg-sky-700 text-white text-sm font-semibold transition shadow-sm">
+            <span>📁 파일 올리기</span>
+            <input id="input-folder-file" type="file" multiple class="hidden" />
+          </label>
+          <button id="btn-add-link" class="px-3.5 py-2 rounded-xl bg-white border border-slate-200 hover:border-sky-400 text-slate-700 text-sm font-semibold transition">
+            🔗 링크 추가
+          </button>
+        </div>
+      </div>
+      <div id="folder-list" class="grid grid-cols-1 sm:grid-cols-2 gap-3"></div>
+    </section>
+
+  </main>
+
+  <!-- Reusable In-Page Modal -->
+  <div id="modal-backdrop" class="hidden fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-xs flex items-center justify-center p-4">
+    <div class="bg-white rounded-2xl shadow-2xl max-w-md w-full p-5">
+      <div class="flex items-center justify-between mb-3">
+        <h3 id="modal-title" class="text-base font-bold text-slate-900"></h3>
+        <button id="modal-close" class="w-7 h-7 rounded-lg hover:bg-slate-100 text-slate-500 flex items-center justify-center">✕</button>
+      </div>
+      <div id="modal-body" class="space-y-3"></div>
+      <div id="modal-footer" class="mt-5 flex justify-end gap-2"></div>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div id="toast" class="hidden fixed bottom-5 left-1/2 -translate-x-1/2 z-50 px-4 py-2 rounded-xl bg-slate-900 text-white text-xs font-semibold shadow-lg transition"></div>
+
+  <script>
+    // ---------- Safe Storage Helper ----------
+    const STORAGE_KEY = 'integrated_study_app_v1';
+    function loadState() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (raw) return JSON.parse(raw);
+      } catch (e) {}
+      return null;
+    }
+    function saveState() {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      } catch (e) {}
+    }
+
+    // ---------- Initial Subjects (Exact 3x3 from User Sketch) ----------
+    const DEFAULT_SUBJECTS = [
+      {
+        id: 'korean', name: '국어', icon: '📖', color: 'from-rose-500 to-pink-600', badgeBg: 'bg-rose-50 text-rose-700',
+        ebookUrl: 'https://www.ebs.co.kr',
+        pages: [
+          { title: '1단원. 문학의 즐거움과 비유적 표현', subtitle: '시의 운율과 심상 이해하기', body: '시는 일상적인 언어를 새롭게 배열하여 깊은 정서와 의미를 전달하는 문학 갈래입니다.\n\n1. 비유하기(직유, 은유, 의인)\n• 직유법: "~처럼", "~같이", "~듯" 등의 연결어를 사용하여 원관념을 보조관념에 직접 빗대는 표현입니다.\n• 은유법: "A는 B이다"의 형태로 원관념과 보조관념을 동일시하여 표현합니다.\n\n[생각 열기]\n내가 좋아하는 시 한 편을 떠올려 보고, 가장 인상 깊었던 비유 표현에 형광펜으로 밑줄을 그어 보세요.' },
+          { title: '2단원. 논리적인 글쓰기와 설득', subtitle: '타당한 근거로 주장 펼치기', body: '주장을 담은 글을 읽을 때는 글쓴이의 주장이 무엇인지 파악하고, 뒷받침하는 근거가 타당하고 공정한지 따져 보아야 합니다.\n\n• 주장의 명확성: 글쓴이가 말하고자 하는 바가 분명한가?\n• 근거의 타당성: 제시된 사실이나 통계가 주장과 직접 연결되는가?\n\n오른쪽 필기 공간이나 교과서 위 필기툴을 사용해 핵심 문장에 표시해 보세요.' },
+          { title: '3단원. 매체와 올바른 언어생활', subtitle: '디지털 시대의 소통 방식', body: '우리는 책, 신문, 영상, SNS 등 다양한 매체를 통해 정보를 주고받습니다. 매체의 특성에 따라 정보를 비판적으로 수용하고, 상대방을 배려하는 바른 언어 예절을 지키는 것이 중요합니다.' }
+        ]
+      },
+      {
+        id: 'social', name: '사회', icon: '🌍', color: 'from-sky-500 to-blue-600', badgeBg: 'bg-sky-50 text-sky-700',
+        ebookUrl: '',
+        pages: [
+          { title: '1단원. 우리가 살아가는 지구촌', subtitle: '기후와 인간 생활의 관계', body: '세계 여러 지역은 위도, 지형, 해류의 영향으로 다양한 기후가 나타납니다. 사람들은 각 지역의 자연환경에 적응하며 고유한 의식주 문화를 발전시켜 왔습니다.\n\n• 열대 기후: 연중 기온이 높고 강수량이 풍부함\n• 건조 기후: 강수량이 매우 적어 오아시스 농업이나 유목 발달\n• 온대 기후: 사계절의 변화가 뚜렷하여 인간 거주에 유리함' },
+          { title: '2단원. 민주주의와 시민의 참여', subtitle: '법의 의미와 기본권 보장', body: '헌법은 국가의 최고법으로서 국민의 기본권을 보장하고 국가 권력을 나누어 견제와 균형을 이루도록 합니다. 시민은 선거, 투표, 청원 등 다양한 방법으로 정치 과정에 참여할 수 있습니다.' }
+        ]
+      },
+      {
+        id: 'art', name: '미술', icon: '🎨', color: 'from-amber-500 to-orange-600', badgeBg: 'bg-amber-50 text-amber-700',
+        ebookUrl: '',
+        pages: [
+          { title: '1단원. 조형 요소와 원리', subtitle: '선, 색, 형, 질감의 조화', body: '미술 작품을 감상하거나 제작할 때는 점, 선, 면, 형, 색, 명암, 질감 등의 조형 요소를 이해하는 것이 기본입니다.\n\n• 색의 3속성: 색상(색의 종류), 명도(밝고 어두움), 채도(맑고 탁함)\n• 보색 대비: 색상환에서 마주 보는 색을 나란히 두면 서로 더욱 선명하게 보입니다.' },
+          { title: '2단원. 한국 전통 회화의 아름다움', subtitle: '수묵화와 진경산수화', body: '먹의 농담(진하고 옅음)을 활용하여 여백의 미를 살리는 수묵화는 자연의 정신과 작가의 내면을 담아내는 데 중점을 둡니다.' }
+        ]
+      },
+      {
+        id: 'english', name: '영어', icon: '🔤', color: 'from-indigo-500 to-violet-600', badgeBg: 'bg-indigo-50 text-indigo-700',
+        ebookUrl: '',
+        pages: [
+          { title: 'Lesson 1. A New Beginning', subtitle: 'Reading & Key Expressions', body: 'Every new school year brings exciting opportunities to meet new friends and discover your hidden talents.\n\n[Key Expressions]\n• "I am looking forward to..." (~하기를 고대하고 있다)\n• "Why don\'t we share our study plans?" (우리 공부 계획을 공유하는 게 어때?)\n\n교과서 위에 필기툴로 모르는 단어에 동그라미를 치고 뜻을 적어보세요.' },
+          { title: 'Lesson 2. Healthy Habits for Teens', subtitle: 'Grammar Focus: Present Perfect', body: 'have / has + 과거분사(p.p.) 형태는 과거에 시작된 일이 현재까지 영향을 미치거나 계속될 때 사용합니다.\n\nExample: "She has kept a study journal since March."' }
+        ]
+      },
+      {
+        id: 'science', name: '과학', icon: '🔬', color: 'from-emerald-500 to-teal-600', badgeBg: 'bg-emerald-50 text-emerald-700',
+        ebookUrl: '',
+        pages: [
+          { title: '1단원. 물질의 구성과 성질', subtitle: '원자와 분자의 세계', body: '모든 물질은 더 이상 쪼개지지 않는 기본 입자인 원자로 이루어져 있으며, 원자들이 결합하여 물질의 성질을 나타내는 가장 작은 입자인 분자를 만듭니다.\n\n• 물(H₂O): 수소 원자 2개 + 산소 원자 1개\n• 이산화탄소(CO₂): 탄소 원자 1개 + 산소 원자 2개' },
+          { title: '2단원. 힘과 운동', subtitle: '중력, 마찰력, 탄성력', body: '물체에 힘이 작용하면 물체의 모양이 변하거나 운동 상태(빠르기, 운동 방향)가 변합니다. 마찰력은 접촉면의 거칠기와 물체가 누르는 힘에 따라 달라집니다.' }
+        ]
+      },
+      {
+        id: 'pe', name: '체육', icon: '⚽', color: 'from-lime-500 to-green-600', badgeBg: 'bg-lime-50 text-lime-700',
+        ebookUrl: '',
+        pages: [
+          { title: '1단원. 건강과 체력 관리', subtitle: '유산소 운동과 근력 운동의 균형', body: '건강 체력 요소에는 심폐 지구력, 근력 및 근지구력, 유연성, 신체 구성이 있습니다.\n\n• 준비 운동(Warm-up): 부상을 예방하고 관절의 가동 범위를 넓혀줍니다.\n• 정리 운동(Cool-down): 운동 후 심박수를 서서히 안정시킵니다.' },
+          { title: '2단원. 스포츠맨십과 페어플레이', subtitle: '협동심과 규칙 준수', body: '경기 규칙을 존중하고 팀원과 협력하며 승패를 겸허히 받아들이는 태도는 스포츠의 진정한 가치입니다.' }
+        ]
+      },
+      {
+        id: 'math', name: '수학', icon: '📐', color: 'from-blue-600 to-indigo-700', badgeBg: 'bg-blue-50 text-blue-700',
+        ebookUrl: '',
+        pages: [
+          { title: '1단원. 소인수분해와 정수', subtitle: '소수와 합성수, 최대공약수', body: '1보다 큰 자연수 중에서 1과 자기 자신만을 약수로 가지는 수를 소수(Prime Number)라고 합니다.\n\n예제 1) 72를 소인수분해하시오.\n풀이 공간을 활용하여 직접 손글씨로 계산 과정을 적어보세요!\n72 = 2³ × 3²' },
+          { title: '2단원. 일차방정식의 활용', subtitle: '미지수 x 정하기와 식 세우기', body: '문장의 조건을 파악하여 구하고자 하는 값을 x로 놓고, 등식 ax + b = 0 형태로 세워 해를 구한 뒤 문제의 뜻에 맞는지 확인합니다.' }
+        ]
+      },
+      {
+        id: 'history', name: '역사', icon: '🏛️', color: 'from-stone-600 to-amber-700', badgeBg: 'bg-stone-100 text-stone-700',
+        ebookUrl: '',
+        pages: [
+          { title: '1단원. 문명의 발생과 고대 국가', subtitle: '고조선의 건국과 발전', body: '청동기 문화를 바탕으로 성립한 고조선은 8조법을 통해 사회 질서를 유지하였습니다.\n\n• 8조법의 특징: 생명 존중, 사유 재산 인정, 신분 사회 존재\n• 연표 정리와 핵심 키워드는 오른쪽 필기 공간에 정리해 보세요.' },
+          { title: '2단원. 삼국의 성립과 문화 교류', subtitle: '고구려 · 백제 · 신라의 발전', body: '삼국은 율령을 반포하고 불교를 수용하여 중앙 집권 국가 체제를 확립하였으며, 각국의 특색 있는 문화유산을 남겼습니다.' }
+        ]
+      },
+      {
+        id: 'design', name: '디자인', icon: '✨', color: 'from-fuchsia-500 to-purple-600', badgeBg: 'bg-fuchsia-50 text-fuchsia-700',
+        ebookUrl: '',
+        pages: [
+          { title: '1단원. 사용자 중심 디자인(UX/UI)', subtitle: '문제 발견과 아이디어 스케치', body: '좋은 디자인은 사용자의 불편함을 관찰하고 공감하는 것에서 시작합니다.\n\n• 그리드 시스템: 정보를 정돈되게 배치하여 가독성을 높입니다.\n• 타이포그래피: 위계(Hierarchy)를 통해 중요한 정보가 먼저 눈에 띄도록 설계합니다.' },
+          { title: '2단원. 컬러 시스템과 브랜딩', subtitle: '주조색, 보조색, 강조색의 비율', body: '보통 60%(배경/주조색) : 30%(보조색) : 10%(강조색)의 비율로 색을 배치하면 시각적으로 안정적이면서도 명확한 포인트를 줄 수 있습니다.' }
+        ]
+      }
+    ];
+
+    const DEFAULT_STATE = {
+      subjects: DEFAULT_SUBJECTS,
+      notes: {
+        korean: [{ id: 'n1', title: '1단원 비유법 핵심 정리', body: '직유법: ~처럼, ~같이\n은유법: A는 B이다\n의인법: 사물을 사람처럼 표현', updatedAt: '오늘' }],
+        math: [{ id: 'n2', title: '소인수분해 오답 노트', body: '1은 소수도 합성수도 아니다! 가장 작은 소수는 2.', updatedAt: '오늘' }]
+      },
+      flashcards: {
+        korean: [
+          { id: 'c1', q: '직유법과 은유법의 가장 큰 차이점은?', a: '직유법은 "~처럼, ~같이" 같은 연결어를 사용하고, 은유법은 "A는 B이다" 형태로 직접 연결합니다.', known: false },
+          { id: 'c2', q: '시에서 느껴지는 말의 가락을 무엇이라고 하나요?', a: '운율 (리듬)', known: true }
+        ],
+        english: [
+          { id: 'c3', q: 'look forward to + ( ? )', a: '동명사(-ing) 또는 명사 ("~하기를 고대하다")', known: false }
+        ],
+        science: [
+          { id: 'c4', q: '물질의 성질을 나타내는 가장 작은 입자는?', a: '분자 (Molecule)', known: false }
+        ]
+      },
+      folders: {
+        korean: [
+          { id: 'f1', name: '국어 1단원 핵심 요약 정리', type: 'link', url: 'https://www.ebs.co.kr', date: '기본 자료' }
+        ]
+      },
+      overlays: {}, // key: `${subjectId}_p${pageIdx}` -> dataURL
+      textAnnotations: {}, // key: `${subjectId}_p${pageIdx}` -> [{id, x, y, text, color, size}]
+      noteCanvases: {} // key: `${subjectId}` -> dataURL
+    };
+
+    let state = loadState() || structuredClone(DEFAULT_STATE);
+    let currentView = 'home'; // home | subject | workspace | notes | memo | folder
+    let currentSubjectId = 'korean';
+    let currentPageIdx = 0;
+    let workspaceMode = 'annotate'; // annotate | split | note-only
+    let splitRatio = 50; // left pane %
+    let drawerOpen = true;
+
+    // Drawing state for overlay canvas
+    let overlayTool = 'pen'; // pencil | pen | highlighter | text | eraser
+    let overlayColor = '#0f172a';
+    let overlayWidth = 3;
+    let overlayUndoStack = [];
+    let isDrawingOverlay = false;
+    let lastOverlayPos = null;
+
+    // Drawing state for split note canvas
+    let noteTool = 'pen';
+    let noteColor = '#0f172a';
+    let isDrawingNote = false;
+    let lastNotePos = null;
+    let activeMemoIdx = 0;
+
+    // ---------- DOM Refs ----------
+    const views = {
+      home: document.getElementById('view-home'),
+      subject: document.getElementById('view-subject'),
+      workspace: document.getElementById('view-workspace'),
+      notes: document.getElementById('view-notes'),
+      memo: document.getElementById('view-memo'),
+      folder: document.getElementById('view-folder')
+    };
+
+    // ---------- Navigation ----------
+    function showView(viewName, subjectId = currentSubjectId) {
+      currentView = viewName;
+      if (subjectId) currentSubjectId = subjectId;
+      Object.entries(views).forEach(([k, el]) => {
+        el.classList.toggle('hidden', k !== viewName);
+        if (k === 'workspace') el.classList.toggle('flex', k === viewName);
+      });
+
+      const subj = getSubject(currentSubjectId);
+      const sep1 = document.getElementById('breadcrumb-sep');
+      const bcSubj = document.getElementById('breadcrumb-subject');
+      const sep2 = document.getElementById('breadcrumb-view-sep');
+      const bcView = document.getElementById('breadcrumb-view');
+      const btnBack = document.getElementById('btn-back');
+      const btnQuickSplit = document.getElementById('btn-quick-split');
+
+      if (viewName === 'home') {
+        sep1.classList.add('hidden');
+        bcSubj.classList.add('hidden');
+        sep2.classList.add('hidden');
+        bcView.classList.add('hidden');
+        btnBack.classList.add('hidden');
+        btnQuickSplit.classList.add('hidden');
+        renderHome();
+      } else {
+        sep1.classList.remove('hidden');
+        bcSubj.classList.remove('hidden');
+        bcSubj.textContent = `${subj.icon} ${subj.name}`;
+        btnBack.classList.remove('hidden');
+        btnQuickSplit.classList.toggle('hidden', viewName === 'workspace');
+
+        const viewLabels = {
+          subject: '',
+          workspace: '학습 공간',
+          notes: '나의 필기',
+          memo: '나의 암기',
+          folder: '나의 폴더 · 자료'
+        };
+        if (viewLabels[viewName]) {
+          sep2.classList.remove('hidden');
+          bcView.classList.remove('hidden');
+          bcView.textContent = viewLabels[viewName];
+        } else {
+          sep2.classList.add('hidden');
+          bcView.classList.add('hidden');
+        }
+      }
+
+      if (viewName === 'subject') renderSubjectHub();
+      if (viewName === 'workspace') {
+        renderWorkspace();
+      }
+      if (viewName === 'notes') renderNotesView();
+      if (viewName === 'memo') renderMemoView();
+      if (viewName === 'folder') renderFolderView();
+    }
+
+    function getSubject(id) {
+      return state.subjects.find(s => s.id === id) || state.subjects[0];
+    }
+
+    // ---------- Toast & Modal ----------
+    let toastTimer = null;
+    function showToast(msg) {
+      const t = document.getElementById('toast');
+      t.textContent = msg;
+      t.classList.remove('hidden');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => t.classList.add('hidden'), 2200);
+    }
+
+    function openModal({ title, bodyHtml, onConfirm, confirmText = '확인' }) {
+      const backdrop = document.getElementById('modal-backdrop');
+      document.getElementById('modal-title').textContent = title;
+      document.getElementById('modal-body').innerHTML = bodyHtml;
+      const footer = document.getElementById('modal-footer');
+      footer.innerHTML = '';
+      const cancelBtn = document.createElement('button');
+      cancelBtn.className = 'px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-slate-100 hover:bg-slate-200 text-slate-700';
+      cancelBtn.textContent = '취소';
+      cancelBtn.onclick = closeModal;
+
+      const okBtn = document.createElement('button');
+      okBtn.className = 'px-4 py-1.5 rounded-xl text-xs font-semibold bg-indigo-600 hover:bg-indigo-700 text-white';
+      okBtn.textContent = confirmText;
+      okBtn.onclick = () => {
+        if (onConfirm()) closeModal();
+      };
+      footer.append(cancelBtn, okBtn);
+      backdrop.classList.remove('hidden');
+    }
+
+    function closeModal() {
+      document.getElementById('modal-backdrop').classList.add('hidden');
+    }
+
+    // ---------- 1. Render Home (3x3 Subject Grid) ----------
+    function renderHome() {
+      const grid = document.getElementById('subject-grid');
+      grid.innerHTML = '';
+      state.subjects.forEach(subj => {
+        const noteCount = (state.notes[subj.id] || []).length;
+        const cardCount = (state.flashcards[subj.id] || []).length;
+        const fileCount = (state.folders[subj.id] || []).length;
+
+        const btn = document.createElement('button');
+        btn.className = 'group bg-white rounded-2xl p-4 sm:p-5 border border-slate-200 hover:border-indigo-400 hover:shadow-lg transition text-left flex flex-col justify-between min-h-[126px]';
+        btn.innerHTML = `
+          <div class="flex items-center justify-between gap-2">
+            <span class="w-11 h-11 rounded-xl bg-gradient-to-br ${subj.color} text-white flex items-center justify-center text-2xl shadow-sm group-hover:scale-105 transition">${subj.icon}</span>
+            <span class="text-slate-300 group-hover:text-indigo-500 transition text-lg">→</span>
+          </div>
+          <div class="mt-3">
+            <div class="text-lg font-bold text-slate-900">${subj.name}</div>
+            <div class="flex flex-wrap gap-1.5 mt-1.5 text-[11px] text-slate-500">
+              <span>필기 ${noteCount}</span>
+              <span>·</span>
+              <span>암기 ${cardCount}</span>
+              <span>·</span>
+              <span>자료 ${fileCount}</span>
+            </div>
+          </div>
+        `;
+        btn.addEventListener('click', () => {
+          currentPageIdx = 0;
+          showView('subject', subj.id);
+        });
+        grid.appendChild(btn);
+      });
+    }
+
+    // ---------- 2. Render Subject Hub ----------
+    function renderSubjectHub() {
+      const subj = getSubject(currentSubjectId);
+      const hero = document.getElementById('subject-hero');
+      hero.className = `rounded-2xl p-5 sm:p-6 text-white shadow-md mb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-gradient-to-r ${subj.color}`;
+      document.getElementById('subject-hero-icon').textContent = subj.icon;
+      document.getElementById('subject-hero-title').textContent = subj.name;
+      document.getElementById('subject-hero-sub').textContent = `교과서 ${subj.pages.length}단원 · 나만의 학습 허브`;
+
+      document.getElementById('badge-ebook').textContent = `교과서 ${subj.pages.length}개 단원 준비됨`;
+      document.getElementById('badge-notes').textContent = `저장된 필기 ${(state.notes[subj.id] || []).length}개`;
+      document.getElementById('badge-memo').textContent = `암기 카드 ${(state.flashcards[subj.id] || []).length}장`;
+      document.getElementById('badge-folder').textContent = `보관 자료 ${(state.folders[subj.id] || []).length}개`;
+    }
+
+    // ---------- 3. Study Workspace (Annotate + Split Screen) ----------
+    function setWorkspaceMode(mode) {
+      workspaceMode = mode;
+      const paneTextbook = document.getElementById('pane-textbook');
+      const paneNotes = document.getElementById('pane-notes');
+      const divider = document.getElementById('split-divider');
+      const presets = document.getElementById('split-presets');
+
+      const mAnnotate = document.getElementById('mode-annotate');
+      const mSplit = document.getElementById('mode-split');
+      const mNoteOnly = document.getElementById('mode-note-only');
+
+      [mAnnotate, mSplit, mNoteOnly].forEach(b => {
+        b.className = 'px-2.5 py-1 rounded-md text-xs font-semibold transition text-slate-600 hover:text-slate-900';
+      });
+
+      if (mode === 'annotate') {
+        mAnnotate.className = 'px-2.5 py-1 rounded-md text-xs font-semibold transition bg-white text-indigo-600 shadow-sm';
+        paneTextbook.classList.remove('hidden');
+        paneTextbook.style.width = '100%';
+        paneNotes.classList.add('hidden');
+        paneNotes.classList.remove('flex');
+        divider.classList.add('hidden');
+        presets.classList.add('hidden');
+        presets.classList.remove('flex');
+      } else if (mode === 'split') {
+        mSplit.className = 'px-2.5 py-1 rounded-md text-xs font-semibold transition bg-white text-indigo-600 shadow-sm';
+        paneTextbook.classList.remove('hidden');
+        paneNotes.classList.remove('hidden');
+        paneNotes.classList.add('flex');
+        divider.classList.remove('hidden');
+        presets.classList.remove('hidden');
+        presets.classList.add('flex');
+        applySplitRatio(splitRatio);
+      } else {
+        mNoteOnly.className = 'px-2.5 py-1 rounded-md text-xs font-semibold transition bg-white text-indigo-600 shadow-sm';
+        paneTextbook.classList.add('hidden');
+        paneNotes.classList.remove('hidden');
+        paneNotes.classList.add('flex');
+        paneNotes.style.width = '100%';
+        divider.classList.add('hidden');
+        presets.classList.add('hidden');
+        presets.classList.remove('flex');
+      }
+      requestAnimationFrame(() => {
+        resizeOverlayCanvas();
+        resizeNoteCanvas();
+      });
+    }
+
+    function applySplitRatio(pct) {
+      splitRatio = Math.max(20, Math.min(80, pct));
+      document.getElementById('pane-textbook').style.width = `${splitRatio}%`;
+      document.getElementById('pane-notes').style.width = `${100 - splitRatio}%`;
+    }
+
+    function renderWorkspace() {
+      setWorkspaceMode(workspaceMode);
+      renderTextbookPage();
+      loadSplitNote();
+    }
+
+    function getOverlayKey() {
+      return `${currentSubjectId}_p${currentPageIdx}`;
+    }
+
+    function renderTextbookPage() {
+      const subj = getSubject(currentSubjectId);
+      if (currentPageIdx >= subj.pages.length) currentPageIdx = 0;
+      const page = subj.pages[currentPageIdx];
+      document.getElementById('page-indicator').textContent = `${currentPageIdx + 1} / ${subj.pages.length}`;
+
+      const content = document.getElementById('textbook-content');
+      if (page.imageDataUrl) {
+        content.innerHTML = `
+          <div class="mb-3 flex items-center justify-between">
+            <span class="text-xs font-bold text-indigo-600">${subj.name} 교과서 · ${page.title}</span>
+          </div>
+          <img src="${page.imageDataUrl}" alt="${page.title}" class="w-full h-auto rounded-lg" />
+        `;
+      } else if (page.pdfDataUrl) {
+        content.innerHTML = `
+          <div class="mb-2 text-xs font-bold text-indigo-600">${subj.name} PDF · ${page.title}</div>
+          <iframe src="${page.pdfDataUrl}" class="w-full h-[640px] rounded-lg border border-slate-200"></iframe>
+        `;
+      } else {
+        content.innerHTML = `
+          <div class="border-b-2 border-indigo-100 pb-4 mb-5">
+            <div class="text-xs font-bold text-indigo-600 uppercase tracking-wider">${subj.icon} ${subj.name} 교과서 eBook</div>
+            <h2 class="text-xl sm:text-2xl font-bold text-slate-900 mt-1">${page.title}</h2>
+            <p class="text-sm text-slate-500 mt-0.5">${page.subtitle || ''}</p>
+          </div>
+          <div class="text-sm sm:text-base leading-8 text-slate-800 whitespace-pre-line">${page.body}</div>
+        `;
+      }
+
+      renderTextAnnotations();
+      requestAnimationFrame(() => {
+        resizeOverlayCanvas();
+      });
+    }
+
+    // ---------- Overlay Canvas (교과서 위에 필기하기) ----------
+    const overlayCanvas = document.getElementById('overlay-canvas');
+    const overlayCtx = overlayCanvas.getContext('2d');
+
+    function resizeOverlayCanvas() {
+      const stage = document.getElementById('textbook-stage');
+      if (!stage || stage.clientWidth === 0) return;
+      const w = stage.clientWidth;
+      const h = Math.max(stage.clientHeight, 560);
+      if (overlayCanvas.width !== w || overlayCanvas.height !== h) {
+        overlayCanvas.width = w;
+        overlayCanvas.height = h;
+      }
+      restoreOverlayDrawing();
+    }
+
+    function restoreOverlayDrawing() {
+      overlayCtx.clearRect(0, 0, overlayCanvas.width, overlayCanvas.height);
+      const dataUrl = state.overlays[getOverlayKey()];
+      if (dataUrl) {
+        const img = new Image();
+        img.onload = () => {
+          overlayCtx.drawImage(img, 0, 0, overlayCanvas.width, overlayCanvas.height);
+        };
+        img.src = dataUrl;
+      }
+    }
+
+    function saveOverlayDrawing() {
+      state.overlays[getOverlayKey()] = overlayCanvas.toDataURL('image/png');
+      saveState();
+    }
+
+    function getCanvasPoint(canvas, e) {
+      const rect = canvas.getBoundingClientRect();
+      return {
+        x: (e.clientX - rect.left) * (canvas.width / rect.width),
+        y: (e.clientY - rect.top) * (canvas.height / rect.height),
+        cssX: e.clientX - rect.left,
+        cssY: e.clientY - rect.top
+      };
+    }
+
+    overlayCanvas.addEventListener('pointerdown', (e) => {
+      if (overlayTool === 'text') {
+        const pt = getCanvasPoint(overlayCanvas, e);
+        openModal({
+          title: '교과서 위에 글씨 쓰기',
+          bodyHtml: `<input id="modal-text-input" type="text" placeholder="메모할 내용을 입력하세요" class="w-full px-3 py-2 rounded-xl border border-slate-300 text-sm focus:outline-none focus:border-indigo-500" />`,
+          confirmText: '추가',
+          onConfirm: () => {
+            const val = document.getElementById('modal-text-input').value.trim();
+            if (!val) return false;
+            const key = getOverlayKey();
+            state.textAnnotations[key] = state.textAnnotations[key] || [];
+            state.textAnnotations[key].push({
+              id: 't_' + Date.now(),
+              x: pt.cssX,
+              y: pt.cssY,
+              text: val,
+              color: overlayColor
+            });
+            saveState();
+            renderTextAnnotations();
+            return true;
+          }
+        });
+        setTimeout(() => document.getElementById('modal-text-input')?.focus(), 50);
+        return;
+      }
+
+      overlayUndoStack.push(overlayCanvas.toDataURL());
+      if (overlayUndoStack.length > 20) overlayUndoStack.shift();
+      isDrawingOverlay = true;
+      overlayCanvas.setPointerCapture(e.pointerId);
+      lastOverlayPos = getCanvasPoint(overlayCanvas, e);
+    });
+
+    overlayCanvas.addEventListener('pointermove', (e) => {
+      if (!isDrawingOverlay) return;
+      const pt = getCanvasPoint(overlayCanvas, e);
+      overlayCtx.save();
+      overlayCtx.lineCap = 'round';
+      overlayCtx.lineJoin = 'round';
+
+      if (overlayTool === 'eraser') {
+        overlayCtx.globalCompositeOperation = 'destination-out';
+        overlayCtx.lineWidth = Math.max(12, overlayWidth * 4);
+      } else if (overlayTool === 'highlighter') {
+        overlayCtx.globalCompositeOperation = 'multiply';
+        overlayCtx.strokeStyle = overlayColor;
+        overlayCtx.globalAlpha = 0.28;
+        overlayCtx.lineWidth = Math.max(14, overlayWidth * 4);
+      } else if (overlayTool === 'pencil') {
+        overlayCtx.strokeStyle = overlayColor;
+        overlayCtx.globalAlpha = 0.72;
+        overlayCtx.lineWidth = Math.max(1, overlayWidth * 0.65);
+      } else {
+        overlayCtx.strokeStyle = overlayColor;
+        overlayCtx.globalAlpha = 1;
+        overlayCtx.lineWidth = overlayWidth;
+      }
+
+      overlayCtx.beginPath();
+      overlayCtx.moveTo(lastOverlayPos.x, lastOverlayPos.y);
+      overlayCtx.lineTo(pt.x, pt.y);
+      overlayCtx.stroke();
+      overlayCtx.restore();
+      lastOverlayPos = pt;
+    });
+
+    function endOverlayStroke() {
+      if (!isDrawingOverlay) return;
+      isDrawingOverlay = false;
+      lastOverlayPos = null;
+      saveOverlayDrawing();
+    }
+    overlayCanvas.addEventListener('pointerup', endOverlayStroke);
+    overlayCanvas.addEventListener('pointercancel', endOverlayStroke);
+
+    function renderTextAnnotations() {
+      const layer = document.getElementById('text-annotations-layer');
+      layer.innerHTML = '';
+      const list = state.textAnnotations[getOverlayKey()] || [];
+      list.forEach(item => {
+        const badge = document.createElement('div');
+        badge.className = 'pointer-events-auto absolute px-2 py-0.5 rounded bg-yellow-50/90 border border-yellow-300/80 text-xs font-bold shadow-xs flex items-center gap-1.5';
+        badge.style.left = `${item.x}px`;
+        badge.style.top = `${item.y}px`;
+        badge.style.color = item.color || '#0f172a';
+        badge.innerHTML = `<span>${item.text}</span><button class="text-[10px] text-slate-400 hover:text-rose-600">✕</button>`;
+        badge.querySelector('button').addEventListener('click', () => {
+          state.textAnnotations[getOverlayKey()] = list.filter(x => x.id !== item.id);
+          saveState();
+          renderTextAnnotations();
+        });
+        layer.appendChild(badge);
+      });
+    }
+
+    // ---------- Split Divider Dragging ----------
+    const splitDivider = document.getElementById('split-divider');
+    let isDraggingDivider = false;
+
+    splitDivider.addEventListener('pointerdown', (e) => {
+      isDraggingDivider = true;
+      splitDivider.classList.add('dragging');
+      splitDivider.setPointerCapture(e.pointerId);
+    });
+
+    splitDivider.addEventListener('pointermove', (e) => {
+      if (!isDraggingDivider) return;
+      const container = document.getElementById('workspace-panes');
+      const rect = container.getBoundingClientRect();
+      const pct = ((e.clientX - rect.left) / rect.width) * 100;
+      applySplitRatio(pct);
+    });
+
+    function stopDividerDrag() {
+      if (!isDraggingDivider) return;
+      isDraggingDivider = false;
+      splitDivider.classList.remove('dragging');
+      resizeOverlayCanvas();
+      resizeNoteCanvas();
+    }
+    splitDivider.addEventListener('pointerup', stopDividerDrag);
+    splitDivider.addEventListener('pointercancel', stopDividerDrag);
+
+    // ---------- Split-Screen Note Space (Text + Canvas) ----------
+    function loadSplitNote() {
+      const list = state.notes[currentSubjectId] || [];
+      const titleEl = document.getElementById('split-note-title');
+      const bodyEl = document.getElementById('split-note-body');
+      if (list.length > 0) {
+        titleEl.value = list[0].title;
+        bodyEl.value = list[0].body;
+      } else {
+        const subj = getSubject(currentSubjectId);
+        titleEl.value = `${subj.name} 핵심 필기`;
+        bodyEl.value = '';
+      }
+      resizeNoteCanvas();
+    }
+
+    function autoSaveSplitNote() {
+      const title = document.getElementById('split-note-title').value.trim() || '제목 없음';
+      const body = document.getElementById('split-note-body').value;
+      state.notes[currentSubjectId] = state.notes[currentSubjectId] || [];
+      if (state.notes[currentSubjectId].length === 0) {
+        state.notes[currentSubjectId].push({ id: 'n_' + Date.now(), title, body, updatedAt: '방금 전' });
+      } else {
+        state.notes[currentSubjectId][0].title = title;
+        state.notes[currentSubjectId][0].body = body;
+        state.notes[currentSubjectId][0].updatedAt = '방금 전';
+      }
+      saveState();
+      document.getElementById('note-save-status').textContent = '저장됨 ✓';
+    }
+
+    document.getElementById('split-note-title').addEventListener('input', autoSaveSplitNote);
+    document.getElementById('split-note-body').addEventListener('input', autoSaveSplitNote);
+
+    const noteCanvas = document.getElementById('note-canvas');
+    const noteCtx = noteCanvas.getContext('2d');
+
+    function resizeNoteCanvas() {
+      const parent = noteCanvas.parentElement;
+      if (!parent || parent.clientWidth === 0 || parent.clientHeight === 0) return;
+      noteCanvas.width = parent.clientWidth;
+      noteCanvas.height = parent.clientHeight;
+      noteCtx.clearRect(0, 0, noteCanvas.width, noteCanvas.height);
+      const saved = state.noteCanvases[currentSubjectId];
+      if (saved) {
+        const img = new Image();
+        img.onload = () => noteCtx.drawImage(img, 0, 0, noteCanvas.width, noteCanvas.height);
+        img.src = saved;
+      }
+    }
+
+    noteCanvas.addEventListener('pointerdown', (e) => {
+      isDrawingNote = true;
+      noteCanvas.setPointerCapture(e.pointerId);
+      lastNotePos = getCanvasPoint(noteCanvas, e);
+    });
+    noteCanvas.addEventListener('pointermove', (e) => {
+      if (!isDrawingNote) return;
+      const pt = getCanvasPoint(noteCanvas, e);
+      noteCtx.save();
+      noteCtx.lineCap = 'round';
+      noteCtx.lineJoin = 'round';
+      if (noteTool === 'eraser') {
+        noteCtx.globalCompositeOperation = 'destination-out';
+        noteCtx.lineWidth = 18;
+      } else {
+        noteCtx.strokeStyle = noteColor;
+        noteCtx.lineWidth = 3;
+      }
+      noteCtx.beginPath();
+      noteCtx.moveTo(lastNotePos.x, lastNotePos.y);
+      noteCtx.lineTo(pt.x, pt.y);
+      noteCtx.stroke();
+      noteCtx.restore();
+      lastNotePos = pt;
+    });
+    function endNoteStroke() {
+      if (!isDrawingNote) return;
+      isDrawingNote = false;
+      state.noteCanvases[currentSubjectId] = noteCanvas.toDataURL('image/png');
+      saveState();
+    }
+    noteCanvas.addEventListener('pointerup', endNoteStroke);
+    noteCanvas.addEventListener('pointercancel', endNoteStroke);
+
+    // ---------- 4. My Notes View ----------
+    function renderNotesView() {
+      const listEl = document.getElementById('notes-list');
+      const notes = state.notes[currentSubjectId] || [];
+      listEl.innerHTML = '';
+      if (notes.length === 0) {
+        listEl.innerHTML = `<div class="col-span-full text-center py-12 bg-white rounded-2xl border border-dashed border-slate-300 text-slate-400 text-sm">아직 작성된 필기가 없습니다. 상단의 '새 필기'를 눌러 시작해 보세요.</div>`;
+        return;
+      }
+      notes.forEach((n, idx) => {
+        const card = document.createElement('div');
+        card.className = 'bg-white rounded-2xl p-4 border border-slate-200 hover:border-emerald-400 transition flex flex-col justify-between gap-3';
+        card.innerHTML = `
+          <div>
+            <div class="flex items-start justify-between gap-2">
+              <h3 class="font-bold text-slate-900 text-base">${n.title}</h3>
+              <span class="text-[11px] text-slate-400 shrink-0">${n.updatedAt || ''}</span>
+            </div>
+            <p class="text-xs text-slate-600 mt-2 whitespace-pre-line line-clamp-3">${n.body || '(내용 없음)'}</p>
+          </div>
+          <div class="flex items-center justify-end gap-2 pt-2 border-t border-slate-100">
+            <button class="open-note-btn px-3 py-1 rounded-lg text-xs font-semibold bg-emerald-50 text-emerald-700 hover:bg-emerald-100">창 분할로 열기</button>
+            <button class="del-note-btn px-2.5 py-1 rounded-lg text-xs font-medium text-rose-600 hover:bg-rose-50">삭제</button>
+          </div>
+        `;
+        card.querySelector('.open-note-btn').addEventListener('click', () => {
+          // Move selected note to index 0 so split workspace loads it
+          const [picked] = notes.splice(idx, 1);
+          notes.unshift(picked);
+          saveState();
+          workspaceMode = 'split';
+          showView('workspace');
+        });
+        card.querySelector('.del-note-btn').addEventListener('click', () => {
+          state.notes[currentSubjectId] = notes.filter(x => x.id !== n.id);
+          saveState();
+          renderNotesView();
+          showToast('필기를 삭제했습니다.');
+        });
+        listEl.appendChild(card);
+      });
+    }
+
+    // ---------- 5. My Memorization (Flashcards) ----------
+    function renderMemoView() {
+      const cards = state.flashcards[currentSubjectId] || [];
+      const stage = document.getElementById('flashcard-stage');
+      const listEl = document.getElementById('memo-list');
+
+      if (cards.length === 0) {
+        stage.innerHTML = `<div class="text-center py-12 bg-white rounded-2xl border border-dashed border-slate-300 text-slate-400 text-sm">등록된 암기 카드가 없습니다. '암기 카드 추가'를 눌러 만들어 보세요!</div>`;
+        listEl.innerHTML = '';
+        return;
+      }
+
+      if (activeMemoIdx >= cards.length) activeMemoIdx = 0;
+      const card = cards[activeMemoIdx];
+
+      stage.innerHTML = `
+        <div class="flashcard cursor-pointer perspective-1000" id="active-flashcard">
+          <div class="flashcard-inner relative w-full min-h-[210px]">
+            <div class="flashcard-face absolute inset-0 bg-white rounded-2xl border-2 border-amber-200 shadow-md p-6 flex flex-col items-center justify-center text-center">
+              <span class="text-[11px] font-bold text-amber-600 mb-2">질문 (${activeMemoIdx + 1} / ${cards.length}) · 클릭해서 정답 보기</span>
+              <p class="text-lg sm:text-xl font-bold text-slate-900">${card.q}</p>
+            </div>
+            <div class="flashcard-face flashcard-back absolute inset-0 bg-amber-50 rounded-2xl border-2 border-amber-400 shadow-md p-6 flex flex-col items-center justify-center text-center">
+              <span class="text-[11px] font-bold text-amber-700 mb-2">정답</span>
+              <p class="text-lg sm:text-xl font-bold text-slate-900">${card.a}</p>
+            </div>
+          </div>
+        </div>
+        <div class="flex items-center justify-between gap-2 mt-3">
+          <button id="btn-card-prev" class="px-3.5 py-2 rounded-xl bg-white border border-slate-200 text-xs font-semibold hover:bg-slate-50">◀ 이전 카드</button>
+          <button id="btn-card-toggle-known" class="px-4 py-2 rounded-xl text-xs font-semibold ${card.known ? 'bg-emerald-600 text-white' : 'bg-slate-200 text-slate-700'}">
+            ${card.known ? '✓ 암기 완료' : '○ 아직 복습 중'}
+          </button>
+          <button id="btn-card-next" class="px-3.5 py-2 rounded-xl bg-white border border-slate-200 text-xs font-semibold hover:bg-slate-50">다음 카드 ▶</button>
+        </div>
+      `;
+
+      document.getElementById('active-flashcard').addEventListener('click', (e) => {
+        e.currentTarget.classList.toggle('flipped');
+      });
+      document.getElementById('btn-card-prev').addEventListener('click', () => {
+        activeMemoIdx = (activeMemoIdx - 1 + cards.length) % cards.length;
+        renderMemoView();
+      });
+      document.getElementById('btn-card-next').addEventListener('click', () => {
+        activeMemoIdx = (activeMemoIdx + 1) % cards.length;
+        renderMemoView();
+      });
+      document.getElementById('btn-card-toggle-known').addEventListener('click', () => {
+        card.known = !card.known;
+        saveState();
+        renderMemoView();
+      });
+
+      listEl.innerHTML = '';
+      cards.forEach((c, idx) => {
+        const row = document.createElement('div');
+        row.className = `bg-white rounded-xl p-3 border ${idx === activeMemoIdx ? 'border-amber-400' : 'border-slate-200'} flex items-center justify-between gap-3`;
+        row.innerHTML = `
+          <button class="text-left flex-1 min-w-0">
+            <div class="text-sm font-semibold text-slate-800 truncate">${c.q}</div>
+            <div class="text-xs text-slate-500 truncate">${c.a}</div>
+          </button>
+          <span class="text-[11px] font-semibold px-2 py-0.5 rounded-full ${c.known ? 'bg-emerald-50 text-emerald-700' : 'bg-slate-100 text-slate-500'}">${c.known ? '완료' : '복습'}</span>
+          <button class="del-card text-xs text-rose-500 hover:text-rose-700 px-1">삭제</button>
+        `;
+        row.querySelector('button').addEventListener('click', () => {
+          activeMemoIdx = idx;
+          renderMemoView();
+        });
+        row.querySelector('.del-card').addEventListener('click', () => {
+          state.flashcards[currentSubjectId] = cards.filter(x => x.id !== c.id);
+          saveState();
+          renderMemoView();
+        });
+        listEl.appendChild(row);
+      });
+    }
+
+    // ---------- 6. My Folder / Materials ----------
+    function renderFolderView() {
+      const listEl = document.getElementById('folder-list');
+      const items = state.folders[currentSubjectId] || [];
+      listEl.innerHTML = '';
+      if (items.length === 0) {
+        listEl.innerHTML = `<div class="col-span-full text-center py-12 bg-white rounded-2xl border border-dashed border-slate-300 text-slate-400 text-sm">보관된 자료가 없습니다. 파일이나 링크를 추가해 보세요.</div>`;
+        return;
+      }
+      items.forEach(item => {
+        const card = document.createElement('div');
+        card.className = 'bg-white rounded-2xl p-4 border border-slate-200 flex items-center justify-between gap-3';
+        const icon = item.type === 'link' ? '🔗' : (item.mime?.startsWith('image/') ? '🖼️' : '📄');
+        card.innerHTML = `
+          <div class="flex items-center gap-3 min-w-0">
+            <div class="w-10 h-10 rounded-xl bg-sky-50 text-sky-600 flex items-center justify-center text-xl shrink-0">${icon}</div>
+            <div class="min-w-0">
+              <div class="font-semibold text-sm text-slate-900 truncate">${item.name}</div>
+              <div class="text-[11px] text-slate-400">${item.date || ''}</div>
+            </div>
+          </div>
+          <div class="flex items-center gap-1.5 shrink-0">
+            <button class="open-item px-2.5 py-1 rounded-lg text-xs font-semibold bg-sky-50 text-sky-700 hover:bg-sky-100">열기</button>
+            <button class="del-item px-2 py-1 rounded-lg text-xs text-rose-500 hover:bg-rose-50">삭제</button>
+          </div>
+        `;
+        card.querySelector('.open-item').addEventListener('click', () => {
+          if (item.type === 'link') {
+            window.open(item.url, '_blank', 'noopener,noreferrer');
+          } else if (item.dataUrl) {
+            const subj = getSubject(currentSubjectId);
+            subj.pages.push({
+              title: item.name,
+              imageDataUrl: item.mime?.startsWith('image/') ? item.dataUrl : undefined,
+              pdfDataUrl: item.mime === 'application/pdf' ? item.dataUrl : undefined,
+              body: item.textContent || ''
+            });
+            currentPageIdx = subj.pages.length - 1;
+            workspaceMode = 'annotate';
+            showView('workspace');
+          }
+        });
+        card.querySelector('.del-item').addEventListener('click', () => {
+          state.folders[currentSubjectId] = items.filter(x => x.id !== item.id);
+          saveState();
+          renderFolderView();
+        });
+        listEl.appendChild(card);
+      });
+    }
+
+    // ---------- Event Wiring ----------
+    document.getElementById('btn-home').addEventListener('click', () => showView('home'));
+    document.getElementById('breadcrumb-subject').addEventListener('click', () => showView('subject'));
+    document.getElementById('btn-back').addEventListener('click', () => {
+      if (currentView === 'subject') showView('home');
+      else showView('subject');
+    });
+    document.getElementById('btn-quick-split').addEventListener('click', () => {
+      workspaceMode = 'split';
+      showView('workspace');
+    });
+
+    // Subject Hub buttons
+    document.getElementById('btn-hub-annotate').addEventListener('click', () => {
+      workspaceMode = 'annotate';
+      showView('workspace');
+    });
+    document.getElementById('btn-hub-split').addEventListener('click', () => {
+      workspaceMode = 'split';
+      showView('workspace');
+    });
+    document.getElementById('shortcut-ebook').addEventListener('click', () => {
+      workspaceMode = 'annotate';
+      showView('workspace');
+    });
+    document.getElementById('shortcut-notes').addEventListener('click', () => showView('notes'));
+    document.getElementById('shortcut-memo').addEventListener('click', () => showView('memo'));
+    document.getElementById('shortcut-folder').addEventListener('click', () => showView('folder'));
+
+    // Mode Switchers
+    document.getElementById('mode-annotate').addEventListener('click', () => setWorkspaceMode('annotate'));
+    document.getElementById('mode-split').addEventListener('click', () => setWorkspaceMode('split'));
+    document.getElementById('mode-note-only').addEventListener('click', () => setWorkspaceMode('note-only'));
+
+    document.querySelectorAll('.split-preset-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        applySplitRatio(Number(btn.dataset.ratio));
+        resizeOverlayCanvas();
+        resizeNoteCanvas();
+      });
+    });
+
+    // Textbook Page Nav
+    document.getElementById('btn-prev-page').addEventListener('click', () => {
+      const subj = getSubject(currentSubjectId);
+      currentPageIdx = (currentPageIdx - 1 + subj.pages.length) % subj.pages.length;
+      renderTextbookPage();
+    });
+    document.getElementById('btn-next-page').addEventListener('click', () => {
+      const subj = getSubject(currentSubjectId);
+      currentPageIdx = (currentPageIdx + 1) % subj.pages.length;
+      renderTextbookPage();
+    });
+
+    // Textbook File Upload (Image or PDF)
+    document.getElementById('input-textbook-file').addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = () => {
+        const subj = getSubject(currentSubjectId);
+        subj.pages.push({
+          title: file.name,
+          imageDataUrl: file.type.startsWith('image/') ? reader.result : undefined,
+          pdfDataUrl: file.type === 'application/pdf' ? reader.result : undefined
+        });
+        currentPageIdx = subj.pages.length - 1;
+        saveState();
+        renderTextbookPage();
+        showToast('교과서 파일이 추가되었습니다.');
+      };
+      reader.readAsDataURL(file);
+      e.target.value = '';
+    });
+
+    // External eBook Link
+    document.getElementById('btn-ebook-url').addEventListener('click', () => {
+      const subj = getSubject(currentSubjectId);
+      openModal({
+        title: `${subj.name} eBook 바로가기 링크 설정`,
+        bodyHtml: `
+          <p class="text-xs text-slate-500">학교나 출판사 eBook 주소를 등록해 두면 새 탭으로 바로 열 수 있습니다.</p>
+          <input id="modal-ebook-url" type="url" value="${subj.ebookUrl || ''}" placeholder="https://..." class="w-full px-3 py-2 rounded-xl border border-slate-300 text-sm focus:outline-none focus:border-indigo-500" />
+          ${subj.ebookUrl ? `<a href="${subj.ebookUrl}" target="_blank" rel="noopener noreferrer" class="inline-block text-xs font-semibold text-indigo-600 hover:underline">현재 등록된 eBook 새 탭에서 열기 ↗</a>` : ''}
+        `,
+        confirmText: '저장',
+        onConfirm: () => {
+          subj.ebookUrl = document.getElementById('modal-ebook-url').value.trim();
+          saveState();
+          showToast('eBook 링크가 저장되었습니다.');
+          return true;
+        }
+      });
+    });
+
+    // Export Overlay Annotation PNG
+    document.getElementById('btn-export-png').addEventListener('click', () => {
+      saveOverlayDrawing();
+      const a = document.createElement('a');
+      a.href = overlayCanvas.toDataURL('image/png');
+      a.download = `${getSubject(currentSubjectId).name}_p${currentPageIdx + 1}_필기.png`;
+      a.click();
+      showToast('현재 페이지 필기를 이미지로 저장했습니다.');
+    });
+
+    // Collapsible Tool Drawer
+    document.getElementById('btn-toggle-drawer').addEventListener('click', () => {
+      drawerOpen = !drawerOpen;
+      const drawer = document.getElementById('tool-drawer');
+      drawer.style.transform = drawerOpen ? 'translateX(0)' : 'translateX(192px)';
+    });
+
+    // Tool Buttons
+    const toolLabels = { pencil: '연필', pen: '펜', highlighter: '형광펜', text: '글씨', eraser: '지우개' };
+    document.querySelectorAll('.tool-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        overlayTool = btn.dataset.tool;
+        document.getElementById('active-tool-label').textContent = toolLabels[overlayTool];
+        document.querySelectorAll('.tool-btn').forEach(b => b.classList.remove('bg-indigo-50', 'border-indigo-400', 'text-indigo-700'));
+        btn.classList.add('bg-indigo-50', 'border-indigo-400', 'text-indigo-700');
+      });
+    });
+    document.querySelector('[data-tool="pen"]').classList.add('bg-indigo-50', 'border-indigo-400', 'text-indigo-700');
+
+    // Color Buttons
+    document.querySelectorAll('.color-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        overlayColor = btn.dataset.color;
+        document.querySelectorAll('.color-btn').forEach(b => b.classList.remove('ring-2', 'ring-indigo-500'));
+        btn.classList.add('ring-2', 'ring-indigo-500');
+      });
+    });
+    document.getElementById('input-custom-color').addEventListener('input', (e) => {
+      overlayColor = e.target.value;
+    });
+    document.getElementById('input-stroke-width').addEventListener('input', (e) => {
+      overlayWidth = Number(e.target.value);
+      document.getElementById('width-label').textContent = `${overlayWidth}px`;
+    });
+
+    // Undo & Clear Overlay
+    document.getElementById('btn-undo').addEventListener('click', () => {
+      if (overlayUndoStack.length === 0) return;
+      const prev = overlayUndoStack.pop();
+      const img = new Image();
+      img.onload = () => {
+        overlayCtx.clearRect(0, 0, overlayCanvas.width, overlayCanvas.height);
+        overlayCtx.drawImage(img, 0, 0, overlayCanvas.width, overlayCanvas.height);
+        saveOverlayDrawing();
+      };
+      img.src = prev;
+    });
+    document.getElementById('btn-clear-overlay').addEventListener('click', () => {
+      overlayCtx.clearRect(0, 0, overlayCanvas.width, overlayCanvas.height);
+      delete state.overlays[getOverlayKey()];
+      delete state.textAnnotations[getOverlayKey()];
+      saveState();
+      renderTextAnnotations();
+      showToast('현재 페이지 필기를 지웠습니다.');
+    });
+
+    // Split Note Tabs (Text vs Draw)
+    document.getElementById('tab-note-text').addEventListener('click', () => {
+      document.getElementById('split-text-area').classList.remove('hidden');
+      document.getElementById('split-draw-area').classList.add('hidden');
+      document.getElementById('split-draw-area').classList.remove('flex');
+      document.getElementById('tab-note-text').className = 'px-2 py-0.5 rounded text-[11px] font-semibold bg-white text-slate-800 shadow-sm';
+      document.getElementById('tab-note-draw').className = 'px-2 py-0.5 rounded text-[11px] font-semibold text-slate-600';
+    });
+    document.getElementById('tab-note-draw').addEventListener('click', () => {
+      document.getElementById('split-text-area').classList.add('hidden');
+      document.getElementById('split-draw-area').classList.remove('hidden');
+      document.getElementById('split-draw-area').classList.add('flex');
+      document.getElementById('tab-note-draw').className = 'px-2 py-0.5 rounded text-[11px] font-semibold bg-white text-slate-800 shadow-sm';
+      document.getElementById('tab-note-text').className = 'px-2 py-0.5 rounded text-[11px] font-semibold text-slate-600';
+      requestAnimationFrame(resizeNoteCanvas);
+    });
+
+    document.querySelectorAll('.ntool-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        noteTool = btn.dataset.ntool;
+        document.querySelectorAll('.ntool-btn').forEach(b => b.className = 'ntool-btn px-2 py-1 rounded text-xs font-semibold text-slate-600 hover:bg-slate-100');
+        btn.className = 'ntool-btn px-2 py-1 rounded text-xs font-semibold bg-indigo-50 text-indigo-700';
+      });
+    });
+    document.getElementById('input-note-color').addEventListener('input', (e) => noteColor = e.target.value);
+    document.getElementById('btn-clear-note-canvas').addEventListener('click', () => {
+      noteCtx.clearRect(0, 0, noteCanvas.width, noteCanvas.height);
+      delete state.noteCanvases[currentSubjectId];
+      saveState();
+    });
+
+    // Add Subject
+    document.getElementById('btn-add-subject').addEventListener('click', () => {
+      openModal({
+        title: '새 과목 추가',
+        bodyHtml: `
+          <input id="new-subj-name" type="text" placeholder="과목명 (예: 정보, 음악)" class="w-full px-3 py-2 rounded-xl border border-slate-300 text-sm" />
+          <input id="new-subj-icon" type="text" value="📘" placeholder="아이콘 이모지" class="w-full px-3 py-2 rounded-xl border border-slate-300 text-sm" />
+        `,
+        confirmText: '추가',
+        onConfirm: () => {
+          const name = document.getElementById('new-subj-name').value.trim();
+          const icon = document.getElementById('new-subj-icon').value.trim() || '📘';
+          if (!name) return false;
+          state.subjects.push({
+            id: 'subj_' + Date.now(),
+            name, icon,
+            color: 'from-cyan-500 to-blue-600',
+            pages: [{ title: `${name} 1단원`, subtitle: '학습 시작하기', body: `${name} 교과서 내용을 입력하거나 파일을 불러와 학습을 시작하세요.` }]
+          });
+          saveState();
+          renderHome();
+          showToast(`${name} 과목이 추가되었습니다.`);
+          return true;
+        }
+      });
+    });
+
+    // New Note
+    document.getElementById('btn-new-note').addEventListener('click', () => {
+      openModal({
+        title: '새 필기 만들기',
+        bodyHtml: `
+          <input id="new-note-title" type="text" placeholder="필기 제목" class="w-full px-3 py-2 rounded-xl border border-slate-300 text-sm" />
+          <textarea id="new-note-body" rows="4" placeholder="필기 내용" class="w-full px-3 py-2 rounded-xl border border-slate-300 text-sm"></textarea>
+        `,
+        confirmText: '저장',
+        onConfirm: () => {
+          const title = document.getElementById('new-note-title').value.trim();
+          const body = document.getElementById('new-note-body').value;
+          if (!title) return false;
+          state.notes[currentSubjectId] = state.notes[currentSubjectId] || [];
+          state.notes[currentSubjectId].unshift({ id: 'n_' + Date.now(), title, body, updatedAt: '방금 전' });
+          saveState();
+          renderNotesView();
+          return true;
+        }
+      });
+    });
+
+    // Add Flashcard
+    document.getElementById('btn-add-card').addEventListener('click', () => {
+      openModal({
+        title: '암기 카드 추가',
+        bodyHtml: `
+          <input id="new-card-q" type="text" placeholder="질문 (앞면)" class="w-full px-3 py-2 rounded-xl border border-slate-300 text-sm" />
+          <input id="new-card-a" type="text" placeholder="정답 (뒷면)" class="w-full px-3 py-2 rounded-xl border border-slate-300 text-sm" />
+        `,
+        confirmText: '추가',
+        onConfirm: () => {
+          const q = document.getElementById('new-card-q').value.trim();
+          const a = document.getElementById('new-card-a').value.trim();
+          if (!q || !a) return false;
+          state.flashcards[currentSubjectId] = state.flashcards[currentSubjectId] || [];
+          state.flashcards[currentSubjectId].push({ id: 'c_' + Date.now(), q, a, known: false });
+          saveState();
+          renderMemoView();
+          return true;
+        }
+      });
+    });
+
+    // Folder File Upload & Link Add
+    document.getElementById('input-folder-file').addEventListener('change', (e) => {
+      const files = Array.from(e.target.files);
+      files.forEach(file => {
+        const reader = new FileReader();
+        reader.onload = () => {
+          state.folders[currentSubjectId] = state.folders[currentSubjectId] || [];
+          state.folders[currentSubjectId].unshift({
+            id: 'f_' + Date.now() + Math.random(),
+            name: file.name,
+            type: 'file',
+            mime: file.type,
+            dataUrl: reader.result,
+            date: new Date().toLocaleDateString('ko-KR')
+          });
+          saveState();
+          renderFolderView();
+        };
+        reader.readAsDataURL(file);
+      });
+      e.target.value = '';
+    });
+
+    document.getElementById('btn-add-link').addEventListener('click', () => {
+      openModal({
+        title: '자료 링크 추가',
+        bodyHtml: `
+          <input id="new-link-name" type="text" placeholder="자료 이름 (예: EBS 개념 강의)" class="w-full px-3 py-2 rounded-xl border border-slate-300 text-sm" />
+          <input id="new-link-url" type="url" placeholder="https://..." class="w-full px-3 py-2 rounded-xl border border-slate-300 text-sm" />
+        `,
+        confirmText: '추가',
+        onConfirm: () => {
+          const name = document.getElementById('new-link-name').value.trim();
+          const url = document.getElementById('new-link-url').value.trim();
+          if (!name || !url) return false;
+          state.folders[currentSubjectId] = state.folders[currentSubjectId] || [];
+          state.folders[currentSubjectId].unshift({
+            id: 'f_' + Date.now(),
+            name, type: 'link', url,
+            date: new Date().toLocaleDateString('ko-KR')
+          });
+          saveState();
+          renderFolderView();
+          return true;
+        }
+      });
+    });
+
+    document.getElementById('modal-close').addEventListener('click', closeModal);
+    window.addEventListener('resize', () => {
+      if (currentView === 'workspace') {
+        resizeOverlayCanvas();
+        resizeNoteCanvas();
+      }
+    });
+
+    // Init
+    showView('home');
+  </script>
+</body>
+</html>
